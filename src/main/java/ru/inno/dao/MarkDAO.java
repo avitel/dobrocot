@@ -5,6 +5,9 @@ import ru.inno.entity.Mark;
 import java.util.Collection;
 
 public interface MarkDAO {
+
+
+
     Collection<Mark> getMarks();
     Mark getMark(int id);
     /**
@@ -13,4 +16,5 @@ public interface MarkDAO {
      * @param name
      */
     void addMark(String name);
+    void deleteMark(Mark mark);
 }

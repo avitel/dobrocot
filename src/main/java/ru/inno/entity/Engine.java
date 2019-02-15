@@ -19,4 +19,12 @@ public class Engine {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Engine() {
+    }
+
+    public Engine(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

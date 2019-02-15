@@ -13,4 +13,5 @@ public interface ColorDAO {
      * @param name
      */
     void addColor(String name);
+    void deleteColor(Color color);
 }

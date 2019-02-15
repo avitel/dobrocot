@@ -82,3 +82,20 @@ alter table model owner to postgres;
 
 create unique index carmodel_id_uindex
 	on model (id);
+
+
+
+create table person
+(
+	id integer,
+	name varchar(50)
+);
+
+alter table person owner to ilya;
+
+create unique index person_id_uindex
+	on person (id);
+
+create index person_name_index
+	on person (name);
+

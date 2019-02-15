@@ -4,12 +4,26 @@ import java.sql.Timestamp;
 
 public class Car {
     int id;
-    int owner_id;
-    int mark_id;
-    int model_id;
+    Person owner;
+    Mark mark;
+    Model model;
     Timestamp assembledate;
-    int engine_id;
+    Engine engine;
     int numberofseats;
+    Color color;
+
+
+    public Car(int id, Person owner, Mark mark, Model model, Timestamp assembledate, Engine engine, int numberofseats, Color color) {
+        this.id = id;
+        this.owner = owner;
+        this.mark = mark;
+        this.model = model;
+        this.assembledate = assembledate;
+        this.engine = engine;
+        this.numberofseats = numberofseats;
+        this.color = color;
+    }
+
 
     public int getId() {
         return id;
@@ -19,28 +33,28 @@ public class Car {
         this.id = id;
     }
 
-    public int getOwner_id() {
-        return owner_id;
+    public Person getOwner() {
+        return owner;
     }
 
-    public void setOwner_id(int owner_id) {
-        this.owner_id = owner_id;
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
-    public int getMark_id() {
-        return mark_id;
+    public Mark getMark() {
+        return mark;
     }
 
-    public void setMark_id(int mark_id) {
-        this.mark_id = mark_id;
+    public void setMark(Mark mark) {
+        this.mark = mark;
     }
 
-    public int getModel_id() {
-        return model_id;
+    public Model getModel() {
+        return model;
     }
 
-    public void setModel_id(int model_id) {
-        this.model_id = model_id;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     public Timestamp getAssembledate() {
@@ -51,12 +65,12 @@ public class Car {
         this.assembledate = assembledate;
     }
 
-    public int getEngine_id() {
-        return engine_id;
+    public Engine getEngine() {
+        return engine;
     }
 
-    public void setEngine_id(int engine_id) {
-        this.engine_id = engine_id;
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 
     public int getNumberofseats() {
@@ -67,15 +81,12 @@ public class Car {
         this.numberofseats = numberofseats;
     }
 
-    public int getColor_id() {
-        return color_id;
+    public Color getColor() {
+        return color;
     }
 
-    public void setColor_id(int color_id) {
-        this.color_id = color_id;
+    public void setColor(Color color) {
+        this.color = color;
     }
-
-    int color_id;
-
 
 }

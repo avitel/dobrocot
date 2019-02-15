@@ -9,7 +9,7 @@ public interface ClassDAO {
     Class getClass(int id);
     /**
      *
-     * Добавляем цвет в базу
+     * Добавляем класс в базу
      * @param name
      */
     void addClass(String name);

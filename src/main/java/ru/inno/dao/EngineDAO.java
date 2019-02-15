@@ -9,7 +9,7 @@ public interface EngineDAO {
     Engine getEngine(int id);
     /**
      *
-     * Добавляем модель в базу
+     * Добавляем двигатель в базу
      * @param name
      */
     void addEngine(String name);

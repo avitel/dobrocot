@@ -12,7 +12,7 @@ public interface MarkDAO {
     Mark getMark(int id);
     /**
      *
-     * Добавляем модель в базу
+     * Добавляем марку в базу
      * @param name
      */
     void addMark(String name);

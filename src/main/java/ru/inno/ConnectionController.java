@@ -3,6 +3,9 @@ package ru.raven;
 //mport org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +16,7 @@ import java.sql.SQLException;
  */
 
 public class ConnectionController {
-    //private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionController.class);
     private Connection conn = null;
     private static ConnectionController instance;
 
@@ -33,7 +36,7 @@ public class ConnectionController {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        //LOGGER.debug("Запустился контроллер соединений.");
+        LOGGER.debug("Запустился контроллер соединений.");
         return instance;
     }
 
@@ -47,10 +50,10 @@ public class ConnectionController {
         try {
             conn = DriverManager.getConnection(url, login, pass);
             conn.setAutoCommit(false);
-            //LOGGER.debug("Соединение с БД установлено.");
+            LOGGER.debug("Соединение с БД установлено.");
         } catch (SQLException e) {
             e.printStackTrace();
-            //LOGGER.error("Соединиться с БД не удалось.");
+            LOGGER.error("Соединиться с БД не удалось.");
         }
     }
 
@@ -70,7 +73,7 @@ public class ConnectionController {
      */
     public void closeConnection(){
         try {
-            //LOGGER.debug("Соединение с БД остановлено.");
+            LOGGER.debug("Соединение с БД остановлено.");
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -28,4 +28,13 @@ public class Model {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Model(int id, int id_mark, String name) {
+        this.id = id;
+        this.id_mark = id_mark;
+        this.name = name;
+    }
+
+    public Model() {
+    }
 }

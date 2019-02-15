@@ -1,14 +1,16 @@
 package ru.inno.dao;
 
+import ru.inno.entity.Model;
+
 import java.util.Collection;
 
 public interface ModelDAO {
-    Collection<ModelDAO> getModels();
-    ModelDAO getModel(int id);
+    Collection<Model> getModels();
+    Model getModel(int id);
     /**
      *
      * Добавляем модель в базу
      * @param name
      */
-    void addModel(String name);
+    void addModel(int id_mark, String name);
 }

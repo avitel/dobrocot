@@ -20,4 +20,12 @@ public class Color {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Color() {
+    }
+
+    public Color(int id, String name) {
+        this.name = name;
+        this.id = id;
+    }
 }

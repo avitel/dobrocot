@@ -5,6 +5,7 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.inno.entity.Mark;
 import ru.inno.entity.Model;
 
 import java.sql.*;
@@ -20,10 +21,10 @@ public class ModelImpl implements ModelDAO {
             "insert into model (id_mark, name) values (?, ?) returning id";
 
         public static final String GET_MODEL_SQL_TEMPLATE =
-            "select id_mark, name from model where id = ?";
+            "select id_mark, ma.name, mo.name from model mo, mark ma where mo.id_mark = ma.id and mo.id = ?";
 
         public static final String GET_MODELS_SQL_TEMPLATE =
-            "select id, id_mark, name from model";
+            "select mo.id, id_mark, ma.name, mo.name from model mo, mark ma where mo.id_mark = ma.id";
 
 
     private final Connection connection;
@@ -46,7 +47,7 @@ public class ModelImpl implements ModelDAO {
             ResultSet rs;
             rs = statement.executeQuery(GET_MODELS_SQL_TEMPLATE);
             while (rs.next()){
-                models.add(new Model(rs.getInt(1),rs.getInt(2),rs.getString(3)));
+                models.add(new Model(rs.getInt(1), new Mark(rs.getInt(2),rs.getString(3)) , rs.getString(4)));
             }
         }catch (Exception ex){
 //            LOGGER.debug(ex.getMessage();
@@ -70,7 +71,8 @@ public class ModelImpl implements ModelDAO {
             if (i<0) {
                 throw new SQLException();
             }
-            model = new Model(id, rs.getInt(1), rs.getString(2));
+            //mo.id, id_mark, ma.name, mo.name
+            model = new Model(id, new Mark(rs.getInt(1),rs.getString(2)) , rs.getString(3));
         }catch (Exception ex){
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при получении модели!");
@@ -102,10 +104,5 @@ public class ModelImpl implements ModelDAO {
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании модели!");
         }
-    }
-
-    @Override
-    public void deleteModel(Model model) {
-
     }
 }

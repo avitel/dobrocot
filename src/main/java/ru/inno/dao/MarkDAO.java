@@ -16,5 +16,5 @@ public interface MarkDAO {
      * @param name
      */
     void addMark(String name);
-    void deleteMark(Mark mark);
+//    void deleteMark(Mark mark);
 }

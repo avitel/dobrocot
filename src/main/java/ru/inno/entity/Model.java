@@ -28,14 +28,12 @@ public class Model {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Model(String name) {
-        this.name = name;
-    }
-
+  
     public Model(int id, Mark mark, String name) {
         this.id = id;
         this.mark = mark;
-        this.name = name;
+        this.name = name;  
+
+    public Model() {
     }
 }

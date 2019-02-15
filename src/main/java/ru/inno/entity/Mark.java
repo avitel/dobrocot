@@ -16,6 +16,14 @@ public class Mark {
         return name;
     }
 
+    public Mark(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Mark() {
+    }
+
     public void setName(String name) {
         this.name = name;
     }

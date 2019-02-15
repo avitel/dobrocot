@@ -27,4 +27,7 @@ public class Color {
         this.id = id;
         this.name = name;
     }
+
+    public Color() {
+    }
 }

@@ -20,6 +20,8 @@ public class Engine {
         this.name = name;
     }
 
+    public Engine() {
+    }
 
     public Engine(int id, String name) {
         this.id = id;

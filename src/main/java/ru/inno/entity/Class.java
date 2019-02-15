@@ -24,4 +24,9 @@ public class Class {
         this.id = id;
         this.name = name;
     }
+
+
+    public Class() {
+    }
+
 }

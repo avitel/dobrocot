@@ -13,5 +13,5 @@ public interface EngineDAO {
      * @param name
      */
     void addEngine(String name);
-    void deleteEngine(Engine engine);
+//    void deleteEngine(Engine engine);
 }

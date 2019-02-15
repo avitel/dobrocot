@@ -27,4 +27,10 @@ public class Mark {
     public void setName(String name) {
         this.name = name;
     }
+
+
+    public Mark(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

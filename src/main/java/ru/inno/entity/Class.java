@@ -25,6 +25,8 @@ public class Class {
         this.name = name;
     }
 
+
     public Class() {
     }
+
 }

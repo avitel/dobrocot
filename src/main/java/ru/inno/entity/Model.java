@@ -2,7 +2,7 @@ package ru.inno.entity;
 
 public class Model {
     int id;
-    int id_mark;
+    Mark mark;
     String name;
 
     public int getId() {
@@ -13,12 +13,12 @@ public class Model {
         this.id = id;
     }
 
-    public int getId_mark() {
-        return id_mark;
+    public Mark getId_mark() {
+        return mark;
     }
 
-    public void setId_mark(int id_mark) {
-        this.id_mark = id_mark;
+    public void setId_mark(Mark mark) {
+        this.mark = mark;
     }
 
     public String getName() {
@@ -28,12 +28,11 @@ public class Model {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Model(int id, int id_mark, String name) {
+  
+    public Model(int id, Mark mark, String name) {
         this.id = id;
-        this.id_mark = id_mark;
-        this.name = name;
-    }
+        this.mark = mark;
+        this.name = name;  
 
     public Model() {
     }

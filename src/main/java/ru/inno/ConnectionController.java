@@ -47,9 +47,10 @@ public class ConnectionController {
     public void setConnection() {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
-            FileInputStream fis;
-            fis = new FileInputStream("./config.properties");
-            property.load(fis);
+//            FileInputStream fis; //for local db
+//            fis = new FileInputStream("config.properties");
+//            property.load(fis);
+            property.load(this.getClass().getResourceAsStream("../../config.properties"));
             String url = property.getProperty("db.url");
             String login = property.getProperty("db.login");
             String pass = property.getProperty("db.pass");

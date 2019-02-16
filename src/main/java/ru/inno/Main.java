@@ -1,11 +1,5 @@
 package ru.inno;
 import ru.inno.dao.*;
-import ru.inno.entity.Class;
-import ru.inno.entity.Color;
-import ru.inno.entity.Engine;
-import ru.inno.entity.Mark;
-import ru.inno.entity.Model;
-import ru.raven.ConnectionController;
 public class Main {
     public static void main(String[] args) {
         ConnectionController cc = ConnectionController.createController();
@@ -35,10 +29,12 @@ public class Main {
 //            System.out.println(m.getName()+ m.getId());
 
         ClassDAO classdao = new ClassImpl(cc.getConnection());
-//        classdao.addClass("C");
-//        classdao.addClass("S");
-//        System.out.println(classdao.getClass(1).getName());
-        for(Class m : classdao.getClasses())
-            System.out.println(m.getName()+ m.getId());
+////        classdao.addClass("C");
+////        classdao.addClass("S");
+        System.out.println(classdao.getClass(1).getName());
+//        for(Class m : classdao.getClasses())
+//            System.out.println(m.getName()+ m.getId());
+//        CarDAO carDAO = new CarImpl(cc.getConnection());
+//        System.out.println(carDAO.getCar(1).getEngine().getName());
     }
 }

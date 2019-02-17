@@ -97,7 +97,9 @@ create unique index carmodel_id_uindex
 
 create table person
 (
-	id integer,
+	id serial not null
+	constraint person_pk
+		primary key,
 	name varchar(50),
 	login varchar(20),
 	password varchar(30),
@@ -120,10 +122,10 @@ create table place
 	id serial not null
 		constraint place_pk
 			primary key,
-	description integer
+	description varchar(50)
 );
 
-alter table place owner to ilya;
+alter table place owner to postgres;
 
 create index place_description_index
 	on place (description);

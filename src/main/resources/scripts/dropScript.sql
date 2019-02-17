@@ -1,0 +1,12 @@
+drop table car;
+drop table class;
+drop table color;
+drop table engine;
+drop table incomingpayment;
+drop table mark;
+drop table model;
+drop table offer;
+drop table order;
+drop table outgoingpayment;
+drop table person;
+drop table place;

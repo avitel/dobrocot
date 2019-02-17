@@ -46,7 +46,7 @@ public class ConnectionController {
      */
     public void setConnection() {
         try {
-            Class.forName("org.postgresql.Driver").newInstance();
+             Class.forName("org.postgresql.Driver").newInstance();
 //            FileInputStream fis; //for local db
 //            fis = new FileInputStream("config.properties");
 //            property.load(fis);
@@ -54,7 +54,11 @@ public class ConnectionController {
             String url = property.getProperty("db.url");
             String login = property.getProperty("db.login");
             String pass = property.getProperty("db.pass");
-            conn = DriverManager.getConnection(url, login, pass);
+            if ("".equals(login)) {
+                conn = DriverManager.getConnection(url);
+            }else {
+                conn = DriverManager.getConnection(url, login, pass);
+            }
             conn.setAutoCommit(false);
             LOGGER.debug("Соединение с БД установлено.");
         } catch (SQLException e) {

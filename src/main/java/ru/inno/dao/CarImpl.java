@@ -2,7 +2,6 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.inno.CarFilter;
 import ru.inno.entity.*;
 
 import java.sql.*;
@@ -20,10 +19,8 @@ public class CarImpl implements CarDAO {
     public static final String GET_FILTERED_CARS_SQL_TEMPLATE =
             "select * from car where ";
 
-
-    //map of fields of Class and sql table fields
-    //key = field in object, value = sql field
-    private static final HashMap<String, String> sqlKeys = new HashMap<>();
+    public static final String GET_CAR_SQL_TEMPLATE =
+            QueryBuilder.GET_FILTERED_CARS_SQL_TEMPLATE +"\n where car.id = ?";
 
 
     private final Connection connection;
@@ -32,45 +29,26 @@ public class CarImpl implements CarDAO {
     public CarImpl(Connection connection) {
 
         this.connection = connection;
-
-        sqlKeys.put("mark_id","mark_id");
-        sqlKeys.put("model_id","model_id");
-        sqlKeys.put("stamp assembledate","assembledate");
-        sqlKeys.put("engine_id","engine_id");
-        sqlKeys.put("numberofseats","numberofseats");
     }
 
 
+    @Override
+    public Car getCar(int id) {
 
-    public String getSQLField(String field){
-        return sqlKeys.get(field);
-    }
-
-
-    public String getObjectFiled(String sqlField){
-        for (Map.Entry<String, String> entry : sqlKeys.entrySet()) {
-            if (entry.getValue() == sqlField) {
-                return entry.getKey();
+        try (PreparedStatement statement = connection.prepareStatement(GET_CAR_SQL_TEMPLATE)) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return getCarObject(rs);
             }
+
+        } catch (Exception ex) {
+            LOGGER.debug(ex.getMessage());
+            LOGGER.error("get car query error");
         }
         return null;
     }
 
-
-
-    public void addCar() {
-
-    }
-
-    @Override
-    public Collection<Car> getCars() {
-        return null;
-    }
-
-    @Override
-    public Car getCar(int id) {
-        return null;
-    }
 
     @Override
     public void addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numbeerofseats) {
@@ -79,33 +57,44 @@ public class CarImpl implements CarDAO {
 
 
     @Override
-    public List<Car> getFilteredCars(CarFilter filter) {
+    public List<Car> getFilteredCars(QueryBuilder filter) {
 
         try (PreparedStatement statement = connection.prepareStatement(filter.getSQLquery())) {
 
-            ResultSet rs;
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
 
             ArrayList<Car> ls = new ArrayList<>();
 
             while (rs.next()) {
-
-                ls.add(new Car(rs.getInt("id"),
-                        new Person(rs.getInt("person_id"), rs.getString("person_name")),
-                        filter.getMark(),
-                        filter.getModel(),
-                        rs.getTimestamp("assembledate"),
-                        filter.getEngine(),
-                        rs.getInt("numberofseats"),
-                        filter.getColor()
-                ));
+                ls.add(getCarObject(rs));
             }
 
             return ls;
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
+            LOGGER.error("",ex);
         }
 
         return null;
+    }
+
+
+    private Car getCarObject(ResultSet rs) throws SQLException {
+
+        Person person = new Person(rs.getInt("owner_id"), rs.getString("person_name"));
+        Mark mark = new Mark(rs.getInt("mark_id"), rs.getString("mark_name"));
+        Model model = new Model(rs.getInt("model_id"), mark, rs.getString("model_name"));
+        Engine engine = new Engine(rs.getInt("engine_id"), rs.getString("engine_name"));
+        Color color = new Color(rs.getInt("color_id"), rs.getString("color_name"));
+
+        return new Car(
+                rs.getInt("id"),
+                person,
+                mark,
+                model,
+                rs.getTimestamp("assembledate"),
+                engine,
+                rs.getInt("numberofseats"),
+                color);
     }
 }

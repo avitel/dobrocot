@@ -54,28 +54,14 @@ create table car
 	assembledate timestamp,
 	engine_id integer not null,
 	numberofseats integer not null,
-	color_id integer not null
+	color_id integer not null,
+	dayprice integer not null
 );
 
 alter table car owner to postgres;
 
 create unique index car_id_uindex
 	on car (id);
-
-
-
-create table class
-(
-	id serial not null
-		constraint carclass_pk
-			primary key,
-	name varchar(10) not null
-);
-
-alter table class owner to postgres;
-
-create unique index carclass_id_uindex
-	on class (id);
 
 
 
@@ -117,54 +103,6 @@ create index person_name_index
 
 
 
-create table place
-(
-	id serial not null
-		constraint place_pk
-			primary key,
-	description varchar(50)
-);
-
-alter table place owner to postgres;
-
-create index place_description_index
-	on place (description);
-
-create unique index place_id_uindex
-	on place (id);
-
-
-
-create table offer
-(
-	id serial not null,
-	date timestamp,
-	seller int,
-	car int,
-	dayprice int,
-	place int
-);
-
-create index offer_car_index
-	on offer (car);
-
-create index offer_dayprice_index
-	on offer (dayprice);
-
-create unique index offer_id_uindex
-	on offer (id);
-
-create index offer_place_index
-	on offer (place);
-
-create index offer_seller_index
-	on offer (seller);
-
-alter table offer
-	add constraint offer_pk
-		primary key (id);
-
-
 
 create table "order"
 (
@@ -172,7 +110,7 @@ create table "order"
 	date timestamp,
 	seller int,
 	customer int,
-	offer int,
+	car int,
 	begindate timestamp,
 	enddate timestamp,
 	price int
@@ -192,46 +130,6 @@ alter table "order"
 		primary key (id);
 
 
-
-create table incomingPayment
-(
-	id serial not null,
-	date timestamp,
-	"order" int,
-	seller int,
-	amount int
-);
-
-create unique index incomingPayment_id_uindex
-	on incomingPayment (id);
-
-create index incomingPayment_seller_index
-	on incomingPayment (seller);
-
-alter table incomingPayment
-	add constraint incomingPayment_pk
-		primary key (id);
-
-
-
-create table outgoingPayment
-(
-	id serial not null,
-	date timestamp,
-	"order" int,
-	seller int,
-	amount int
-);
-
-create unique index outgoingPayment_id_uindex
-	on outgoingPayment (id);
-
-create index outgoingPayment_seller_index
-	on outgoingPayment (seller);
-
-alter table outgoingPayment
-	add constraint outgoingPayment_pk
-		primary key (id);
 
 
 

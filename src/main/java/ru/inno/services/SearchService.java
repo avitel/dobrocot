@@ -20,7 +20,7 @@ public class SearchService {
         EngineDAO engineDAO = new EngineImpl(connectionController.getConnection());
 
         Collection<Mark> marks = markDAO.getMarks();
-        Collection<Model> models = modelDAO.getModels();
+        Collection<Model> models = modelDAO.getModels(null);
         Collection<Color> colors = colorDAO.getColors();
         Collection<Engine> engines = engineDAO.getEngines();
 

@@ -11,6 +11,7 @@ import ru.inno.entity.Model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ModelImpl implements ModelDAO {
 
@@ -20,11 +21,14 @@ public class ModelImpl implements ModelDAO {
     public static final String INSERT_MODEL_SQL_TEMPLATE =
             "insert into model (id_mark, name) values (?, ?) returning id";
 
-        public static final String GET_MODEL_SQL_TEMPLATE =
+    public static final String GET_MODEL_SQL_TEMPLATE =
             "select id_mark, ma.name, mo.name from model mo, mark ma where mo.id_mark = ma.id and mo.id = ?";
 
-        public static final String GET_MODELS_SQL_TEMPLATE =
-            "select mo.id, id_mark, ma.name, mo.name from model mo, mark ma where mo.id_mark = ma.id";
+    public static final String GET_MODELS_BY_MARK_SQL_TEMPLATE =
+            "select mo.id, id_mark, ma.name, mo.name " +
+                    "from model mo " +
+                    "left join mark ma " +
+                    "on mo.id_mark = ma.id ";
 
 
     private final Connection connection;
@@ -38,25 +42,34 @@ public class ModelImpl implements ModelDAO {
     }
 
 
-
-
     @Override
-    public Collection<Model> getModels() {
-        Collection<Model> models = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet rs;
-            rs = statement.executeQuery(GET_MODELS_SQL_TEMPLATE);
+    public List<Model> getModels(Integer mark_id) {
+
+        StringBuilder query = new StringBuilder(GET_MODELS_BY_MARK_SQL_TEMPLATE);
+        if (mark_id != null){
+            query.append(" where ma.id=?");
+        }
+
+        List<Model> models = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(query.toString())) {
+            if (mark_id != null){
+                statement.setInt(1,mark_id);
+            }
+
+            ResultSet rs = statement.executeQuery();
             while (rs.next()){
-                models.add(new Model(rs.getInt(1), new Mark(rs.getInt(2),rs.getString(3)) , rs.getString(4)));
+                models.add(new Model(rs.getInt(1),
+                        new Mark(rs.getInt(2), rs.getString(3)) ,
+                        rs.getString(4)));
             }
         }catch (Exception ex){
-//            LOGGER.debug(ex.getMessage();
-//            LOGGER.error("Ошибка при получении списка студентов!");
-            System.out.println(ex.getMessage());
-            System.out.println("Ошибка при получении списка студентов!");
+            LOGGER.debug(ex.getMessage());
+            LOGGER.error("Ошибка при получении списка моделей!");
         }
         return models;
     }
+
+
 
     @Override
     public Model getModel(int id) {
@@ -79,6 +92,8 @@ public class ModelImpl implements ModelDAO {
         }
         return model;
     }
+
+
 
     @Override
     public void addModel(int id_mark, String name) {

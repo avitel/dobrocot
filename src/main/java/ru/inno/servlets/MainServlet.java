@@ -20,8 +20,8 @@ public class MainServlet extends HttpServlet {
 
     private SearchService searchService = new SearchService();
 
-    @Override
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("filterOption", searchService.getFilterOption());
         // TODO: 18.02.2019 переписать для всех null

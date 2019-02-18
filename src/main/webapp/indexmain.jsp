@@ -1,7 +1,8 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.inno.entity.*" %>
-<%@ page import="java.util.Map" %><%--
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: ilya
   Date: 2019-02-12
@@ -20,7 +21,24 @@
 Введите параметры поиска автомобиля!<br/>
 
 <form action="${pageContext.request.contextPath}/" method="post">
+    <%--
+        <%
+            Map<String, Object> filters = (Map<String, Object>) request.getAttribute("filterOption");
+            Set<String> filterList = filters.keySet();
+            for (String filterName : filterList) {
+                out.println("<p><label> <select name=" + filterName + "> <option selected disabled>" + filterName + "</option>");
+    //            Collection marks = (Collection) ((Map<String, Object>) request.getAttribute("filterOption")).get("marks");
+                Collection options = (Collection) filters.get(filterName);
 
+
+
+                for (Object option : options) {
+                    out.println("<option value=" + option.getId() + ">" + mark.getName() + "</option>");
+                }
+                ;
+                out.println("</select></label>");
+            }
+        %>--%>
     <p><label>
         <select name="mark">
             <option selected disabled>Марка</option>
@@ -85,7 +103,16 @@
     List<Car> cars = (List<Car>) request.getAttribute("result");
     if (!(null == cars)) {
         for (Car car : cars) {
-            out.println(car.toString() + "<br/>");
+            out.println("<form action=\"/card\" method=\"post\">" +
+                    car.getOwner().getName() + " | "
+                    + car.getMark().getName() + " | "
+                    + car.getModel().getName() + " | "
+                    + car.getAssembledate().toString() + " | "
+                    + car.getNumberofseats() + " | "
+                    + car.getColor().getName() + "  "
+                    + "<button type=\"submit\" value="+car.getId()+">Выбрать</button></p></form>"
+                    + "<br/>"
+            );
         }
     } else out.println("Вы ничего не выбрали!");
 

@@ -91,7 +91,7 @@ public class QueryBuilder {
         
         StringBuilder sb = new StringBuilder(GET_FILTERED_CARS_SQL_TEMPLATE);
 
-        sb.append("\nwhere");
+        sb.append("\nwhere true and");
         
         if (color != null) {
             sb.append("\ncolor_id = "+color+" and");

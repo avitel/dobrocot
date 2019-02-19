@@ -81,24 +81,23 @@ create unique index carmodel_id_uindex
 
 
 
-create table person
+create table if not exists person
 (
 	id serial not null
-	constraint person_pk
-		primary key,
+		constraint person_pk
+			primary key,
 	name varchar(50),
 	login varchar(20),
-	password varchar(30),
+	password varchar(64),
 	isseller boolean,
-	iscustomer boolean
+	iscustomer boolean,
+	role varchar(20)
 );
 
-alter table person owner to postgres;
-
-create unique index person_id_uindex
+create unique index if not exists person_id_uindex
 	on person (id);
 
-create index person_name_index
+create index if not exists person_name_index
 	on person (name);
 
 

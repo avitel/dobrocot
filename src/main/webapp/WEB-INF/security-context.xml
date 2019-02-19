@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:context="http://www.springframework.org/schema/context"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="ru.inno"/>
+
+   <http auto-config="true" use-expressions="true">
+       <csrf disabled="true"/>
+       <intercept-url pattern="/order" access="hasAnyRole('ROLE_USER')"/>
+       <form-login/>
+       <logout/>
+
+   </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="select login as username, password, true as enabled from person where login = ?"
+                               authorities-by-username-query="SELECT login as username, role from person where login = ?"/>
+
+            <password-encoder ref="passwordencoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <b:bean id="passwordencoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+
+    <b:bean id = "dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <b:property name="driverClassName" value="org.postgresql.Driver"/>
+        <b:property name="url" value="jdbc:postgresql://localhost:5432/dobrocot"/>
+        <!--<b:property name="username" value=""/>-->
+        <!--<b:property name="password" value=""/>-->
+    </b:bean>
+
+    <b:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <b:constructor-arg name="dataSource" ref="dataSource"/>
+    </b:bean>
+
+</b:beans>

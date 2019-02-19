@@ -11,10 +11,10 @@ import java.util.Collection;
 
 public class PersonImpl implements PersonDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EngineImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonImpl.class);
 
-    public static final String INSERT_PERSON_SQL_TEMPLATE =
-            "insert into person (name) values (?) returning id";
+    public static final String CREAT_PERSON_SQL_TEMPLATE =
+            "insert into person (name, login, password, role) values (?,?,?,?) returning id";
 
     public static final String GET_PERSON_SQL_TEMPLATE =
             "select name from person where id = ?";
@@ -32,6 +32,7 @@ public class PersonImpl implements PersonDAO {
     public PersonImpl(Connection connection) {
         this.connection = connection;
     }
+
 
     @Override
     public Collection<Person> getPersons() {
@@ -52,6 +53,8 @@ public class PersonImpl implements PersonDAO {
         }
         return persons;
     }
+
+
 
     @Override
     public Person getPerson(int id) {
@@ -75,28 +78,33 @@ public class PersonImpl implements PersonDAO {
         return person;
     }
 
+
+
     @Override
-    public void addPerson(String name) {
-        int i = -1;
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_PERSON_SQL_TEMPLATE)) {
+    public int addPerson(String name, String login, String password, String role) throws SQLException {
+        System.out.println("dao");
+
+        try (PreparedStatement statement = connection.prepareStatement(CREAT_PERSON_SQL_TEMPLATE)) {
             statement.setString(1, name);
-            ResultSet rs;
-            rs = statement.executeQuery();
-            rs.next();
-            i = rs.getInt(1);
-            if (i<0) {
-                throw new SQLException();
+            statement.setString(2, login);
+            statement.setString(3, password);
+            statement.setString(4, role);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                connection.commit();
+                LOGGER.info("person {} ({}) was created", name, login);
+                return rs.getInt("id");
+            }else {
+                LOGGER.error("returning id fail");
+                throw new SQLDataException("something went wrong");
             }
-            connection.commit();
-            LOGGER.info("Персона " + name + " успешно добавлена.");
-        }catch (Exception ex){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            LOGGER.debug(ex.getMessage());
-            LOGGER.error("Ошибка при создании персоны!");
+        }catch (Exception e){
+            connection.rollback();
+            System.out.println(e);
+            return 0;
         }
     }
+
+
 }

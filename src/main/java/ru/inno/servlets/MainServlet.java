@@ -27,8 +27,6 @@ public class MainServlet extends HttpServlet {
         // TODO: 18.02.2019 переписать для всех null
 //        req.setAttribute("result", searchService.getFilteredCars(null, null, null, null));
         req.setAttribute("result", searchService.getFilteredCars(null, null, null, 3));
-//        ConnectionManager cm = new ConnectionManager();
-//        cm.setConnection();
         RequestDispatcher dispatcher = req.getRequestDispatcher("indexmain.jsp");
         dispatcher.forward(req, resp);
     }

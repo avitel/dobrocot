@@ -1,10 +1,11 @@
 package ru.inno.servlets;
 
-import ru.inno.ConnectionController;
+import ru.inno.ConnectionManager;
 import ru.inno.dao.*;
 import ru.inno.entity.*;
 import ru.inno.services.SearchService;
 
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +13,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/")
 public class MainServlet extends HttpServlet {
-
     private SearchService searchService = new SearchService();
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("filterOption", searchService.getFilterOption());
         // TODO: 18.02.2019 переписать для всех null
         req.setAttribute("result", searchService.getFilteredCars(null, null, null, null));
-//        req.setAttribute("result", searchService.getFilteredCars(null, null, null, 3));
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("indexmain.jsp");
         dispatcher.forward(req, resp);
     }

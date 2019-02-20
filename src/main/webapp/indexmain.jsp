@@ -15,8 +15,10 @@
     <title>Dobrocot</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/">Home</a><br/>
-Текущее время: <%= new java.util.Date() %>
+<p><a href="${pageContext.request.contextPath}/registration">Registration</a>
+<p><a href="${pageContext.request.contextPath}/order">Order</a>
+
+<p>Текущее время: <%= new java.util.Date() %>
 <br/>
 Введите параметры поиска автомобиля!<br/>
 

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.inno.entity.Engine;
 import ru.inno.entity.Person;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +15,7 @@ public class PersonImpl implements PersonDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonImpl.class);
 
     public static final String CREAT_PERSON_SQL_TEMPLATE =
-            "insert into person (name, login, password, role) values (?,?,?,?) returning id";
+            "insert into person (name, login, password, role, isseller, iscustomer) values (?,?,?,?,?,?) returning id";
 
     public static final String GET_PERSON_SQL_TEMPLATE =
             "select name from person where id = ?";
@@ -81,17 +82,19 @@ public class PersonImpl implements PersonDAO {
 
 
     @Override
-    public int addPerson(String name, String login, String password, String role) throws SQLException {
-        System.out.println("dao");
-
+    public int addPerson(String name, String login, String password, String role, boolean isseller, boolean iscustomer) throws SQLException {
+        System.out.println("in the begin");
         try (PreparedStatement statement = connection.prepareStatement(CREAT_PERSON_SQL_TEMPLATE)) {
             statement.setString(1, name);
             statement.setString(2, login);
             statement.setString(3, password);
             statement.setString(4, role);
+            statement.setBoolean(5, isseller);
+            statement.setBoolean(6, iscustomer);
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
+
                 connection.commit();
                 LOGGER.info("person {} ({}) was created", name, login);
                 return rs.getInt("id");
@@ -105,6 +108,4 @@ public class PersonImpl implements PersonDAO {
             return 0;
         }
     }
-
-
 }

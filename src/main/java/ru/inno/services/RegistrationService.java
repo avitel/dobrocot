@@ -14,16 +14,12 @@ import java.sql.SQLException;
 
 public class RegistrationService {
 
-
-    //private static ConnectionController connectionController = ConnectionController.createController();
-
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineImpl.class);
 
 
     public void addUser(String name, String login, String password){
         System.out.println("service");
 
-//        PersonDAO dao = new PersonImpl(connectionController.getConnection());
         Connection c = ConnectionManager.getConnection();
         PersonDAO dao = new PersonImpl(c);
         PasswordEncoder encoder = new BCryptPasswordEncoder();

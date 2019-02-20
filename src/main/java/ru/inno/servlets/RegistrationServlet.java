@@ -2,7 +2,6 @@ package ru.inno.servlets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.inno.ConnectionController;
 import ru.inno.services.RegistrationService;
 import ru.inno.services.SearchService;
 

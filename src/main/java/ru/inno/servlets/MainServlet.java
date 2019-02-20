@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/")
+//@WebServlet(urlPatterns = "/")
 public class MainServlet extends HttpServlet {
     private SearchService searchService = new SearchService();
 

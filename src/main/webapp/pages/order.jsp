@@ -11,6 +11,13 @@
     <title>Бронирование автомобиля</title>
   </head>
   <body>
-  Форма бронировния автомобиля
+  Форма бронировния автомобиля<br/>
+
+  Вы авторизованы как
+  <%out.println(request.getAttribute("username"));%><br/>
+
+  <p><a href="${pageContext.request.contextPath}/logout">logout</a>
+  <p><a href="${pageContext.request.contextPath}/">Home</a>
+
   </body>
 </html>

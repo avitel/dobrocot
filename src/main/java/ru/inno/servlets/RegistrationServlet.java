@@ -1,9 +1,9 @@
 package ru.inno.servlets;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.inno.services.RegistrationService;
-import ru.inno.services.SearchService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +23,6 @@ public class RegistrationServlet extends HttpServlet {
 
         System.out.println("servlete_in");
 
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("pages/registration.jsp");
         dispatcher.forward(req, resp);
     }
@@ -37,7 +36,12 @@ public class RegistrationServlet extends HttpServlet {
 
        RegistrationService regService = new RegistrationService();
 
-        regService.addUser(req.getParameter("name"), req.getParameter("login"), req.getParameter("pass"));
+        regService.addUser(req.getParameter("name")
+                ,req.getParameter("login")
+                ,req.getParameter("pass")
+                ,req.getParameter("isseller")
+                ,req.getParameter("iscustomer")
+        );
 
         req.getRequestDispatcher("").forward(req, resp);
     }

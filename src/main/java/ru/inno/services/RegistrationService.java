@@ -17,7 +17,7 @@ public class RegistrationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineImpl.class);
 
 
-    public void addUser(String name, String login, String password){
+    public void addUser(String name, String login, String password, String isseller, String iscustomer){
         System.out.println("service");
 
         Connection c = ConnectionManager.getConnection();
@@ -25,7 +25,7 @@ public class RegistrationService {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordHash = encoder.encode(password);
         try {
-            dao.addPerson(name, login, passwordHash, "ROLE_USER");
+            dao.addPerson(name, login, passwordHash, "ROLE_USER", true, true);
         } catch (SQLException e) {
             LOGGER.error("add user sql error ");
         }

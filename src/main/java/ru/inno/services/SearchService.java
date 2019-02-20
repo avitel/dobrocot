@@ -1,12 +1,13 @@
 package ru.inno.services;
 
+import org.springframework.stereotype.Component;
 import ru.inno.ConnectionManager;
 import ru.inno.dao.*;
 import ru.inno.entity.*;
 
 import java.sql.Connection;
 import java.util.*;
-
+@Component
 public class SearchService {
 
     public Map<String, Object> getFilterOption() {

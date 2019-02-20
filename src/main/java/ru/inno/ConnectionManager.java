@@ -25,7 +25,6 @@ static{
                 Class.forName("org.postgresql.Driver").newInstance();
                 ic = new InitialContext();
                 ds = (DataSource) ic.lookup("java:/comp/env/jdbc/postgres");
-                System.out.println("Соединение с БД установлено!");
                 LOGGER.debug("Соединение с БД установлено.");
             } catch (Exception e) {
                 LOGGER.debug("Подключиться с БД не удалось!");
@@ -45,12 +44,10 @@ static{
             try {
                 return ds.getConnection();
             } catch (SQLException e) {
-                System.out.println("Ошибка получения соединения");
                 LOGGER.error(e.getStackTrace().toString());
             }
         }
         else {
-            System.out.println("Соединение с базой не установлено!");
             LOGGER.error("Соединение с базой не установлено!");
         }
         return null;

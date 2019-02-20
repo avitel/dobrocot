@@ -9,16 +9,8 @@ import java.util.*;
 
 public class SearchService {
 
-//    private static ConnectionController connectionController = ConnectionController.createController();
-
-
     public Map<String, Object> getFilterOption() {
         Map<String, Object> result = new HashMap<>();
-//        connectionController.setConnection();
-//        MarkDAO markDAO = new MarkImpl(connectionController.getConnection());
-//        ModelDAO modelDAO = new ModelImpl(connectionController.getConnection());
-//        ColorDAO colorDAO = new ColorImpl(connectionController.getConnection());
-//        EngineDAO engineDAO = new EngineImpl(connectionController.getConnection());
         Connection c = ConnectionManager.getConnection();
         MarkDAO markDAO = new MarkImpl(c);
         ModelDAO modelDAO = new ModelImpl(c);
@@ -40,7 +32,6 @@ public class SearchService {
 
     public List<Car> getFilteredCars(Integer mark_id, Integer model_id, Integer engine_id, Integer color_id) {
         QueryBuilder builder = new QueryBuilder(color_id, engine_id, mark_id, model_id);
-//        CarDAO carDAO = new CarImpl(connectionController.getConnection());
         Connection c = ConnectionManager.getConnection();
         CarDAO carDAO = new CarImpl(c);
 

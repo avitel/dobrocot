@@ -34,15 +34,16 @@
 
     <b:bean id = "dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <b:property name="driverClassName" value="org.postgresql.Driver"/>
-        <!--<b:property name="url" value="jdbc:postgresql://localhost:5432/dobrocot"/>-->
-        <b:property name="url" value="jdbc:postgresql://itcraft.su:5432/postgres"/>
-        <b:property name="username" value="dbworker"/>
-        <b:property name="password" value="Rfkbyf"/>
+        <b:property name="url" value="${db.url}"/>
+        <b:property name="username" value="${db.login}"/>
+        <b:property name="password" value="${db.pass}"/>
     </b:bean>
 
 
     <b:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <b:constructor-arg name="dataSource" ref="dataSource"/>
     </b:bean>
+
+    <context:property-placeholder location="classpath:config.properties"/>
 
 </b:beans>

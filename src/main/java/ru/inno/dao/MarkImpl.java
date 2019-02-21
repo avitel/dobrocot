@@ -83,14 +83,8 @@ public class MarkImpl implements MarkDAO {
             if (i<0) {
                 throw new SQLException();
             }
-            connection.commit();
             LOGGER.info("Марка " + name + " успешно добавлена.");
         }catch (Exception ex){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании марки!");
         }

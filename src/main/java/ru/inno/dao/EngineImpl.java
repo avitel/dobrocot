@@ -89,15 +89,9 @@ public class EngineImpl implements EngineDAO{
             if (i<0) {
                 throw new SQLException();
             }
-            connection.commit();
             LOGGER.info("Двигатель " + name + " успешно добавлен.");
 //            System.out.println("Двигатель " + name + " успешно добавлен.");
         }catch (Exception ex){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             LOGGER.debug(ex.getMessage());
 //            System.out.println(ex.getMessage());
             LOGGER.error("Ошибка при создании двигателя!");

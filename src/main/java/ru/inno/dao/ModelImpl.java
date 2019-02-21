@@ -108,14 +108,8 @@ public class ModelImpl implements ModelDAO {
             if (i<0) {
                 throw new SQLException();
             }
-            connection.commit();
             LOGGER.info("Модель " + name + " успешно добавлена.");
         }catch (Exception ex){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании модели!");
         }

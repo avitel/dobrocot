@@ -83,14 +83,8 @@ public class ClassImpl implements ClassDAO {
             if (i<0) {
                 throw new SQLException();
             }
-            connection.commit();
             LOGGER.info("Класс автомобиля " + name + " успешно добавлен.");
         }catch (Exception ex){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании класса автомобиля!");
         }

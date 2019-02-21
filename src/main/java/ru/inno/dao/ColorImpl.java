@@ -85,14 +85,8 @@ public class ColorImpl implements ColorDAO {
             if (i<0) {
                 throw new SQLException();
             }
-            connection.commit();
             LOGGER.info("Цвет " + name + " успешно добавлен.");
         }catch (Exception ex){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании цвета!");
         }

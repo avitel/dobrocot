@@ -7,17 +7,31 @@
 </head>
 <body>
 
-<p><a href="${pageContext.request.contextPath}/">Home</a>
+<a href="${pageContext.request.contextPath}/">Home</a> <br/>
+
+<br/>
+<font size="5">Registration new user</font>
+<br/>
+<br/>
+
+Please fill the form<br/>
 
 <form method="post" action="${pageContext.request.contextPath}/registration">
 
-    name        <input type="text" name="name" required autofocus><br />
-    login       <input type="text" name="login" required ><br />
-    password    <input type="password" name="pass" required><br />
-    is seller   <input type="checkbox" name="isseller" ><br />
-    is customer <input type="checkbox" name="iscustomer" ><br />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <input type="submit" value="Зарегистрироваться"/>
+    <table>
+        <tr>
+            <td> name:</td> <td> <input type="text" name="name" required autofocus> </td>
+        </tr>
+        <tr>
+            <td> login:</td> <td> <input type="text" name="login" required > </td>
+        </tr>
+        <tr>
+            <td> password:</td> <td> <input type="text" name="pass" required > </td>
+        </tr>
+        <tr>
+            <td>        </td> <td> <input type="submit" value="Submit"/> </td>
+        </tr>
+    </table>
 
 </form>
 

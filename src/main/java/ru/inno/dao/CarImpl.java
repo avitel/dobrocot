@@ -81,7 +81,7 @@ public class CarImpl implements CarDAO {
 
     private Car getCarObject(ResultSet rs) throws SQLException {
 
-        Person person = new Person(rs.getInt("owner_id"), rs.getString("person_name"));
+        Person person = new Person(rs.getInt("owner_id"), rs.getString("person_name"), rs.getString("person_login"));
         Mark mark = new Mark(rs.getInt("mark_id"), rs.getString("mark_name"));
         Model model = new Model(rs.getInt("model_id"), mark, rs.getString("model_name"));
         Engine engine = new Engine(rs.getInt("engine_id"), rs.getString("engine_name"));

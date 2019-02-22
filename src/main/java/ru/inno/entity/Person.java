@@ -4,6 +4,9 @@ public class Person {
 
     int id;
     String name;
+    String login;
+    String password;
+    String role;
 
     public int getId() {
         return id;
@@ -21,8 +24,16 @@ public class Person {
         this.name = name;
     }
 
-    public Person(int id, String name) {
+    public Person(int id, String name, String login, String role) {
         this.id = id;
         this.name = name;
+        this.login = login;
+        this.role = role;
+    }
+
+    public Person(int id, String name, String login) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
     }
 }

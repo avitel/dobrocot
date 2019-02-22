@@ -1,8 +1,10 @@
 package ru.inno.servlets;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import ru.inno.ConnectionManager;
+import ru.inno.Security;
+import ru.inno.dao.PersonImpl;
+import ru.inno.entity.Person;
 import ru.inno.services.SearchService;
 
 import javax.servlet.RequestDispatcher;
@@ -22,18 +24,11 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //todo вынести в сервис
-        String username ="";
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            Object principal = auth.getPrincipal();
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails)principal).getUsername();
-            } else {
-                username = principal.toString();
-            }
-        }
 
-        req.setAttribute("username", username);
+        Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(ConnectionManager.getConnection()));
+        Person user = security.getCurrentUser();
+
+        req.setAttribute("username", user.getName());
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("pages/order.jsp");
         dispatcher.forward(req, resp);

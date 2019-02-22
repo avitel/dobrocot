@@ -113,7 +113,7 @@
     List<Car> cars = (List<Car>) request.getAttribute("result");
     if (!(null == cars)) {
         for (Car car : cars) {
-            out.println("<form action=\"/card\" method=\"post\">" +
+            out.println("<form action=\"/carreserve\" method=\"post\">" +
                     car.getOwner().getName() + " | "
                     + car.getMark().getName() + " | "
                     + car.getModel().getName() + " | "

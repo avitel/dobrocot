@@ -1,10 +1,10 @@
-package ru.inno.controllers;
+package ru.inno.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import ru.inno.services.SearchService;
 
 @Controller
@@ -19,27 +19,27 @@ public class MainController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String mainPageGET(Model springModel) {
-
-        springModel.addAttribute("filterOption", searchService.getFilterOption());
-        springModel.addAttribute("result", searchService.getFilteredCars(null, null, null, null));
-
-        return "mainpage";
+    public ModelAndView mainPageGET(ModelAndView modelAndView) {
+        modelAndView.addObject("filterOption", searchService.getFilterOption());
+        modelAndView.addObject("result", searchService.getFilteredCars(null, null, null, null));
+        modelAndView.setViewName("mainpage");
+        return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String mainPagePOST(@RequestParam(name = "mark", required = false) String makr,
+    public ModelAndView mainPagePOST(@RequestParam(name = "mark", required = false) String makr,
                                @RequestParam(name = "model", required = false) String model,
                                @RequestParam(name = "engine", required = false) String engine,
                                @RequestParam(name = "color", required = false) String color,
-                               Model springModel) {
-        springModel.addAttribute("filterOption", searchService.getFilterOption());
-        springModel.addAttribute("result", searchService.getFilteredCars(
+                               ModelAndView modelAndView) {
+        modelAndView.addObject("filterOption", searchService.getFilterOption());
+        modelAndView.addObject("result", searchService.getFilteredCars(
                 null == makr ? null : Integer.valueOf(makr),
                 null == model ? null : Integer.valueOf(model),
                 null == engine ? null : Integer.valueOf(engine),
                 null == color ? null : Integer.valueOf(color)
         ));
-        return "mainpage";
+        modelAndView.setViewName("mainpage");
+        return modelAndView;
     }
 }

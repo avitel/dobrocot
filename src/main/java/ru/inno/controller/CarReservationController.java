@@ -29,7 +29,7 @@ public class CarReservationController {
         this.reservableService = reservableService;
     }
 
-    @RequestMapping(value = "/carreserve",method = RequestMethod.GET)
+    @RequestMapping(value = "/carreserve",method = RequestMethod.POST)
 //public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
     public String doReserve(Model model,@RequestParam(name = "car_id") String car_id) {
         System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<я тут"

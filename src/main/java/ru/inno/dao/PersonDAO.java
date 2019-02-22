@@ -11,5 +11,7 @@ public interface PersonDAO {
 
     Person getPerson(int id);
 
+    Person getPerson(String login);
+
     int addPerson(String name, String login, String pass, String role) throws SQLException;
 }

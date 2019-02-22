@@ -26,6 +26,6 @@ public class RegistrationController {
 
         regService.addUser(name, login, pass);
 
-        return new RedirectView("indexmain");
+        return new RedirectView("/");
     }
 }

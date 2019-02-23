@@ -2,11 +2,11 @@ package ru.inno.entity;
 
 public class Person {
 
-    int id;
-    String name;
-    String login;
-    String password;
-    String role;
+    private int id;
+    private String name;
+    private String login;
+    private String password;
+    private String role;
 
     public int getId() {
         return id;

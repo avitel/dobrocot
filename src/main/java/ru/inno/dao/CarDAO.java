@@ -12,4 +12,8 @@ public interface CarDAO {
     void addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numbeerofseats);
 
     List<Car> getFilteredCars(QueryBuilder filter);
+
+    List<Car> getCarsByPerson(int person_id);
+
+    
 }

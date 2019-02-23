@@ -7,6 +7,7 @@ public class QueryBuilder {
     private Integer mark;
     private Integer model;
     private Integer carClass;
+    private Integer owner;
 
     public static final String GET_FILTERED_CARS_SQL_TEMPLATE =
             "select car.id, \n" +
@@ -31,12 +32,12 @@ public class QueryBuilder {
                     "left join color on car.color_id = color.id";
 
 
-    public QueryBuilder(Integer color, Integer engine, Integer mark, Integer model, Integer carClass) {
+    public QueryBuilder(Integer color, Integer engine, Integer mark, Integer model, Integer owner) {
         this.color = color;
         this.engine = engine;
         this.mark = mark;
         this.model = model;
-        this.carClass = carClass;
+        this.owner = owner;
     }
 
     public QueryBuilder(Integer color, Integer engine, Integer mark, Integer model) {
@@ -108,6 +109,10 @@ public class QueryBuilder {
 
         if (model != null) {
             sb.append("\nmodel_id = "+model+" and");
+        }
+
+        if (owner != null) {
+            sb.append("\nowner_id = "+owner+" and");
         }
 
         if (carClass != null) {

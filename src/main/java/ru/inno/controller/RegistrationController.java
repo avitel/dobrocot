@@ -1,5 +1,6 @@
 package ru.inno.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,13 @@ import ru.inno.services.RegistrationService;
 @RequestMapping("/registration")
 public class RegistrationController {
 
+    private RegistrationService service;
+
+    @Autowired
+    public RegistrationController(RegistrationService service) {
+        this.service = service;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String getForm(){
         return "registration";
@@ -22,9 +30,7 @@ public class RegistrationController {
                             ,@RequestParam String login
                             ,@RequestParam String pass){
 
-        RegistrationService regService = new RegistrationService();
-
-        regService.addUser(name, login, pass);
+        service.addUser(name, login, pass);
 
         return new RedirectView("/");
     }

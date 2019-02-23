@@ -2,6 +2,7 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.inno.entity.Engine;
 import ru.inno.entity.Person;
@@ -27,7 +28,6 @@ public class PersonImpl implements PersonDAO {
     public static final String GET_PERSONS_SQL_TEMPLATE =
             "select id, name from person";
 
-
     private final Connection connection;
 
     /**
@@ -37,7 +37,6 @@ public class PersonImpl implements PersonDAO {
     public PersonImpl(Connection connection) {
         this.connection = connection;
     }
-
 
     @Override
     public Collection<Person> getPersons() {

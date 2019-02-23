@@ -2,82 +2,33 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.inno.entity.Engine;
-import ru.inno.entity.Order;
+import ru.inno.ConnectionManager;
+import ru.inno.entity.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class OrderImpl implements OrderDAO{
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(OrderImpl.class);
-//int id_car, int id_owner, int id_customer, Timestamp dateOrder
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderImpl.class);
+
     public static final String INSERT_ORDER_SQL_TEMPLATE =
             "insert into \"order\" (car, seller, customer, date) values (?,?,?,?)";
 
-//    public static final String GET_ORDER_SQL_TEMPLATE =
-//            "select name from engine where id = ?";
-//
-//    public static final String GET_ORDER_SQL_TEMPLATE =
-//            "select id, name from engine";
+    public static final String GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE =
+            "select * from \"order\" where customer = ?";
+
 
 
     private final Connection connection;
 
-    /**
-     * Получает подключение и сохраняет в данном объекте.
-     * @param connection
-     */
+
     public OrderImpl(Connection connection) {
         this.connection = connection;
     }
 
-//    @Override
-//    public Collection<Engine> getEngines() {
-//
-//        Collection<Engine> engines = new ArrayList<>();
-//        try (Statement statement = connection.createStatement()) {
-//            ResultSet rs;
-//            rs = statement.executeQuery(GET_ENGINES_SQL_TEMPLATE);
-//            while (rs.next()){
-//                engines.add(new Engine(rs.getInt(1),rs.getString(2)));
-//            }
-//            if(engines.size() == 0){
-//                LOGGER.info("Список двигателей пуст!");
-//            }
-//        }catch (Exception ex){
-//            LOGGER.debug(ex.getMessage());
-//            LOGGER.error("Ошибка при получении списка двигателей!");
-////            System.out.println(ex.getMessage());
-////            System.out.println("Ошибка при получении списка двигателей!");
-//        }
-//        return engines;
-//    }
-//
-//    @Override
-//    public Engine getEngine(int id) {
-//
-//                Engine engine = null;
-//        try (PreparedStatement statement = connection.prepareStatement(GET_ENGINE_SQL_TEMPLATE)) {
-//            statement.setInt(1,id);
-//            String i = null;
-//            ResultSet rs;
-//            rs = statement.executeQuery();
-//            rs.next();
-//            i = rs.getString(1);
-//            if (i==null) {
-//                throw new SQLException();
-//            }
-//            engine = new Engine(id, i);
-//        }catch (Exception ex){
-//            LOGGER.debug(ex.getMessage());
-//            LOGGER.error("Ошибка при получении двигателя!");
-////            System.out.println(ex.getMessage());
-////            System.out.println(("Ошибка при получении двигателя!"));
-//        }
-//        return engine;
-//    }
 
     @Override
     public void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder) {
@@ -86,7 +37,6 @@ public class OrderImpl implements OrderDAO{
             statement.setInt(1, id_car);
             statement.setInt(2, id_owner);
             statement.setInt(3, id_customer);
-//            statement.setString(4, dateOrder.toString());
             statement.setTimestamp(4,dateOrder);
             statement.execute();
             LOGGER.info("Сделка " + i + " успешно добавлена.");
@@ -98,7 +48,42 @@ public class OrderImpl implements OrderDAO{
     }
 
     @Override
-    public Collection<Order> getOrders() {
+    public List<Order> getOrdersByCustomer(int person_id) {
+
+        try (PreparedStatement statement = connection.prepareStatement(GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE)) {
+            statement.setInt(1, person_id);
+            ResultSet rs = statement.executeQuery();
+
+            List<Order> list = new ArrayList<>();
+            while (rs.next()) {
+
+                Connection c = ConnectionManager.getConnection();
+                CarDAO cardao = new CarImpl(c);
+                PersonDAO persondao = new PersonImpl(c);
+
+                Car car = cardao.getCar(rs.getInt("car"));
+                Person seller = persondao.getPerson(rs.getInt("seller"));
+                Person customer = persondao.getPerson(rs.getInt("customer"));
+
+                list.add( new Order(rs.getInt("id"),
+                        car,
+                        customer,
+                        seller,
+                        rs.getTimestamp("date")));
+
+            }
+            return list;
+
+        } catch (Exception ex) {
+            LOGGER.debug(ex.getMessage());
+            LOGGER.error("get car query error");
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Order> getOrders() {
         return null;
     }
 

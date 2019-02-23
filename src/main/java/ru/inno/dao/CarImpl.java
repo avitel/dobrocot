@@ -79,6 +79,15 @@ public class CarImpl implements CarDAO {
     }
 
 
+
+    @Override
+    public List<Car> getCarsByPerson(int person_id) {
+        QueryBuilder builder = new QueryBuilder(null, null, null, null, person_id);
+        return getFilteredCars(builder);
+    }
+
+
+
     private Car getCarObject(ResultSet rs) throws SQLException {
 
         Person person = new Person(rs.getInt("owner_id"), rs.getString("person_name"), rs.getString("person_login"));

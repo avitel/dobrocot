@@ -3,7 +3,7 @@
 <%@ page import="java.io.IOException" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="ru.inno.entity.*" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>--%>
 
@@ -21,11 +21,19 @@
     <title>Dobrocot</title>
 </head>
 <body>
-<p><a href="${pageContext.request.contextPath}/registration">Registration</a>
-<p><a href="${pageContext.request.contextPath}/order">Order</a>
-<p><a href="${pageContext.request.contextPath}/login">Login</a>
-<p><a href="${pageContext.request.contextPath}/logout">Logout</a>
+<%
+    //    Person person = (Person) request.getAttribute("user");
+    if (null == request.getAttribute("user")) {
+        out.println("<p><a href=\"/registration\">Registration</a>");
+        out.println("<p><a href=\"/login\">Login</a>");
 
+    } else {
+        out.println("Hello, " + request.getAttribute("user") + "!");
+        out.println("<p><a href=\"/cabinet\">Cabinet</a>");
+        out.println("<p><a href=\"/order\">Order</a>");
+        out.println("<p><a href=\"/logout\">Logout</a>");
+    }
+%>
 <p>Текущее время: <%= new java.util.Date() %>
     <br/>
     Введите параметры поиска автомобиля!<br/>
@@ -120,7 +128,7 @@
                     + car.getAssembledate().toString() + " | "
                     + car.getNumberofseats() + " | "
                     + car.getColor().getName() + "  "
-                    + "<button name=\"car_id\" type=\"submit\" value="+car.getId()+">Выбрать</button></p></form>"
+                    + "<button name=\"car_id\" type=\"submit\" value=" + car.getId() + ">Выбрать</button></p></form>"
                     + "<br/>"
             );
         }

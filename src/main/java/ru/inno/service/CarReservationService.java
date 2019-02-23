@@ -16,7 +16,6 @@ public class CarReservationService implements ReservableService {
 
     @Override
     public Map<String,String> getValues(String ... requestParams) {
-        System.out.println("теперь тут>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         int id = Integer.parseInt(requestParams[0]);
         Connection c = ConnectionManager.getConnection();
         CarDAO carDAO = new CarImpl(c);

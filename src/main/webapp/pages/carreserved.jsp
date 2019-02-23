@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/">На главную</a>
+<br>
 <h2>Ваша машина зарезервирована!</h2>
 </body>
 </html>

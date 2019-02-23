@@ -1,9 +1,9 @@
 package ru.inno.entity;
 
 public class Model {
-    int id;
-    Mark mark;
-    String name;
+    private int id;
+    private Mark mark;
+    private String name;
 
     public int getId() {
         return id;

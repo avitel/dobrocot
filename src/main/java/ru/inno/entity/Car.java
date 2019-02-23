@@ -3,14 +3,14 @@ package ru.inno.entity;
 import java.sql.Timestamp;
 
 public class Car {
-    int id;
-    Person owner;
-    Mark mark;
-    Model model;
-    Timestamp assembledate;
-    Engine engine;
-    int numberofseats;
-    Color color;
+    private int id;
+    private Person owner;
+    private Mark mark;
+    private Model model;
+    private Timestamp assembledate;
+    private Engine engine;
+    private int numberofseats;
+    private Color color;
 
 
     public Car(int id, Person owner, Mark mark, Model model, Timestamp assembledate, Engine engine, int numberofseats, Color color) {

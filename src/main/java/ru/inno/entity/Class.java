@@ -1,8 +1,8 @@
 package ru.inno.entity;
 
 public class Class {
-    int id;
-    String name;
+    private int id;
+    private String name;
 
     public int getId() {
         return id;

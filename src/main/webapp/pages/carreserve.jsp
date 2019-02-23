@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/">На главную</a>
 <h2>Выбранное авто</h2><br>
 <table border="1" width="100%" cellpadding="5">
     <tr>
@@ -30,6 +31,21 @@
         <td>${owner}</td>
     </tr>
 </table>
+
+<table border="1" width="10%" cellpadding="5">
+    <tr>
+        <th><h3>Количество дней</h3></th>
+        <th><h3>${days}</h3></th>
+        <th><h3>Сумма аренды</h3></th>
+        <th><h3>${cost}</h3></th>
+    </tr>
+</table>
+<form action="/carreserve3" method="post">
+    <input type="date" name="date_begin"/>
+    <input type="date" name="date_end"/>
+    <button type="submit" name="submit" value="Добавить" >Посчитать</button>
+</form>
+<label></label>
 <form action="/carreserve2" method="post">
     <button type="submit">Беру</button>
 </form>

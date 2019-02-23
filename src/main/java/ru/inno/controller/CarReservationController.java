@@ -32,11 +32,6 @@ public class CarReservationController {
     @RequestMapping(value = "/carreserve",method = RequestMethod.POST)
 //public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
     public String doReserve(Model model,@RequestParam(name = "car_id") String car_id) {
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<я тут"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         Map<String,String> carParams = reservableService.getValues(car_id);
         for (String s : carParams.keySet()) {
             model.addAttribute(s, carParams.get(s));
@@ -46,15 +41,23 @@ public class CarReservationController {
 
     }
 
+    @RequestMapping(value = "/carreserve3",method = RequestMethod.POST)
+//public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
+    public String doReserve2(Model model,@RequestParam(name = "date_begin") Date date_begin, @RequestParam(name = "date_end") Date date_end) {
+        System.out.println(date_begin);
+        System.out.println(date_end);
+        System.out.println(date_end.getTime()-date_begin.getTime());
+        int days = (int)((date_end.getTime()-date_begin.getTime())/86400000);
+        model.addAttribute("days", days);
+        model.addAttribute("cost", 100*days);
+
+        return "carreserve";
+
+    }
+
     @RequestMapping(value = "/carreserve2",method = RequestMethod.POST)
 //public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
     public String doReserve(Model model) {
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<я тут"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-                +"/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ВЗЯЛ");
         Connection c = ConnectionManager.getConnection();
         OrderDAO order = new OrderImpl(c);
 //        order.addOrder(5,5,5, Timestamp.valueOf(LocalDateTime.now()));

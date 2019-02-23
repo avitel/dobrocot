@@ -1,6 +1,5 @@
 package ru.inno.services;
 
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.inno.ConnectionManager;
@@ -9,6 +8,7 @@ import ru.inno.dao.*;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
 import ru.inno.entity.Person;
+import sun.tools.tree.OrExpression;
 
 import java.sql.Connection;
 import java.util.List;
@@ -16,19 +16,38 @@ import java.util.List;
 @Service
 public class CabinetService {
 
-    public List<Car> getCarList(){
-        Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(ConnectionManager.getConnection()));
-        Person user = security.getCurrentUser();
-        Connection c = ConnectionManager.getConnection();
-        CarDAO carDAO = new CarImpl(c);
-        List<Car> carList = carDAO.getCarsByPerson(user.getId());
+    Person currentPerson;
 
-        ConnectionManager.closeConnection(c);
-        return null;
+    public Person getCurrentPerson(){
+        if (null == currentPerson){
+            Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(ConnectionManager.getConnection()));
+            currentPerson = security.getCurrentUser();
+        }
+        return currentPerson;
     }
 
-    public List<Order> getOrderList(){
-        return null;
+    public List<Car> getCarList(Person person){
+        Connection connection = ConnectionManager.getConnection();
+        CarDAO carDAO = new CarImpl(connection);
+        List<Car> carList = carDAO.getCarsByPerson(person.getId());
+        ConnectionManager.closeConnection(connection);
+        return carList;
+    }
+
+    public List<Order> getSellerOrders(Person person){
+        Connection connection = ConnectionManager.getConnection();
+        OrderDAO orderDAO = new OrderImpl(connection);
+        List<Order> list = orderDAO.getOrdersBySeller(person);
+        ConnectionManager.closeConnection(connection);
+        return list;
+    }
+
+    public List<Order> getCustomerOrders(Person person){
+        Connection connection = ConnectionManager.getConnection();
+        OrderDAO orderDAO = new OrderImpl(connection);
+        List<Order> list = orderDAO.getOrdersByCustomer(person);
+        ConnectionManager.closeConnection(connection);
+        return list;
     }
 
 }

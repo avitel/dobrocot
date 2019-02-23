@@ -1,48 +1,34 @@
+<%@ page import="ru.inno.entity.Order" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.io.IOException" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="ru.inno.entity.*" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>--%>
-
-<%@ page pageEncoding="UTF-8" %>
-
-<%--
+<%@ page import="ru.inno.entity.Car" %>
+<%@ page import="ru.inno.entity.Person" %><%--
   Created by IntelliJ IDEA.
-  User: ilya
-  Date: 2019-02-12
-  Time: 17:07
+  User: yuri
+  Date: 2019-02-22
+  Time: 20:43
   To change this template use File | Settings | File Templates.
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Dobrocot</title>
+    <title>Personal area</title>
 </head>
 <body>
-
+<h4>Customer Orders</h4>
 <%
-    List<Car> cars = (List<Car>) request.getAttribute("result");
-    if (!(null == cars)) {
-        for (Car car : cars) {
-            out.println("<form action=\"/order\" method=\"post\">" +
-                    car.getOwner().getName() + " | "
-                    + car.getMark().getName() + " | "
-                    + car.getModel().getName() + " | "
-                    + car.getAssembledate().toString() + " | "
-                    + car.getNumberofseats() + " | "
-                    + car.getColor().getName() + "  "
-                    + "<button name=\"car_id\" type=\"submit\" value="+car.getId()+">Выбрать</button></p></form>"
-                    + "<br/>"
-            );
-        }
-    } else out.println("Вы ничего не выбрали!");
-
+    out.print(request.getAttribute("personid"));
 %>
-
+<ul>
+    <%
+        List<Order> list = (List<Order>) request.getAttribute("customerOrders");
+        if (list != null) {
+            for (Order order : list) {
+                Car car = order.getCar();
+                Person person = order.getCustomer();
+                out.println("<li> Car: " + car.getMark().getName() + " Customer Name: " + order.getOwner().getName() + "</li>");
+            }
+        }
+    %>
+</ul>
 </body>
 </html>
-

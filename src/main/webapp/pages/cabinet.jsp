@@ -15,9 +15,6 @@
 </head>
 <body>
 <h4>Customer Orders</h4>
-<%
-    out.print(request.getAttribute("personid"));
-%>
 <ul>
     <%
         List<Order> list = (List<Order>) request.getAttribute("customerOrders");

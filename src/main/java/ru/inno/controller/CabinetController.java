@@ -28,7 +28,6 @@ public class CabinetController {
         Person currentPerson = cabinetService.getCurrentPerson();
         modelAndView.addObject("carList", cabinetService.getCarList(currentPerson));
         modelAndView.addObject("customerOrders", cabinetService.getCustomerOrders(currentPerson));
-        modelAndView.addObject("sellerOrders", cabinetService.getSellerOrders(currentPerson));
         modelAndView.setViewName("cabinet");
         return modelAndView;
     }

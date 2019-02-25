@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class CabinetService {
 
-    Person currentPerson;
+    private Person currentPerson;
 
     public Person getCurrentPerson(){
         if (null == currentPerson){
@@ -34,18 +34,12 @@ public class CabinetService {
         return carList;
     }
 
-    public List<Order> getSellerOrders(Person person){
-        Connection connection = ConnectionManager.getConnection();
-        OrderDAO orderDAO = new OrderImpl(connection);
-        List<Order> list = orderDAO.getOrdersBySeller(person);
-        ConnectionManager.closeConnection(connection);
-        return list;
-    }
+
 
     public List<Order> getCustomerOrders(Person person){
         Connection connection = ConnectionManager.getConnection();
         OrderDAO orderDAO = new OrderImpl(connection);
-        List<Order> list = orderDAO.getOrdersByCustomer(person);
+        List<Order> list = orderDAO.getOrdersByCustomer(person.getId());
         ConnectionManager.closeConnection(connection);
         return list;
     }

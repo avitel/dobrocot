@@ -2,51 +2,42 @@ package ru.inno.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.inno.ConnectionManager;
-import ru.inno.Security;
-import ru.inno.dao.PersonImpl;
-import ru.inno.services.SearchService;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+import ru.inno.service.MainService;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
-    private SearchService searchService;
+    private MainService mainService;
 
-    public MainController(SearchService searchService) {
-        this.searchService = searchService;
+    public MainController(MainService mainService) {
+        this.mainService = mainService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ModelAndView mainPageGET(ModelAndView modelAndView) {
-        if (!addUser(modelAndView)) return modelAndView;
-        modelAndView.addObject("filterOption", searchService.getFilterOption());
-            modelAndView.addObject("result", searchService.getFilteredCars(null, null, null, null));
-            modelAndView.setViewName("mainpage");
-            return modelAndView;
+        modelAndView.addObject("user", null == mainService.getCurrentPerson() ? null : mainService.getCurrentPerson().getName());
+        modelAndView.addObject("filterOption", mainService.getAllFilterOption());
+        modelAndView.addObject("result", mainService.getFilteredCars(null, null, null, null));
+        modelAndView.setViewName("mainpage");
+        return modelAndView;
 
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ModelAndView mainPagePOST(@RequestParam(name = "mark", required = false) String makr,
                                      @RequestParam(name = "model", required = false) String model,
                                      @RequestParam(name = "engine", required = false) String engine,
                                      @RequestParam(name = "color", required = false) String color,
                                      ModelAndView modelAndView) {
 
-        if (!addUser(modelAndView)) return modelAndView;
-        modelAndView.addObject("filterOption", searchService.getFilterOption());
-        modelAndView.addObject("result", searchService.getFilteredCars(
+        modelAndView.addObject("user", null == mainService.getCurrentPerson() ? null : mainService.getCurrentPerson().getName());
+        modelAndView.addObject("filterOption", mainService.getAllFilterOption());
+        modelAndView.addObject("result", mainService.getFilteredCars(
                 null == makr ? null : Integer.valueOf(makr),
                 null == model ? null : Integer.valueOf(model),
                 null == engine ? null : Integer.valueOf(engine),
@@ -55,19 +46,5 @@ public class MainController {
         modelAndView.setViewName("mainpage");
         return modelAndView;
     }
-
-    private boolean addUser(ModelAndView modelAndView) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(connection));
-            modelAndView.addObject("user", null == security.getCurrentUser() ? null : security.getCurrentUser().getName());
-        } catch (SQLException e) {
-            LOGGER.error("MainController.mainPage();", e);
-            modelAndView.addObject("error", "Произошла непредвиденная ошибка :( ");
-            modelAndView.setViewName("error");
-            return false;
-        }
-        return true;
-    }
-
 
 }

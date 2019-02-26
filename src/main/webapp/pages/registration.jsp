@@ -10,7 +10,11 @@
 <a href="${pageContext.request.contextPath}/">Home</a> <br/>
 
 <br/>
-<font size="5">Registration new user</font>
+<font size="5" >Registration new user</font>
+<br/>
+<br/>
+
+<font color="red" >${WarningMessage}</font>
 <br/>
 <br/>
 
@@ -26,7 +30,7 @@ Please fill the form<br/>
             <td> login:</td> <td> <input type="text" name="login" required > </td>
         </tr>
         <tr>
-            <td> password:</td> <td> <input type="text" name="pass" required > </td>
+            <td> password:</td> <td> <input type="password" name="pass" required > </td>
         </tr>
         <tr>
             <td>        </td> <td> <input type="submit" value="Submit"/> </td>

@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.inno.ConnectionManager;
 import ru.inno.dao.*;
+import ru.inno.entity.Person;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,18 +29,25 @@ public class RegistrationService {
         this.dao = dao;
     }
 
-    public void addUser(String name, String login, String password){
-        System.out.println("service");
+    public boolean addUser(String name, String login, String password){
 
         Connection c = ConnectionManager.getConnection();
         dao = new PersonImpl(c);
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordHash = encoder.encode(password);
+        boolean result = false;
         try {
-            dao.addPerson(name, login, passwordHash, "ROLE_USER");
+            if (dao.getPerson(login) == null){
+                int id = dao.addPerson(name, login, passwordHash, "ROLE_USER");
+                if (id != 0){
+                    result = true;
+                }
+            }
+
         } catch (SQLException e) {
-            LOGGER.error("add user sql error ");
+            LOGGER.error("add user sql error",e);
         }
         ConnectionManager.closeConnection(c);
+        return result;
     }
 }

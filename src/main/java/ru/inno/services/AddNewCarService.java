@@ -62,7 +62,7 @@ public class AddNewCarService {
         }
         Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
         carDAO.addCar(getId, parseInt(mark_id), parseInt(model_id), timestamp,
-                parseInt(engine_id), parseInt(numbeerofseats));
+                parseInt(engine_id), parseInt(numbeerofseats), parseInt(color));
 
         ConnectionManager.closeConnection(c);
     }

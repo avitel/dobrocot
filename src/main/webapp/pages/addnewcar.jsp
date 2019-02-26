@@ -4,6 +4,7 @@
 <%@ page import="ru.inno.entity.Model" %>
 <%@ page import="ru.inno.entity.Color" %>
 <%@ page import="ru.inno.entity.Engine" %>
+<%@ page import="java.util.Calendar" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -47,6 +48,20 @@
                     }
 
                 %>
+            </select>
+        </label>
+
+
+        <label>
+            <select name="assembledate">
+                <option selected disabled>Год выпуска</option>
+              <%
+                  Calendar now = Calendar.getInstance();
+                  for (int i = 1990; i < now.get(Calendar.YEAR); i++) {
+                      out.println("<option value=" + i + ">" + i + "</option>");
+                      i++;
+                  }
+              %>
             </select>
         </label>
 

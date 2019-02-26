@@ -12,10 +12,7 @@ import ru.inno.ConnectionManager;
 import ru.inno.Security;
 import ru.inno.dao.PersonImpl;
 import ru.inno.services.AddNewCarService;
-
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 
 @Controller
 @RequestMapping("/addnewcar")
@@ -43,30 +40,13 @@ public class AddNewCarController {
                                   @RequestParam(name = "color", required = false) String color,
                                   Model carModel) {
 
-        int getId = 0;
-
-        try (Connection c = ConnectionManager.getConnection()) {
-            Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(c));
-
-            //getId = (null == security.getCurrentUser()) ? null : security.getCurrentUser().getId();
-
-//           if ((security.getCurrentUser()== null)) {
-//               carModel.addAttribute("error","error" );
-//               return new RedirectView("error");
-//           } else
-//               getId = security.getCurrentUser().getId();
-
-            getId = security.getCurrentUser().getId();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            carModel.addAttribute("error", "Ошибка ");
-            return new RedirectView("error");
-        }
+        Connection c = ConnectionManager.getConnection();
+        Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(c));
+        int getId = security.getCurrentUser().getId();
 
         addNewCarService.addCar(getId, mark, model, assembledate, engine, numbeerofseats, color);
 
-        return new RedirectView("/");
+        return new RedirectView("/cabinet");
     }
 
 

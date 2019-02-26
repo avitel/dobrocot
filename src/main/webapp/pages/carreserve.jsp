@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.HashMap" %><%--
   Created by IntelliJ IDEA.
   User: admin
   Date: 21.02.2019
@@ -11,7 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/">На главную</a>
+<a href="/logout">Logout</a><br>
+<a href="/cabinet">Cabinet</a><br>
+<a href="/">Home</a><br>
 <h2>Выбранное авто</h2><br>
 <table border="1" width="100%" cellpadding="5">
     <tr>
@@ -31,7 +33,18 @@
         <td>${owner}</td>
     </tr>
 </table>
-
+Это авто недоступно на сдедующие даты: <br>
+<table border="1" width="10%" cellpadding="5">
+    <%
+        HashMap<String, String> mapDates = (HashMap<String, String>) request.getAttribute("dateReserved");
+        for (String begin : mapDates.keySet()) {
+    %>
+    <tr>
+        <td><%=begin%></td>
+        <td><%=mapDates.get(begin)%></td>
+    </tr>
+   <%}%>
+</table>
 <table border="1" width="10%" cellpadding="5">
     <tr>
         <th><h3>Количество дней</h3></th>
@@ -41,12 +54,27 @@
     </tr>
 </table>
 <form action="/carreserve3" method="post">
-    <input type="date" name="date_begin"/>
-    <input type="date" name="date_end"/>
+    <input type="date" name="date_begin"
+           value="<%=request.getAttribute("date_begin")%>"
+           data-date="" data-date-format="DD MMMM YYYY"/>
+    <input type="date" name="date_end"
+           value="<%=request.getAttribute("date_end")%>"
+           data-date="" data-date-format="DD MMMM YYYY"/>
+    <input type="hidden" name="car_id" value=${car_id} />
+
     <button type="submit" name="submit" value="Добавить" >Посчитать</button>
 </form>
 <label></label>
 <form action="/carreserve2" method="post">
+    <input type="hidden" name="date_begin"
+           value="<%=request.getAttribute("date_begin")%>"
+           data-date="" data-date-format="DD MMMM YYYY"/>
+    <input type="hidden"  name="date_end"
+           value="<%=request.getAttribute("date_end")%>"
+           data-date="" data-date-format="DD MMMM YYYY"/>
+    <input type="hidden" name="car_id" value=${car_id} />
+    <input type="hidden" name="id_owner" value=${id_owner} />
+    <input type="hidden" name="price" value=${cost} />
     <button type="submit">Беру</button>
 </form>
 

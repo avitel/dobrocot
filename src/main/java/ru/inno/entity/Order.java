@@ -8,6 +8,8 @@ public class Order {
     private Person owner;
     private Person customer;
     private Timestamp dateOrder;
+    private Timestamp begindate;
+    private Timestamp enddate;
 
     public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder) {
         this.id = id;
@@ -15,6 +17,28 @@ public class Order {
         this.owner = owner;
         this.customer = customer;
         this.dateOrder = dateOrder;
+    }
+
+    public Order(int id, Timestamp begindate, Timestamp enddate) {
+        this.id = id;
+        this.begindate = begindate;
+        this.enddate = enddate;
+    }
+
+    public Timestamp getBegindate() {
+        return begindate;
+    }
+
+    public void setBegindate(Timestamp begindate) {
+        this.begindate = begindate;
+    }
+
+    public Timestamp getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(Timestamp enddate) {
+        this.enddate = enddate;
     }
 
     public int getId() {

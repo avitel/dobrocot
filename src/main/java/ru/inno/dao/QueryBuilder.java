@@ -18,6 +18,7 @@ public class QueryBuilder {
                     "engine_id, \n" +
                     "numberofseats, \n" +
                     "color_id, \n" +
+                    "dayprice, \n" +
                     "person.name person_name, \n" +
                     "person.login person_login, \n" +
                     "mark.name mark_name, \n" +

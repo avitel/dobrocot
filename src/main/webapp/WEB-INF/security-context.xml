@@ -17,6 +17,8 @@
        <intercept-url pattern="/carreserve" access="hasAnyRole('ROLE_USER')"/>
        <intercept-url pattern="/carreserve2" access="hasAnyRole('ROLE_USER')"/>
        <intercept-url pattern="/carreserved" access="hasAnyRole('ROLE_USER')"/>
+       <intercept-url pattern="/addnewcar" access="hasAnyRole('ROLE_USER')"/>
+       <intercept-url pattern="/cabinet" access="hasAnyRole('ROLE_USER')"/>
        <form-login/>
        <logout/>
 

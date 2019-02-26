@@ -2,6 +2,7 @@ package ru.inno.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,16 +23,23 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getForm(){
+
         return "registration";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public RedirectView addPerson( @RequestParam String name
-                            ,@RequestParam String login
-                            ,@RequestParam String pass){
+    public String addPerson(Model model
+                                ,@RequestParam String name
+                                ,@RequestParam String login
+                                ,@RequestParam String pass){
 
-        service.addUser(name, login, pass);
+        if (service.addUser(name, login, pass) == false){
+            model.addAttribute("WarningMessage", "user already exist");
 
-        return new RedirectView("/");
+            return "registration";
+        } else {
+            return "redirect:/";
+        }
+
     }
 }

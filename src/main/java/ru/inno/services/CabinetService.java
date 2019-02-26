@@ -1,5 +1,6 @@
 package ru.inno.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.inno.ConnectionManager;
@@ -16,10 +17,15 @@ import java.util.List;
 public class CabinetService {
 
     private Person currentPerson;
+    private Security security;
+
+    @Autowired
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
 
     public Person getCurrentPerson(){
         if (null == currentPerson){
-            Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(ConnectionManager.getConnection()));
             currentPerson = security.getCurrentUser();
         }
         return currentPerson;

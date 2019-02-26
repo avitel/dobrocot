@@ -1,4 +1,4 @@
-package ru.inno.services;
+package ru.inno.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

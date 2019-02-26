@@ -19,10 +19,12 @@ import java.sql.Connection;
 public class AddNewCarController {
 
     private final AddNewCarService addNewCarService;
+    private Security security;
 
     @Autowired
-    public AddNewCarController(AddNewCarService addNewCarService) {
+    public AddNewCarController(AddNewCarService addNewCarService, Security security) {
         this.addNewCarService = addNewCarService;
+        this.security = security;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -40,8 +42,6 @@ public class AddNewCarController {
                                   @RequestParam(name = "color", required = false) String color,
                                   Model carModel) {
 
-        Connection c = ConnectionManager.getConnection();
-        Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(c));
         int getId = security.getCurrentUser().getId();
 
         addNewCarService.addCar(getId, mark, model, assembledate, engine, numbeerofseats, color);

@@ -11,9 +11,11 @@ public class Car {
     private Engine engine;
     private int numberofseats;
     private Color color;
+    private int dayprice;
 
-
-    public Car(int id, Person owner, Mark mark, Model model, Timestamp assembledate, Engine engine, int numberofseats, Color color) {
+    public Car(int id, Person owner, Mark mark, Model model, Timestamp assembledate, Engine engine, int numberofseats, Color color
+            , int dayprice
+    ) {
         this.id = id;
         this.owner = owner;
         this.mark = mark;
@@ -22,8 +24,16 @@ public class Car {
         this.engine = engine;
         this.numberofseats = numberofseats;
         this.color = color;
+        this.dayprice = dayprice;
     }
 
+    public int getDayprice() {
+        return dayprice;
+    }
+
+    public void setDayprice(int dayprice) {
+        this.dayprice = dayprice;
+    }
 
     public int getId() {
         return id;

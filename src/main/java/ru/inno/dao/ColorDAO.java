@@ -2,10 +2,10 @@ package ru.inno.dao;
 
 import ru.inno.entity.Color;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ColorDAO {
-    Collection<Color> getColors();
+    List<Color> getColors();
     Color getColor(int id);
     /**
      *

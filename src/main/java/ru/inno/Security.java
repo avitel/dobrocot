@@ -31,6 +31,9 @@ public class Security {
                 login = principal.toString();
             }
         }
+        if ("anonymousUser".equals(login)) {
+            return null;
+        }
 
         return dao.getPerson(login);
     }

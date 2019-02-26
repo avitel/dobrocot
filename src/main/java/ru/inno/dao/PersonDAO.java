@@ -3,11 +3,11 @@ package ru.inno.dao;
 import ru.inno.entity.Person;
 
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 
 public interface PersonDAO {
 
-    Collection<Person> getPersons();
+    List<Person> getPersons();
 
     Person getPerson(int id);
 

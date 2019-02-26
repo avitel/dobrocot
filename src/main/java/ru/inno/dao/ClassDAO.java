@@ -2,10 +2,10 @@ package ru.inno.dao;
 
 import ru.inno.entity.Class;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ClassDAO {
-    Collection<Class> getClasses();
+    List<Class> getClasses();
     Class getClass(int id);
     /**
      *

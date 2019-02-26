@@ -6,6 +6,7 @@ import ru.inno.entity.Color;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ColorImpl implements ColorDAO {
 
@@ -33,9 +34,9 @@ public class ColorImpl implements ColorDAO {
     }
 
     @Override
-    public Collection<Color> getColors() {
+    public List<Color> getColors() {
 
-        Collection<Color> colors = new ArrayList<>();
+        List<Color> colors = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs;
             rs = statement.executeQuery(GET_COLORS_SQL_TEMPLATE);

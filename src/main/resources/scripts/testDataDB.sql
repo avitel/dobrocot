@@ -1,12 +1,17 @@
 
+delete from color where true;
+alter sequence color_id_seq restart ;
 INSERT INTO public.color (name)
 VALUES
 ('red'),
 ('green'),
 ('blue'),
 ('black'),
-('white');
+('white'),
+('purple');
 
+delete from engine where true;
+alter sequence engine_id_seq restart ;
 INSERT INTO public.engine (name)
 VALUES
 ('0.8'),
@@ -19,6 +24,8 @@ VALUES
 ('3.0'),
 ('7.0');
 
+delete from mark where true;
+alter sequence mark_id_seq restart ;
 INSERT INTO public.mark (name)
 VALUES
 ('BMV'),
@@ -27,6 +34,8 @@ VALUES
 ('Honda'),
 ('Skoda');
 
+delete from model where true;
+alter sequence model_id_seq restart ;
 INSERT INTO public.model (id_mark, name)
 VALUES
 (1,'3-series'),
@@ -43,6 +52,8 @@ VALUES
 (5,'Octavia'),
 (5,'Rapid');
 
+delete from car where true;
+alter sequence car_id_seq restart ;
 INSERT INTO public.car (owner_id, mark_id, model_id, assembledate, engine_id, numberofseats, color_id, dayprice)
 VALUES
 (1,1,2,'1999-01-09',2,4,1,100),
@@ -54,7 +65,8 @@ VALUES
 (8,4,9,'2017-12-01',3,6,3,100),
 (9,4,10,'2005-10-12',4,8,1,100);
 
-
+delete from person where true;
+alter sequence person_id_seq restart ;
 INSERT INTO public.person(name)
 VALUES ('Valuev'),
        ('Zabidova'),
@@ -67,6 +79,9 @@ VALUES ('Valuev'),
        ('Tonguzova'),
        ('Lapshin');
 
+
+delete from "order" where true;
+alter sequence order_id_seq restart ;
 INSERT INTO public."order" (date, seller, customer, car, begindate, enddate)
 VALUES
 ('1999-01-09',2,4,1,'1999-01-09','2999-01-09'),

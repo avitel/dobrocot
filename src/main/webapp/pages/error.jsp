@@ -8,12 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>error page</title>
 </head>
 <body>
+
 <a href="${pageContext.request.contextPath}/">Home</a><br/>
-<%
-    out.println(request.getAttribute("error"));
-%>
+
+<font size="5">Ooops... something went wrong</font><br/>
+
+<font size="3">Please, try later. We are working with the problem</font>
+
 </body>
 </html>

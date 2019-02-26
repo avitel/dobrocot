@@ -21,7 +21,7 @@ public class DobrocotConfig {
     }
 
     @Bean
-    MarkDAO markDAO(Connection connection){
+    MarkDAO markDAO(Connection connection) {
         return new MarkImpl(connection);
     }
 

@@ -1,5 +1,6 @@
 package ru.inno.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.inno.Security;
@@ -20,6 +21,12 @@ public class MainService {
     private ColorDAO colorDAO;
     private EngineDAO engineDAO;
     private PersonDAO personDAO;
+    private Security security;
+
+    @Autowired
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
 
     public MainService(CarDAO carDAO, MarkDAO markDAO, ModelDAO modelDAO, ColorDAO colorDAO, EngineDAO engineDAO, PersonDAO personDAO) {
         this.carDAO = carDAO;
@@ -46,7 +53,6 @@ public class MainService {
     }
 
     public Person getCurrentPerson() {
-        Security security = new Security(SecurityContextHolder.getContext(), personDAO);
         return security.getCurrentUser();
     }
 

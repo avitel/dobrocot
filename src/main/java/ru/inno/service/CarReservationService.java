@@ -1,5 +1,6 @@
 package ru.inno.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.inno.ConnectionManager;
@@ -18,6 +19,13 @@ import java.util.Map;
 
 @Service
 public class CarReservationService implements ReservableService {
+
+    private Security security;
+
+    @Autowired
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
 
     @Override
     public Map<String, String> getValues(String... requestParams) {
@@ -88,7 +96,6 @@ public class CarReservationService implements ReservableService {
     public void addReservationOrder(int id_car, int id_owner, Date date_begin, Date date_end, int price) {
         Connection c = ConnectionManager.getConnection();
         OrderDAO order = new OrderImpl(c);
-        Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(c));
         int id_customer = security.getCurrentUser().getId();
         order.addOrder(id_car, id_owner, id_customer, new Timestamp(System.currentTimeMillis()),
                 new Timestamp(date_begin.getTime()),

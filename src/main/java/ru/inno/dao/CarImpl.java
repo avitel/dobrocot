@@ -20,7 +20,7 @@ public class CarImpl implements CarDAO {
             "select * from car where ";
 
     public static final String GET_CAR_SQL_TEMPLATE =
-            QueryBuilder.GET_FILTERED_CARS_SQL_TEMPLATE +"\n where car.id = ?";
+            QueryBuilder.GET_FILTERED_CARS_SQL_TEMPLATE + "\n where car.id = ?";
 
 
     private final Connection connection;
@@ -72,12 +72,11 @@ public class CarImpl implements CarDAO {
             return ls;
 
         } catch (Exception ex) {
-            LOGGER.error("",ex);
+            LOGGER.error("", ex);
         }
 
         return null;
     }
-
 
 
     @Override
@@ -85,7 +84,6 @@ public class CarImpl implements CarDAO {
         QueryBuilder builder = new QueryBuilder(null, null, null, null, person_id);
         return getFilteredCars(builder);
     }
-
 
 
     private Car getCarObject(ResultSet rs) throws SQLException {
@@ -104,6 +102,8 @@ public class CarImpl implements CarDAO {
                 rs.getTimestamp("assembledate"),
                 engine,
                 rs.getInt("numberofseats"),
-                color);
+                color
+                , rs.getInt("dayprice")
+        );
     }
 }

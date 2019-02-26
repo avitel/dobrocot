@@ -3,7 +3,8 @@ package ru.inno.dao;
 import ru.inno.entity.Mark;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +36,8 @@ public class MarkImpl implements MarkDAO {
     }
 
     @Override
-    public Collection<Mark> getMarks() {
-        Collection<Mark> marks = new ArrayList<>();
+    public List<Mark> getMarks() {
+        List<Mark> marks = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs;
             rs = statement.executeQuery(GET_MARKS_SQL_TEMPLATE);

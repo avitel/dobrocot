@@ -2,7 +2,6 @@ package ru.inno.dao;
 
 import ru.inno.entity.Model;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface ModelDAO {

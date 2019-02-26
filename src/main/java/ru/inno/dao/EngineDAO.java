@@ -2,10 +2,10 @@ package ru.inno.dao;
 
 import ru.inno.entity.Engine;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface EngineDAO {
-    Collection<Engine> getEngines();
+    List<Engine> getEngines();
     Engine getEngine(int id);
     /**
      *

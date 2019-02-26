@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.inno.entity.Class;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class ClassImpl implements ClassDAO {
 
@@ -32,8 +32,8 @@ public class ClassImpl implements ClassDAO {
     }
 
     @Override
-    public Collection<Class> getClasses() {
-        Collection<Class> aClasses = new ArrayList<>();
+    public List<Class> getClasses() {
+        List<Class> aClasses = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs;
             rs = statement.executeQuery(GET_CLASSES_SQL_TEMPLATE);

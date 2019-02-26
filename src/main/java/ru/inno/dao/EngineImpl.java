@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.inno.entity.Engine;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class EngineImpl implements EngineDAO{
 
@@ -32,9 +32,9 @@ public class EngineImpl implements EngineDAO{
     }
 
     @Override
-    public Collection<Engine> getEngines() {
+    public List<Engine> getEngines() {
 
-        Collection<Engine> engines = new ArrayList<>();
+        List<Engine> engines = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs;
             rs = statement.executeQuery(GET_ENGINES_SQL_TEMPLATE);

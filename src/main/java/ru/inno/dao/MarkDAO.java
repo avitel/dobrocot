@@ -2,13 +2,13 @@ package ru.inno.dao;
 
 import ru.inno.entity.Mark;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface MarkDAO {
 
 
 
-    Collection<Mark> getMarks();
+    List<Mark> getMarks();
     Mark getMark(int id);
     /**
      *

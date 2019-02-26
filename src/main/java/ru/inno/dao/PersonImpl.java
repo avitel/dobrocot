@@ -2,15 +2,11 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.inno.entity.Engine;
 import ru.inno.entity.Person;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class PersonImpl implements PersonDAO {
 
@@ -39,9 +35,9 @@ public class PersonImpl implements PersonDAO {
     }
 
     @Override
-    public Collection<Person> getPersons() {
+    public List<Person> getPersons() {
 
-        Collection<Person> persons = new ArrayList<>();
+        List<Person> persons = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs;
             rs = statement.executeQuery(GET_PERSONS_SQL_TEMPLATE);
@@ -62,28 +58,25 @@ public class PersonImpl implements PersonDAO {
 
 
 
-    @Override
     public Person getPerson(int id) {
 
-        Person person = null;
         try (PreparedStatement statement = connection.prepareStatement(GET_PERSON_SQL_TEMPLATE)) {
-            statement.setInt(1,id);
-            String i = null;
-            ResultSet rs;
-            rs = statement.executeQuery();
-            rs.next();
-            i = rs.getString(1);
-            if (i==null) {
-                throw new SQLException();
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return new Person(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("login"),
+                        rs.getString("role"));
+            }else {
+                return new Person(0,"", "", "");
             }
-            person = new Person(id, i, rs.getString(3));
-        }catch (Exception ex){
-            LOGGER.debug(ex.getMessage());
-            LOGGER.error("Ошибка при получении персоны!");
-        }
-        return person;
-    }
 
+        } catch (SQLException ex) {
+            LOGGER.error("get person by id query error",ex);
+        }
+        return null;
+    }
 
 
     @Override
@@ -98,15 +91,11 @@ public class PersonImpl implements PersonDAO {
                         rs.getString("login"),
                         rs.getString("role"));
             }else {
-                return new Person(rs.getInt(""),
-                        rs.getString(""),
-                        rs.getString(""),
-                        rs.getString(""));
+                return new Person(0,"", "", "");
             }
 
-        } catch (Exception ex) {
-            LOGGER.debug(ex.getMessage());
-            LOGGER.error("get person query error");
+        } catch (SQLException ex) {
+            LOGGER.error("get person by login query error",ex);
         }
         return null;
     }

@@ -2,11 +2,13 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.inno.ConnectionManager;
 import ru.inno.entity.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class OrderImpl implements OrderDAO {
 
@@ -23,11 +25,18 @@ public class OrderImpl implements OrderDAO {
 
     private final Connection connection;
 
+    private CarDAO cardao;
+    private PersonDAO persondao;
+
+    public OrderImpl(Connection connection, CarDAO cardao, PersonDAO persondao) {
+        this.connection = connection;
+        this.cardao = cardao;
+        this.persondao = persondao;
+    }
 
     public OrderImpl(Connection connection) {
         this.connection = connection;
     }
-
 
     @Override
     public void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price) {
@@ -59,9 +68,6 @@ public class OrderImpl implements OrderDAO {
             List<Order> list = new ArrayList<>();
             while (rs.next()) {
 
-                Connection c = ConnectionManager.getConnection();
-                CarDAO cardao = new CarImpl(c);
-                PersonDAO persondao = new PersonImpl(c);
 
                 Car car = cardao.getCar(rs.getInt("car"));
                 Person seller = persondao.getPerson(rs.getInt("seller"));

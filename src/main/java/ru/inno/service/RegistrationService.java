@@ -21,18 +21,13 @@ public class RegistrationService {
 
     private PersonDAO dao;
 
-    public PersonDAO getDao() {
-        return dao;
-    }
-
+    @Autowired
     public void setDao(PersonDAO dao) {
         this.dao = dao;
     }
 
     public boolean addUser(String name, String login, String password){
 
-        Connection c = ConnectionManager.getConnection();
-        dao = new PersonImpl(c);
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordHash = encoder.encode(password);
         boolean result = false;
@@ -47,7 +42,6 @@ public class RegistrationService {
         } catch (SQLException e) {
             LOGGER.error("add user sql error",e);
         }
-        ConnectionManager.closeConnection(c);
         return result;
     }
 }

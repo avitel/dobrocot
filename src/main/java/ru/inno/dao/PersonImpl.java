@@ -16,20 +16,17 @@ public class PersonImpl implements PersonDAO {
             "insert into person (name, login, password, role) values (?,?,?,?) returning id";
 
     public static final String GET_PERSON_SQL_TEMPLATE =
-            "select id, name, login from person where id = ?";
+            "select * from person where id = ?";
 
     public static final String GET_PERSON_BY_LOGIN_SQL_TEMPLATE =
-            "select id, name, login, role from person where login = ?";
+            "select * from person where login = ?";
 
     public static final String GET_PERSONS_SQL_TEMPLATE =
-            "select id, name from person";
+            "select * from person";
 
     private final Connection connection;
 
-    /**
-     * Получает подключение и сохраняет в данном объекте.
-     * @param connection
-     */
+
     public PersonImpl(Connection connection) {
         this.connection = connection;
     }
@@ -42,9 +39,13 @@ public class PersonImpl implements PersonDAO {
             ResultSet rs;
             rs = statement.executeQuery(GET_PERSONS_SQL_TEMPLATE);
             while (rs.next()){
-                persons.add(new Person(rs.getInt(1),
+                persons.add(
+                        new Person(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3)));
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5))
+                );
             }
             if(persons.size() == 0){
                 LOGGER.info("Список персон пуст!");
@@ -64,12 +65,15 @@ public class PersonImpl implements PersonDAO {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new Person(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("login"),
-                        rs.getString("role"));
+                return
+                        new Person(rs.getInt(1),
+                                rs.getString(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getString(5))
+                        ;
             }else {
-                return new Person(0,"", "", "");
+                return null;
             }
 
         } catch (SQLException ex) {
@@ -86,10 +90,13 @@ public class PersonImpl implements PersonDAO {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return new Person(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("login"),
-                        rs.getString("role"));
+                return
+                        new Person(rs.getInt(1),
+                                rs.getString(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getString(5))
+                        ;
             }else {
                 return null;
             }

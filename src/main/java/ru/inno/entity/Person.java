@@ -1,39 +1,30 @@
 package ru.inno.entity;
 
-public class Person {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "person")
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column
     private String name;
+    @Column
     private String login;
+    @Column
     private String password;
+    @Column
     private String role;
 
-    public int getId() {
-        return id;
+    public Person() {
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Person(int id, String name, String login, String role) {
+    public Person(int id, String name, String login, String password, String role) {
         this.id = id;
         this.name = name;
         this.login = login;
+        this.password = password;
         this.role = role;
-    }
-
-    public Person(int id, String name, String login) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
     }
 }

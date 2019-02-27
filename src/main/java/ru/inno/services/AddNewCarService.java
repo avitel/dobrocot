@@ -1,19 +1,15 @@
 package ru.inno.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.view.RedirectView;
 import ru.inno.ConnectionManager;
-import ru.inno.Security;
 import ru.inno.dao.*;
-import ru.inno.entity.*;
+import ru.inno.entity.Color;
+import ru.inno.entity.Engine;
+import ru.inno.entity.Mark;
+import ru.inno.entity.Model;
 
-import java.sql.Timestamp;
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.inno.ConnectionManager;
 import ru.inno.dao.*;
+import ru.inno.repository.PersonHiber;
 
 import java.sql.Connection;
 
@@ -41,8 +42,8 @@ public class DobrocotConfig {
     }
 
     @Bean
-    PersonDAO personDAO(Connection connection) {
-        return new PersonImpl(connection);
+    PersonDAO personDAO() {
+        return new PersonHiber();
     }
 
 

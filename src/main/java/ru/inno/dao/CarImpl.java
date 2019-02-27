@@ -51,8 +51,8 @@ public class CarImpl implements CarDAO {
 
 
     @Override
-    public void addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numbeerofseats) {
-
+    public int addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int color_id, int numbeerofseats, int dayprice) {
+        return 0;
     }
 
 

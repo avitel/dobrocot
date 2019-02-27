@@ -16,13 +16,13 @@ public class PersonImpl implements PersonDAO {
             "insert into person (name, login, password, role) values (?,?,?,?) returning id";
 
     public static final String GET_PERSON_SQL_TEMPLATE =
-            "select id, name, login from person where id = ?";
+            "select * from person where id = ?";
 
     public static final String GET_PERSON_BY_LOGIN_SQL_TEMPLATE =
-            "select id, name, login, role from person where login = ?";
+            "select * from person where login = ?";
 
     public static final String GET_PERSONS_SQL_TEMPLATE =
-            "select id, name from person";
+            "select * from person";
 
     private final Connection connection;
 

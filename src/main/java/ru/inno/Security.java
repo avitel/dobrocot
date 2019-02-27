@@ -1,28 +1,27 @@
 package ru.inno;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import ru.inno.dao.PersonDAO;
 import ru.inno.entity.Person;
 
+
+@Component
 public class Security {
 
-    private SecurityContext securityContext;
     private PersonDAO dao;
 
-    public Security(SecurityContext securityContext, PersonDAO dao) {
-        this.securityContext = securityContext;
+    public Security(PersonDAO dao) {
         this.dao = dao;
     }
 
     public Person getCurrentUser(){
 
         String login ="";
-        Authentication auth = securityContext.getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             Object principal = auth.getPrincipal();
             if (principal instanceof UserDetails) {
@@ -31,6 +30,7 @@ public class Security {
                 login = principal.toString();
             }
         }
+
         if ("anonymousUser".equals(login)) {
             return null;
         }

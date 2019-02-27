@@ -1,11 +1,7 @@
 package ru.inno.dao;
 
-import ru.inno.entity.Engine;
 import ru.inno.entity.Order;
-
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
 public interface OrderDAO {
@@ -15,7 +11,9 @@ public interface OrderDAO {
      *
      * Добавляем заказ в базу
      */
-    void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder);
+    void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price);
 
     List<Order> getOrdersByCustomer(int person_id);
+
+    List<Order> getOrdersByCar(int car_id);
 }

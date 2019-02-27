@@ -6,63 +6,66 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.inno.ConnectionManager;
-import ru.inno.dao.CarDAO;
-import ru.inno.dao.CarImpl;
-import ru.inno.dao.OrderDAO;
-import ru.inno.dao.OrderImpl;
-import ru.inno.service.CarReservationService;
 import ru.inno.service.ReservableService;
-
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 public class CarReservationController {
-    ReservableService reservableService;
+    private ReservableService reservableService;
 
     @Autowired
-    CarReservationController(ReservableService reservableService){
+    CarReservationController(ReservableService reservableService) {
         this.reservableService = reservableService;
     }
 
-    @RequestMapping(value = "/carreserve",method = RequestMethod.POST)
-//public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
-    public String doReserve(Model model,@RequestParam(name = "car_id") String car_id) {
-        Map<String,String> carParams = reservableService.getValues(car_id);
+    @RequestMapping(value = "/carreserve", method = RequestMethod.POST)
+    public String doReserve(Model model, @RequestParam(name = "car_id") String car_id) {
+        Map<String, String> carParams = reservableService.getValues(car_id);
         for (String s : carParams.keySet()) {
             model.addAttribute(s, carParams.get(s));
         }
-
+        model.addAttribute("car_id", car_id);
+        HashMap<String, String> mapDates = (HashMap<String, String>) reservableService.getReservedDates(car_id);
+        model.addAttribute("dateReserved", mapDates);
         return "carreserve";
 
     }
 
-    @RequestMapping(value = "/carreserve3",method = RequestMethod.POST)
-//public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
-    public String doReserve2(Model model,@RequestParam(name = "date_begin") Date date_begin, @RequestParam(name = "date_end") Date date_end) {
-        System.out.println(date_begin);
-        System.out.println(date_end);
-        System.out.println(date_end.getTime()-date_begin.getTime());
-        int days = (int)((date_end.getTime()-date_begin.getTime())/86400000);
+    @RequestMapping(value = "/carreserve3", method = RequestMethod.POST)
+    public String doReserve2(Model model, @RequestParam(name = "date_begin") Date date_begin,
+                             @RequestParam(name = "date_end") Date date_end,
+                             @RequestParam(name = "car_id") String car_id) {
+        model.addAttribute("date_begin", date_begin);
+        model.addAttribute("date_end", date_end);
+        int days = 0;
+        try {
+            days = reservableService.getDays(date_begin, date_end);
+        } catch (Exception e) {
+            model.addAttribute("error", "Error in date of reserve!");
+            return "error";
+        }
         model.addAttribute("days", days);
-        model.addAttribute("cost", 100*days);
-
-        return "carreserve";
+        Map<String, String> carParams = reservableService.getValues(car_id);
+        model.addAttribute("cost", Integer.parseInt(carParams.get("dayprice")) * days);
+        model.addAttribute("car_id", car_id);
+        return doReserve(model, car_id);
 
     }
 
-    @RequestMapping(value = "/carreserve2",method = RequestMethod.POST)
-//public String doReserve(Model model,@RequestParam(name = "car_id",required = true) String car_id) {
-    public String doReserve(Model model) {
-        Connection c = ConnectionManager.getConnection();
-        OrderDAO order = new OrderImpl(c);
-//        order.addOrder(5,5,5, Timestamp.valueOf(LocalDateTime.now()));
-        order.addOrder(5,5,5, new Timestamp(System.currentTimeMillis()));
-        ConnectionManager.closeConnection(c);
+    @RequestMapping(value = "/carreserve2", method = RequestMethod.POST)
+    public String doReserve3(Model model,
+                             @RequestParam(name = "date_begin") Date date_begin,
+                             @RequestParam(name = "date_end") Date date_end,
+                             @RequestParam(name = "car_id") String car_id,
+                             @RequestParam(name = "id_owner") String id_owner,
+                             @RequestParam(name = "price") String price) {
+        if (!reservableService.checkAvailableDate(date_begin, date_end, car_id)) {
+            model.addAttribute("error", "Error in date of reserve!");
+            return "error";
+        }
+        reservableService.addReservationOrder(Integer.parseInt(car_id), Integer.parseInt(id_owner), /*Integer.parseInt(id_customer),*/ date_begin, date_end, Integer.parseInt(price));
         return "carreserved";
 
     }

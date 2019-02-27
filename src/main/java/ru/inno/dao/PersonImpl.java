@@ -90,7 +90,7 @@ public class PersonImpl implements PersonDAO {
                         rs.getString("login"),
                         rs.getString("role"));
             }else {
-                return new Person(0,"", "", "");
+                return null;
             }
 
         } catch (SQLException ex) {

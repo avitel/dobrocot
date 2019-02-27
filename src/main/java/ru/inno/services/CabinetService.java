@@ -15,16 +15,21 @@ import java.util.List;
 @Service
 public class CabinetService {
 
+    private Person currentPerson;
+    private Security security;
 
-    public Person getCurrentPerson() {
-        Person currentPerson;
-        Security security = new Security(SecurityContextHolder.getContext(), new PersonImpl(ConnectionManager.getConnection()));
+    @Autowired
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
+
+    public Person getCurrentPerson(){
+        security = new Security(SecurityContextHolder.getContext(), new PersonImpl(ConnectionManager.getConnection()));
         currentPerson = security.getCurrentUser();
-
         return currentPerson;
     }
 
-    public List<Car> getCarList(Person person) {
+    public List<Car> getCarList(Person person){
         Connection connection = ConnectionManager.getConnection();
         CarDAO carDAO = new CarImpl(connection);
         List<Car> carList = carDAO.getCarsByPerson(person.getId());
@@ -33,7 +38,8 @@ public class CabinetService {
     }
 
 
-    public List<Order> getCustomerOrders(Person person) {
+
+    public List<Order> getCustomerOrders(Person person){
         Connection connection = ConnectionManager.getConnection();
         OrderDAO orderDAO = new OrderImpl(connection);
         List<Order> list = orderDAO.getOrdersByCustomer(person.getId());

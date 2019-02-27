@@ -66,8 +66,7 @@ public class PersonImpl implements PersonDAO {
             if (rs.next()) {
                 return new Person(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("login"),
-                        rs.getString("role"));
+                        rs.getString("login"));
             }else {
                 return new Person(0,"", "", "");
             }

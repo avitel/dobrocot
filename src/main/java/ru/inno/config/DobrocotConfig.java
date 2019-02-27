@@ -45,5 +45,10 @@ public class DobrocotConfig {
         return new PersonImpl(connection);
     }
 
+    @Bean
+    OrderDAO orderDAO(Connection connection, CarDAO carDAO, PersonDAO personDAO) {
+        return new OrderImpl(connection, carDAO, personDAO);
+    }
+
 
 }

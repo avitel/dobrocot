@@ -18,34 +18,28 @@ public class CabinetService {
 
     private Person currentPerson;
     private Security security;
+    private CarDAO carDAO;
+    private OrderDAO orderDAO;
 
     @Autowired
-    public void setSecurity(Security security) {
+    public CabinetService(Security security, CarDAO carDAO, OrderDAO orderDAO) {
         this.security = security;
+        this.carDAO = carDAO;
+        this.orderDAO = orderDAO;
     }
 
     public Person getCurrentPerson(){
-        if (null == currentPerson){
-            currentPerson = security.getCurrentUser();
-        }
+        currentPerson = security.getCurrentUser();
         return currentPerson;
     }
 
     public List<Car> getCarList(Person person){
-        Connection connection = ConnectionManager.getConnection();
-        CarDAO carDAO = new CarImpl(connection);
         List<Car> carList = carDAO.getCarsByPerson(person.getId());
-        ConnectionManager.closeConnection(connection);
         return carList;
     }
 
-
-
     public List<Order> getCustomerOrders(Person person){
-        Connection connection = ConnectionManager.getConnection();
-        OrderDAO orderDAO = new OrderImpl(connection);
         List<Order> list = orderDAO.getOrdersByCustomer(person.getId());
-        ConnectionManager.closeConnection(connection);
         return list;
     }
 

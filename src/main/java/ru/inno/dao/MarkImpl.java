@@ -73,7 +73,7 @@ public class MarkImpl implements MarkDAO {
     }
 
     @Override
-    public void addMark(String name) {
+    public int addMark(String name) {
         int i = -1;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_MARK_SQL_TEMPLATE)) {
             statement.setString(1, name);
@@ -89,6 +89,7 @@ public class MarkImpl implements MarkDAO {
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании марки!");
         }
+        return 0;
     }
 
 

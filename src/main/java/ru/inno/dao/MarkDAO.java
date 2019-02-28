@@ -15,6 +15,6 @@ public interface MarkDAO {
      * Добавляем марку в базу
      * @param name
      */
-    void addMark(String name);
+    int addMark(String name);
 //    void deleteMark(Mark mark);
 }

@@ -1,16 +1,45 @@
 package ru.inno.entity;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
-
+@Entity
+@Table(name = "_order")
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car")
     private Car car;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller")
     private Person owner;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer")
     private Person customer;
+
+    @Column(name = "date")
     private Timestamp dateOrder;
+    @Column
     private Timestamp begindate;
+    @Column
     private Timestamp enddate;
+    @Column
     private int price;
+
+    public Order() {
+    }
+
+    public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder) {
+        this.id = id;
+        this.car = car;
+        this.owner = owner;
+        this.customer = customer;
+        this.dateOrder = dateOrder;
+    }
 
     public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder,
                  Timestamp begindate, Timestamp enddate,int price) {
@@ -30,11 +59,13 @@ public class Order {
         this.enddate = enddate;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
+    public Order(Car car, Person owner, Person customer, Timestamp dateOrder, Timestamp begindate, Timestamp enddate, int price) {
+        this.car = car;
+        this.owner = owner;
+        this.customer = customer;
+        this.dateOrder = dateOrder;
+        this.begindate = begindate;
+        this.enddate = enddate;
         this.price = price;
     }
 
@@ -92,5 +123,13 @@ public class Order {
 
     public void setDateOrder(Timestamp dateOrder) {
         this.dateOrder = dateOrder;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

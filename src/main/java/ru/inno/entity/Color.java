@@ -1,9 +1,15 @@
 package ru.inno.entity;
 
-public class Color {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "color")
+public class Color {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column
     private String name;
 
 
@@ -23,11 +29,23 @@ public class Color {
         this.name = name;
     }
 
+
     public Color(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Color() {
+    public Color(String name) {
+        this.name = name;
+    }
+
+    public Color() {}
+
+    @Override
+    public String toString() {
+        return "Color{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

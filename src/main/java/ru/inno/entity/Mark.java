@@ -1,7 +1,14 @@
 package ru.inno.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "mark")
 public class Mark {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String name;
 
     public int getId() {
@@ -21,8 +28,11 @@ public class Mark {
         this.name = name;
     }
 
-    public Mark() {
+    public Mark(String name) {
+        this.name = name;
     }
+
+    public Mark() {}
 
     public void setName(String name) {
         this.name = name;

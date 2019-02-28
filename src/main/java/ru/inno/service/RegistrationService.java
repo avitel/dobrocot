@@ -6,33 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.inno.ConnectionManager;
 import ru.inno.dao.*;
-import ru.inno.entity.Person;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 
 @Service
 public class RegistrationService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EngineImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
 
     private PersonDAO dao;
 
-    public PersonDAO getDao() {
-        return dao;
-    }
-
+    @Autowired
     public void setDao(PersonDAO dao) {
         this.dao = dao;
     }
 
     public boolean addUser(String name, String login, String password){
 
-        Connection c = ConnectionManager.getConnection();
-        dao = new PersonImpl(c);
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordHash = encoder.encode(password);
         boolean result = false;
@@ -47,7 +38,6 @@ public class RegistrationService {
         } catch (SQLException e) {
             LOGGER.error("add user sql error",e);
         }
-        ConnectionManager.closeConnection(c);
         return result;
     }
 }

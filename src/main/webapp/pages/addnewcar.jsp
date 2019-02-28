@@ -4,6 +4,7 @@
 <%@ page import="ru.inno.entity.Model" %>
 <%@ page import="ru.inno.entity.Color" %>
 <%@ page import="ru.inno.entity.Engine" %>
+<%@ page import="java.util.Calendar" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -50,6 +51,19 @@
             </select>
         </label>
 
+
+        <label>
+            <select name="assembledate">
+                <option selected disabled>Год выпуска</option>
+                <%
+                    Calendar now = Calendar.getInstance();
+                    for (int i = now.get(Calendar.YEAR); i > 1990; i--) {
+                        out.println("<option value=" + i + ">" + i + "</option>");
+                    }
+                %>
+            </select>
+        </label>
+
         <label>
             <select name="color">
                 <option selected disabled>Цвет</option>
@@ -89,6 +103,8 @@
                 %>
             </select>
         </label>
+
+        <input type="number" name="dayprice">Цена
 
         <input type="submit" value="Добавить"></p>
 

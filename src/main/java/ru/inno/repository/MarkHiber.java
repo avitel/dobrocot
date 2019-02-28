@@ -3,6 +3,7 @@ package ru.inno.repository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ru.inno.dao.MarkDAO;
 import ru.inno.entity.Car;
 import ru.inno.entity.Color;
@@ -10,6 +11,7 @@ import ru.inno.entity.Mark;
 
 import java.util.List;
 
+@Repository
 public class MarkHiber implements MarkDAO {
 
     @Override

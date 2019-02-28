@@ -3,6 +3,7 @@ package ru.inno.repository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ru.inno.dao.CarDAO;
 import ru.inno.dao.QueryBuilder;
 import ru.inno.entity.*;
@@ -10,6 +11,7 @@ import ru.inno.entity.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Repository
 public class CarHiber implements CarDAO {
 
     @Override

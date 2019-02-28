@@ -16,35 +16,18 @@ public class DobrocotConfig {
         return ConnectionManager.getConnection();
     }
 
-    @Bean
-    CarDAO carDAO(Connection connection) {
-        return new CarImpl(connection);
-    }
-
-    @Bean
-    MarkDAO markDAO(Connection connection) {
-        return new MarkImpl(connection);
-    }
 
     @Bean
     ModelDAO modelDAO(Connection connection) {
         return new ModelImpl(connection);
     }
 
-    @Bean
-    ColorDAO colorDAO(Connection connection) {
-        return new ColorImpl(connection);
-    }
 
     @Bean
     EngineDAO engineDAO(Connection connection) {
         return new EngineImpl(connection);
     }
 
-    @Bean
-    PersonDAO personDAO() {
-        return new PersonHiber();
-    }
 
 
 }

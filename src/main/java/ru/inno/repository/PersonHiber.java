@@ -3,12 +3,14 @@ package ru.inno.repository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ru.inno.dao.PersonDAO;
 import ru.inno.entity.Color;
 import ru.inno.entity.Person;
 
 import java.util.List;
 
+@Repository
 public class PersonHiber implements PersonDAO {
 
     @Override

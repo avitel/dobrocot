@@ -4,14 +4,18 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.inno.dao.PersonDAO;
+import ru.inno.entity.Color;
 import ru.inno.entity.Person;
 
 import java.util.List;
 
 public class PersonHiber implements PersonDAO {
+
     @Override
     public List<Person> getPersons() {
-        return null;
+        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Person");
+        List<Person> list = query.list();
+        return list;
     }
 
     @Override

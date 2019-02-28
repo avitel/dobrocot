@@ -19,10 +19,16 @@ public class HibernateSessionFactory {
         if (sessionFactory == null) {
             try {
                 long begin = System.currentTimeMillis();
+
                 Configuration configuration = new Configuration();
+
                 configuration.addAnnotatedClass(Person.class);
+                configuration.addAnnotatedClass(Car.class);
+                configuration.addAnnotatedClass(Color.class);
+
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
+
                 System.out.println("init time : "+(System.currentTimeMillis()-begin));
 
             } catch (Exception e) {

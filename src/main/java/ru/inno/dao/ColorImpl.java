@@ -75,7 +75,7 @@ public class ColorImpl implements ColorDAO {
     }
 
     @Override
-    public void addColor(String name) {
+    public int addColor(String name) {
         int i = -1;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_COLOR_SQL_TEMPLATE)) {
             statement.setString(1, name);
@@ -91,5 +91,7 @@ public class ColorImpl implements ColorDAO {
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании цвета!");
         }
+
+        return 0;
     }
 }

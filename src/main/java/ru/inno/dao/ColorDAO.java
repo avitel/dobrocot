@@ -12,6 +12,6 @@ public interface ColorDAO {
      * Добавляем цвет в базу
      * @param name
      */
-    void addColor(String name);
+    int addColor(String name);
 //    void deleteColor(Color color);
 }

@@ -1,7 +1,6 @@
 package ru.inno.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.inno.Security;
 import ru.inno.dao.*;
@@ -20,21 +19,19 @@ public class MainService {
     private ModelDAO modelDAO;
     private ColorDAO colorDAO;
     private EngineDAO engineDAO;
-    private PersonDAO personDAO;
     private Security security;
 
-    @Autowired
-    public void setSecurity(Security security) {
-        this.security = security;
+    public MainService() {
     }
 
-    public MainService(CarDAO carDAO, MarkDAO markDAO, ModelDAO modelDAO, ColorDAO colorDAO, EngineDAO engineDAO, PersonDAO personDAO) {
+    @Autowired
+    public MainService(CarDAO carDAO, MarkDAO markDAO, ModelDAO modelDAO, ColorDAO colorDAO, EngineDAO engineDAO, Security security) {
         this.carDAO = carDAO;
         this.markDAO = markDAO;
         this.modelDAO = modelDAO;
         this.colorDAO = colorDAO;
         this.engineDAO = engineDAO;
-        this.personDAO = personDAO;
+        this.security = security;
     }
 
 

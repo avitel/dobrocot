@@ -1,3 +1,4 @@
+<%@ page import="ru.inno.controller.MainController" %>
 <%@ page import="ru.inno.entity.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
@@ -32,14 +33,13 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark  justify-content-end">
     <ul class="navbar-nav">
-        <%
-            if (null == request.getAttribute("user")) {
+        <% String user = (String) request.getAttribute(MainController.USER_ATTRIBUTE);
+            if (null == user) {
                 out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/\">Привет, Гость! </a></li>");
                 out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/registration\">Регистрация</a></li>");
                 out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/login\">Войти</a></li>");
-
             } else {
-                out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/\">Привет, " + request.getAttribute("user") + "!</a></li>");
+                out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/\">Привет, " + user + "!</a></li>");
                 out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/cabinet\">Личный кабинет</a></li>");
                 out.println("<li class=\"nav-item\"><a class=\"nav-link\" href=\"" + request.getContextPath() + "/logout\">Выйти</a></li>");
             }
@@ -51,12 +51,15 @@
     <br/>
     Введите параметры поиска автомобиля!<br/>
     <form action="${pageContext.request.contextPath}/" method="post">
+            <%
+            Map<String,Object> filterOption = (Map<String, Object>) request.getAttribute(MainController.FILTER_OPTION_ATTRIBUTE);
+            %>
 <p>
     <label>
-        <select class="form-control" name="mark">
+        <select class="form-control" name=<%=MainController.MARK_REQUEST%>>
             <option selected disabled>Марка</option>
             <%
-                List<Mark> marks = (List<Mark>) ((Map<String, Object>) request.getAttribute("filterOption")).get("marks");
+                List<Mark> marks = (List<Mark>) filterOption.get("marks");
                 for (Mark mark : marks) {
                     out.println("<option value=" + mark.getId() + ">" + mark.getName() + "</option>");
                 }
@@ -65,10 +68,10 @@
     </label>
 
     <label>
-        <select class="form-control" name="model">
+        <select class="form-control" name=<%=MainController.MODEL_REQUEST%>>
             <option selected disabled>Модель</option>
             <%
-                List<Model> models = (List<Model>) ((Map<String, Object>) request.getAttribute("filterOption")).get("models");
+                List<Model> models = (List<Model>) filterOption.get("models");
                 for (Model model : models) {
                     out.println("<option value=" + model.getId() + ">" + model.getName() + "</option>");
                 }
@@ -77,10 +80,10 @@
     </label>
 
     <label>
-        <select class="form-control" name="color">
+        <select class="form-control" name=<%=MainController.MODEL_REQUEST%>>
             <option selected disabled>Цвет</option>
             <%
-                List<Color> colors = (List<Color>) ((Map<String, Object>) request.getAttribute("filterOption")).get("colors");
+                List<Color> colors = (List<Color>) filterOption.get("colors");
                 for (Color color : colors) {
                     out.println("<option value=" + color.getId() + ">" + color.getName() + "</option>");
                 }
@@ -89,10 +92,10 @@
     </label>
 
     <label>
-        <select class="form-control" name="engine">
+        <select class="form-control" name=<%=MainController.ENGINE_REQUEST%>>
             <option selected disabled>Объем</option>
             <%
-                List<Engine> engines = (List<Engine>) ((Map<String, Object>) request.getAttribute("filterOption")).get("engines");
+                List<Engine> engines = (List<Engine>) filterOption.get("engines");
                 for (Engine engine : engines) {
                     out.println("<option value=" + engine.getId() + ">" + engine.getName() + "</option>");
                 }
@@ -118,21 +121,23 @@
             <th>Год выпуска</th>
             <th>Количество сидений</th>
             <th>Цвет</th>
+            <th>Цена</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <%
-            List<Car> cars = (List<Car>) request.getAttribute("result");
+            List<Car> cars = (List<Car>) request.getAttribute(MainController.RESULT_ATTRIBUTE);
             if (!(null == cars)) {
                 for (Car car : cars) {
                     out.println("<tr><form action=\"" + request.getContextPath() + "/carreserve\" method=\"post\">" +
                             "<td>" + car.getOwner().getName() + "</td>" +
                             "<td>" + car.getMark().getName() + "</td>" +
                             "<td>" + car.getModel().getName() + "</td>" +
-                            "<td>" + car.getAssembledate().toString() + "</td>" +
+                            "<td>" + String.format("%tY", car.getAssembledate()) + "</td>" +
                             "<td>" + car.getNumberofseats() + "</td>" +
                             "<td>" + car.getColor().getName() + "</td>" +
+                            "<td>" + car.getDayprice() + "</td>" +
                             "<td>" + "<button name=\"car_id\" type=\"submit\" value=" + car.getId() + ">Выбрать</button></p></form>" + "</td>"
                             + "</tr>"
                     );

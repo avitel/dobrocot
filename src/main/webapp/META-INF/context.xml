@@ -22,7 +22,7 @@
                 minEvictableIdleTimeMillis="30000"
                 jmxEnabled="true"
                 username="dbworker"
-                password="Vfkbyf"
+                password=""
                 driverClassName="org.postgresql.Driver"
                 url="jdbc:postgresql://itcraft.su:5432/postgres"/>
 

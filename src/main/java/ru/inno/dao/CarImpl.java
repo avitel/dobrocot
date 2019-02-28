@@ -13,8 +13,8 @@ public class CarImpl implements CarDAO {
 
 
     private static final String ADD_CAR_SQL_TEMPLATE =
-            "insert into car (owner_id, mark_id, model_id, assembledate, engine_id, numberofseats, color_id) \n" +
-                    "values (?,?,?,?,?,?,?) ";
+            "insert into car (owner_id, mark_id, model_id, assembledate, engine_id, numberofseats, color_id, dayprice) \n" +
+                    "values (?,?,?,?,?,?,?,?) returning id";
 
     public static final String GET_FILTERED_CARS_SQL_TEMPLATE =
             "select * from car where ";
@@ -51,8 +51,30 @@ public class CarImpl implements CarDAO {
 
 
     @Override
-    public void addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numbeerofseats) {
+    public int addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numberofseats, int color_id, int dayprice) {
+        try (PreparedStatement statement = connection.prepareStatement(ADD_CAR_SQL_TEMPLATE)) {
+            statement.setInt(1, owner_id);
+            statement.setInt(2, mark_id);
+            statement.setInt(3, model_id);
+            statement.setTimestamp(4, assembledate);
+            statement.setInt(5, engine_id);
+            statement.setInt(6, numberofseats);
+            statement.setInt(7, color_id);
+            statement.setInt(8, dayprice);
+            ResultSet rs = statement.executeQuery();
 
+            if (rs.next()) {
+
+                LOGGER.info("car {} ({}) was created", mark_id, model_id);
+                return rs.getInt("id");
+            }else {
+                LOGGER.error("returning add car id fail");
+                throw new SQLDataException("something went wrong");
+            }
+        }catch (Exception e){
+            LOGGER.error("add car error",e);
+            return 0;
+        }
     }
 
 

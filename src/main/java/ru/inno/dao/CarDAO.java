@@ -9,7 +9,7 @@ public interface CarDAO {
 
     Car getCar(int id);
 
-    void addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numbeerofseats);
+    int addCar(int owner_id, int mark_id, int model_id, Timestamp assembledate, int engine_id, int numbeerofseats, int color_id, int dayprice);
 
     List<Car> getFilteredCars(QueryBuilder filter);
 

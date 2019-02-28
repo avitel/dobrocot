@@ -10,19 +10,32 @@ public class Order {
     private Timestamp dateOrder;
     private Timestamp begindate;
     private Timestamp enddate;
+    private int price;
 
-    public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder) {
+    public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder,
+                 Timestamp begindate, Timestamp enddate,int price) {
         this.id = id;
         this.car = car;
         this.owner = owner;
         this.customer = customer;
         this.dateOrder = dateOrder;
+        this.price = price;
+        this.begindate = begindate;
+        this.enddate = enddate;
     }
 
     public Order(int id, Timestamp begindate, Timestamp enddate) {
         this.id = id;
         this.begindate = begindate;
         this.enddate = enddate;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public Timestamp getBegindate() {

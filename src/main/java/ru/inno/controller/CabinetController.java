@@ -32,13 +32,16 @@ public class CabinetController {
     public ModelAndView cabinetGET(ModelAndView modelAndView) {
         Person currentPerson = cabinetService.getCurrentPerson();
         List<Car> listCar = cabinetService.getCarList(currentPerson);
-        List<Order> listOrder = cabinetService.getCustomerOrders(currentPerson);
+        List<Order> customerOrders = cabinetService.getCustomerOrders(currentPerson);
+        List<Order> sellerOrders = cabinetService.getSellerOrders(currentPerson);
 
         log.info("Person {} - cars list {} ", currentPerson.getName(), listCar);
-        log.info("Person {} - orders list {} ", currentPerson.getName(), listOrder);
+        log.info("Seller orders list {} ", customerOrders);
+        log.info("Customer orders list {} ", sellerOrders);
 
         modelAndView.addObject("carList", listCar);
-        modelAndView.addObject("customerOrders", listOrder);
+        modelAndView.addObject("customerOrders", customerOrders);
+        modelAndView.addObject("sellerOrders", sellerOrders);
         modelAndView.addObject("currentPerson", currentPerson);
         modelAndView.setViewName("cabinet");
         return modelAndView;

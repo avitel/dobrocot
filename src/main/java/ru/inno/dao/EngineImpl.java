@@ -78,7 +78,7 @@ public class EngineImpl implements EngineDAO{
     }
 
     @Override
-    public void addEngine(String name) {
+    public int addEngine(String name) {
         int i = -1;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ENGINE_SQL_TEMPLATE)) {
             statement.setString(1, name);
@@ -97,5 +97,6 @@ public class EngineImpl implements EngineDAO{
             LOGGER.error("Ошибка при создании двигателя!");
 //            System.out.println("Ошибка при создании двигателя!");
         }
+        return 1;
     }
 }

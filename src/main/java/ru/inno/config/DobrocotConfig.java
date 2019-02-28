@@ -23,11 +23,5 @@ public class DobrocotConfig {
     }
 
 
-    @Bean
-    EngineDAO engineDAO(Connection connection) {
-        return new EngineImpl(connection);
-    }
-
-
 
 }

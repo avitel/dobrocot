@@ -3,6 +3,7 @@ package ru.inno.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.inno.Security;
+import ru.inno.controller.MainController;
 import ru.inno.dao.*;
 import ru.inno.entity.Car;
 import ru.inno.entity.Person;
@@ -37,10 +38,10 @@ public class MainService {
 
     public Map<String, Object> getAllFilterOption() {
         Map<String, Object> result = new HashMap<>();
-        result.put("marks", markDAO.getMarks());
-        result.put("models", modelDAO.getModels(null));
-        result.put("colors", colorDAO.getColors());
-        result.put("engines", engineDAO.getEngines());
+        result.put(MainController.MARK_REQUEST, markDAO.getMarks());
+        result.put(MainController.MODEL_REQUEST, modelDAO.getModels(null));
+        result.put(MainController.COLOR_REQUEST, colorDAO.getColors());
+        result.put(MainController.ENGINE_REQUEST, engineDAO.getEngines());
         return result;
     }
 

@@ -21,6 +21,8 @@ public class MainController {
     public static final String ENGINE_REQUEST = "engine";
     public static final String COLOR_REQUEST = "color";
 
+    public static final String MAINPAGE = "mainpage";
+
     private MainService mainService;
 
     public MainController(MainService mainService) {
@@ -32,7 +34,7 @@ public class MainController {
         modelAndView.addObject(USER_ATTRIBUTE, null == mainService.getCurrentPerson() ? null : mainService.getCurrentPerson().getName());
         modelAndView.addObject(FILTER_OPTION_ATTRIBUTE, mainService.getAllFilterOption());
         modelAndView.addObject(RESULT_ATTRIBUTE, mainService.getFilteredCars(null, null, null, null));
-        modelAndView.setViewName("mainpage");
+        modelAndView.setViewName(MAINPAGE);
         return modelAndView;
 
     }
@@ -52,7 +54,7 @@ public class MainController {
                 null == engine ? null : Integer.valueOf(engine),
                 null == color ? null : Integer.valueOf(color)
         ));
-        modelAndView.setViewName("mainpage");
+        modelAndView.setViewName(MAINPAGE);
         return modelAndView;
     }
 

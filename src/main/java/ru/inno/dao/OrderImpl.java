@@ -5,26 +5,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.inno.ConnectionManager;
 import ru.inno.entity.*;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class OrderImpl implements OrderDAO {
 
+    private static final String INSERT_ORDER_SQL_TEMPLATE = "insert into \"order\" (car, seller, customer, date, begindate, enddate, price) values (?,?,?,?,?,?,?)";
+    private static final String GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE = "select * from \"order\" where customer = ?";
+    private static final String GET_ORDERS_BY_SELLER_SQL_TEMPLATE = "select * from \"order\" where seller = ?";
+    private static final String GET_ORDERS_BY_CAR_SQL_TEMPLATE = "select * from \"order\" where car = ?";
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderImpl.class);
 
-    public static final String INSERT_ORDER_SQL_TEMPLATE =
-            "insert into \"order\" (car, seller, customer, date, begindate, enddate, price) values (?,?,?,?,?,?,?)";
-
-    public static final String GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE =
-            "select * from \"order\" where customer = ?";
-
-    public static final String GET_ORDERS_BY_CAR_SQL_TEMPLATE =
-            "select * from \"order\" where car = ?";
-
     private final Connection connection;
-
     private CarDAO cardao;
     private PersonDAO persondao;
 
@@ -60,34 +56,44 @@ public class OrderImpl implements OrderDAO {
 
     @Override
     public List<Order> getOrdersByCustomer(int person_id) {
+        return getOrderList(GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE, person_id);
+    }
 
-        try (PreparedStatement statement = connection.prepareStatement(GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE)) {
-            statement.setInt(1, person_id);
+
+    @Override
+    public List<Order> getOrdersBySeller(int person_id) {
+        return getOrderList(GET_ORDERS_BY_SELLER_SQL_TEMPLATE, person_id);
+    }
+
+
+    private List<Order> getOrderList(String query, int personId) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, personId);
             ResultSet rs = statement.executeQuery();
-
             List<Order> list = new ArrayList<>();
+
             while (rs.next()) {
-
-
                 Car car = cardao.getCar(rs.getInt("car"));
                 Person seller = persondao.getPerson(rs.getInt("seller"));
                 Person customer = persondao.getPerson(rs.getInt("customer"));
+                list.add(new Order(
+                        rs.getInt("id"), car, seller, customer,
+                        rs.getTimestamp("date"),
+                        rs.getTimestamp("begindate"),
+                        rs.getTimestamp("enddate"),
+                        rs.getInt("price")));
 
-                list.add(new Order(rs.getInt("id"),
-                        car,
-                        customer,
-                        seller,
-                        rs.getTimestamp("date")));
-
+                LOGGER.debug("{} {}", query, personId);
+                LOGGER.debug("car({}) seller({}) customer({})", car, seller, customer);
             }
-            return list;
 
-        } catch (Exception ex) {
+
+            return list;
+        } catch (SQLException ex) {
             LOGGER.debug(ex.getMessage());
             LOGGER.error("get car query error");
         }
-
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

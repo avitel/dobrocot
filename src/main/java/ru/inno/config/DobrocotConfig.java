@@ -16,18 +16,9 @@ public class DobrocotConfig {
         return ConnectionManager.getConnection();
     }
 
-
-    @Bean
-    ModelDAO modelDAO(Connection connection) {
-        return new ModelImpl(connection);
-    }
-
-
     @Bean
     EngineDAO engineDAO(Connection connection) {
         return new EngineImpl(connection);
     }
-
-
 
 }

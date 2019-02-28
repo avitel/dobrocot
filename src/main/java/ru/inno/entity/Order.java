@@ -41,6 +41,18 @@ public class Order {
         this.dateOrder = dateOrder;
     }
 
+    public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder,
+                 Timestamp begindate, Timestamp enddate,int price) {
+        this.id = id;
+        this.car = car;
+        this.owner = owner;
+        this.customer = customer;
+        this.dateOrder = dateOrder;
+        this.price = price;
+        this.begindate = begindate;
+        this.enddate = enddate;
+    }
+
     public Order(int id, Timestamp begindate, Timestamp enddate) {
         this.id = id;
         this.begindate = begindate;

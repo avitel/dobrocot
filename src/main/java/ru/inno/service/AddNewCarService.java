@@ -1,15 +1,20 @@
 package ru.inno.services;
 
-//import ru.inno.ConnectionManager;
 import org.springframework.stereotype.Service;
 import ru.inno.dao.*;
 import ru.inno.entity.*;
 
 import java.sql.Timestamp;
 import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+
+import static java.lang.Integer.parseInt;
 
 @Service
 public class AddNewCarService {
@@ -29,18 +34,12 @@ public class AddNewCarService {
     }
 
     public Map<String, Object> getParam() {
-//        Connection c = ConnectionManager.getConnection();
         Map<String, Object> allParams = new HashMap<>();
-//        MarkDAO markDAO = new MarkImpl(c);
-//        ModelDAO modelDAO = new ModelImpl(c);
-//        EngineDAO engineDAO = new EngineImpl(c);
-//        ColorDAO colorDAO = new ColorImpl(c);
 
         List<Mark> marks = markDAO.getMarks();
         List<Model> models = modelDAO.getModels(null);
         List<Engine> engines = engineDAO.getEngines();
         List<Color> colors = colorDAO.getColors();
-//        ConnectionManager.closeConnection(c);
 
         allParams.put("marks", marks);
         allParams.put("models", models);
@@ -50,17 +49,20 @@ public class AddNewCarService {
         return allParams;
     }
 
-    public boolean addCar(String mark_id, String model_id,
-                         Timestamp assembledate, String engine_id, String numbeerofseats, String color) {
-//        Connection c = ConnectionManager.getConnection();
-//        CarDAO carDAO = new CarImpl(c);
+    public void addCar(int getId, String mark_id, String model_id, String assembledate,
+                       String engine_id, String numbeerofseats, String color, String dayprice) {
 
-        //Person person = (Person) authentication.getPrincipal();
 
-//        carDAO.addCar(person.getId(), mark_id, model_id, assembledate,
-//                engine_id), numbeerofseats);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+        Date parsedDate = null;
+        try {
+            parsedDate = simpleDateFormat.parse(assembledate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Timestamp timestamp = new Timestamp(parsedDate.getTime());
+        carDAO.addCar(getId, parseInt(mark_id), parseInt(model_id), timestamp,
+                parseInt(engine_id), parseInt(numbeerofseats), parseInt(color), parseInt(dayprice));
 
-//        ConnectionManager.closeConnection(c);
-        return true;
     }
 }

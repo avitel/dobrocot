@@ -18,4 +18,6 @@ public interface OrderDAO {
     List<Order> getOrdersByOwner(int person_id);
 
     List<Order> getOrdersByCar(int car_id);
+
+    List<Order> getOrdersBySeller(int person_id);
 }

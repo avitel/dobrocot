@@ -21,7 +21,14 @@ public class OrderImpl implements OrderDAO {
             "select * from _order where car = ?";
 
     private final Connection connection;
+    private CarDAO cardao;
+    private PersonDAO persondao;
 
+    public OrderImpl(Connection connection, CarDAO cardao, PersonDAO persondao) {
+        this.connection = connection;
+        this.cardao = cardao;
+        this.persondao = persondao;
+    }
 
     public OrderImpl(Connection connection) {
         this.connection = connection;
@@ -29,7 +36,7 @@ public class OrderImpl implements OrderDAO {
 
 
     @Override
-    public int addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price) {
+    public void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price) {
         int i = -1;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_SQL_TEMPLATE)) {
             statement.setInt(1, id_car);
@@ -46,45 +53,50 @@ public class OrderImpl implements OrderDAO {
             LOGGER.error("Ошибка при создании сделки!");
 
         }
-        return 1;
     }
 
     @Override
     public List<Order> getOrdersByCustomer(int person_id) {
+        return getOrderList(GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE, person_id);
+    }
 
-        try (PreparedStatement statement = connection.prepareStatement(GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE)) {
-            statement.setInt(1, person_id);
+
+    @Override
+    public List<Order> getOrdersBySeller(int person_id) {
+        return getOrderList(GET_ORDERS_BY_SELLER_SQL_TEMPLATE, person_id);
+    }
+
+
+    private List<Order> getOrderList(String query, int personId) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, personId);
             ResultSet rs = statement.executeQuery();
 
             List<Order> list = new ArrayList<>();
             while (rs.next()) {
 
-                CarDAO cardao = new CarImpl(connection);
-                PersonDAO persondao = new PersonImpl(connection);
 
                 Car car = cardao.getCar(rs.getInt("car"));
                 Person seller = persondao.getPerson(rs.getInt("seller"));
                 Person customer = persondao.getPerson(rs.getInt("customer"));
+                list.add(new Order(
+                        rs.getInt("id"), car, seller, customer,
+                        rs.getTimestamp("date"),
+                        rs.getTimestamp("begindate"),
+                        rs.getTimestamp("enddate"),
+                        rs.getInt("price")));
 
-                list.add(new Order(rs.getInt("id"),
-                        car,
-                        customer,
-                        seller,
-                        rs.getTimestamp("date")));
-
+                LOGGER.debug("{} {}", query, personId);
+                LOGGER.debug("car({}) seller({}) customer({})", car, seller, customer);
             }
-            return list;
 
-        } catch (Exception ex) {
+
+            return list;
+        } catch (SQLException ex) {
             LOGGER.debug(ex.getMessage());
             LOGGER.error("get car query error");
         }
 
-        return null;
-    }
-
-    @Override
-    public List<Order> getOrdersByOwner(int person_id) {
         return null;
     }
 

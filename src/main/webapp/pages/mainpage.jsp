@@ -57,6 +57,9 @@
     <form action="<%=contextPath%>/" method="post">
             <%
             Map<String,Object> filterOption = (Map<String, Object>) request.getAttribute(MainController.FILTER_OPTION_ATTRIBUTE);
+            if (null==filterOption) {
+            response.sendRedirect(contextPath+"/error");
+            }
             %>
 <p>
     <label>

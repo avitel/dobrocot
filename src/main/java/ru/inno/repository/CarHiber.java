@@ -39,6 +39,7 @@ public class CarHiber implements CarDAO {
     @Override
     public List<Car> getFilteredCars(QueryBuilder filter) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        System.out.println("________________________________________"+filter.getHQLquery());
         Query query = session.createQuery(filter.getHQLquery());
         filter.setHQLParameters(query, session);
         List<Car> list = query.list();

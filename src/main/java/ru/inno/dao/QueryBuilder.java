@@ -141,31 +141,40 @@ public class QueryBuilder {
 
         StringBuilder sb = new StringBuilder(GET_FILTERED_CARS_HQL_TEMPLATE);
 
-        sb.append("\nwhere true and");
+        sb.append("\nwhere ");
+
+        boolean conditionExists=false;
 
         if (color != null) {
             sb.append("\ncolor = :param_color and");
+            conditionExists = true;
         }
 
         if (engine != null) {
             sb.append("\nengine = :param_engine and");
+            conditionExists = true;
         }
 
         if (mark != null) {
             sb.append("\nmark = :param_mark and");
+            conditionExists = true;
         }
 
         if (model != null) {
             sb.append("\nmodel = :param_model and");
+            conditionExists = true;
         }
 
         if (owner != null) {
             sb.append("\nowner = :param_owner and");
+            conditionExists = true;
         }
 
-
-
-        sb.delete(sb.length()-3, sb.length());
+        if (conditionExists) {
+            sb.delete(sb.length()-3, sb.length());
+        }else {
+            sb.delete(sb.length()-7, sb.length());
+        }
 
         return sb.toString();
     }

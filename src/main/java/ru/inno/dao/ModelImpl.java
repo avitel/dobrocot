@@ -95,7 +95,7 @@ public class ModelImpl implements ModelDAO {
 
 
     @Override
-    public void addModel(int id_mark, String name) {
+    public int addModel(int id_mark, String name) {
         int i = -1;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_MODEL_SQL_TEMPLATE)) {
             statement.setInt(1, id_mark);
@@ -112,5 +112,6 @@ public class ModelImpl implements ModelDAO {
             LOGGER.debug(ex.getMessage());
             LOGGER.error("Ошибка при создании модели!");
         }
+        return 0;
     }
 }

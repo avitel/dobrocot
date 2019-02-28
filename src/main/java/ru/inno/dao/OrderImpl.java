@@ -2,7 +2,6 @@ package ru.inno.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.inno.ConnectionManager;
 import ru.inno.entity.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,9 +58,8 @@ public class OrderImpl implements OrderDAO {
             List<Order> list = new ArrayList<>();
             while (rs.next()) {
 
-                Connection c = ConnectionManager.getConnection();
-                CarDAO cardao = new CarImpl(c);
-                PersonDAO persondao = new PersonImpl(c);
+                CarDAO cardao = new CarImpl(connection);
+                PersonDAO persondao = new PersonImpl(connection);
 
                 Car car = cardao.getCar(rs.getInt("car"));
                 Person seller = persondao.getPerson(rs.getInt("seller"));

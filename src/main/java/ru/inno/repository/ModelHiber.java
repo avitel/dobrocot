@@ -14,12 +14,20 @@ public class ModelHiber implements ModelDAO {
 
     @Override
     public List<Model> getModels(Integer mark_id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Mark mark = session.get(Mark.class, mark_id);
 
-        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Model where mark = :mark");
-        query.setParameter("mark", mark);
-        List<Model> list = query.list();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        List<Model> list;
+        Query query;
+
+        if (mark_id != null){
+            Mark mark = session.get(Mark.class, mark_id);
+            query = session.createQuery("from Model where mark = :mark");
+            query.setParameter("mark", mark);
+        }else{
+            query = session.createQuery("from Model");
+        }
+
+        list = query.list();
         return list;
     }
 

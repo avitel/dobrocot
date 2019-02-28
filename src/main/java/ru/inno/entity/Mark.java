@@ -5,11 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "mark")
 public class Mark {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column
     private String name;
 
@@ -34,8 +32,7 @@ public class Mark {
         this.name = name;
     }
 
-    public Mark() {
-    }
+    public Mark() {}
 
     public void setName(String name) {
         this.name = name;

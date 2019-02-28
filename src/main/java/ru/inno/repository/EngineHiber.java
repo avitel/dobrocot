@@ -15,8 +15,8 @@ public class EngineHiber implements EngineDAO {
 
     @Override
     public List<Engine> getEngines() {
-        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from engine");
-        List<Engine> list = query.getResultList();
+        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Engine");
+        List<Engine> list = query.list();
         return list;
     }
 

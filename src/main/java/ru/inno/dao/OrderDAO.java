@@ -11,9 +11,11 @@ public interface OrderDAO {
      *
      * Добавляем заказ в базу
      */
-    void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price);
+    int addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price);
 
     List<Order> getOrdersByCustomer(int person_id);
+
+    List<Order> getOrdersByOwner(int person_id);
 
     List<Order> getOrdersByCar(int car_id);
 }

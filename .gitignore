@@ -4,3 +4,5 @@ target
 *.iml
 Main.class
 .gitignore
+src/main/webapp/META-INF/context.xml
+config.properties

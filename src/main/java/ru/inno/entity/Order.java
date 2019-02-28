@@ -1,15 +1,32 @@
 package ru.inno.entity;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
-
+@Entity
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car")
     private Car car;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner")
     private Person owner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer")
     private Person customer;
+    @Column
     private Timestamp dateOrder;
+    @Column
     private Timestamp begindate;
+    @Column
     private Timestamp enddate;
+    @Column
+    private int price;
+
+    public Order() {
+    }
 
     public Order(int id, Car car, Person owner, Person customer, Timestamp dateOrder) {
         this.id = id;
@@ -23,6 +40,16 @@ public class Order {
         this.id = id;
         this.begindate = begindate;
         this.enddate = enddate;
+    }
+
+    public Order(Car car, Person owner, Person customer, Timestamp dateOrder, Timestamp begindate, Timestamp enddate, int price) {
+        this.car = car;
+        this.owner = owner;
+        this.customer = customer;
+        this.dateOrder = dateOrder;
+        this.begindate = begindate;
+        this.enddate = enddate;
+        this.price = price;
     }
 
     public Timestamp getBegindate() {
@@ -79,5 +106,13 @@ public class Order {
 
     public void setDateOrder(Timestamp dateOrder) {
         this.dateOrder = dateOrder;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

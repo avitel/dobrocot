@@ -29,7 +29,7 @@ public class OrderImpl implements OrderDAO {
 
 
     @Override
-    public void addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price) {
+    public int addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price) {
         int i = -1;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_SQL_TEMPLATE)) {
             statement.setInt(1, id_car);
@@ -46,6 +46,7 @@ public class OrderImpl implements OrderDAO {
             LOGGER.error("Ошибка при создании сделки!");
 
         }
+        return 1;
     }
 
     @Override
@@ -79,6 +80,11 @@ public class OrderImpl implements OrderDAO {
             LOGGER.error("get car query error");
         }
 
+        return null;
+    }
+
+    @Override
+    public List<Order> getOrdersByOwner(int person_id) {
         return null;
     }
 

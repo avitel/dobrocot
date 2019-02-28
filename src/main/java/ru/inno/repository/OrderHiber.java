@@ -3,6 +3,7 @@ package ru.inno.repository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ru.inno.dao.OrderDAO;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
@@ -11,6 +12,7 @@ import ru.inno.entity.Person;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Repository
 public class OrderHiber implements OrderDAO {
     @Override
     public List<Order> getOrders() {

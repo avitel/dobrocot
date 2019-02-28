@@ -3,20 +3,25 @@ package ru.inno.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 @Entity
+@Table(name = "_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car")
     private Car car;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "seller")
     private Person owner;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
     private Person customer;
-    @Column
+
+    @Column(name = "date")
     private Timestamp dateOrder;
     @Column
     private Timestamp begindate;

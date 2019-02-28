@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ru.inno.entity.Car" %>
 <%@ page import="ru.inno.entity.Person" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -42,7 +44,9 @@
                 <h4 class="card-title">
                     <%
                         Person curPerson = (Person) request.getAttribute("currentPerson");
-                        out.print(curPerson.getName());
+                        if (curPerson != null) {
+                            out.print(curPerson.getName());
+                        }
                     %>
                 </h4>
                 <p class="card-text">Ваш идентификатор - <% out.print(curPerson.getId());%></p>
@@ -77,6 +81,10 @@
                                             <th>Марка</th>
                                             <th>Модель</th>
                                             <th>Цвет</th>
+                                            <th>Двигатель</th>
+                                            <th>Число мест</th>
+                                            <th>Дата выпуска</th>
+                                            <th>Цена за день</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -84,10 +92,16 @@
                                             List<Car> listCar = (List<Car>) request.getAttribute("carList");
                                             if (listCar != null) {
                                                 for (Car car : listCar) {
+                                                    DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
+
                                                     out.print("<tr>");
                                                     out.println("<td>" + car.getMark().getName() + "</td>");
                                                     out.println("<td>" + car.getModel().getName() + "</td>");
                                                     out.println("<td>" + car.getColor().getName() + "</td>");
+                                                    out.println("<td>" + car.getEngine().getName() + "</td>");
+                                                    out.println("<td>" + car.getNumberofseats() + "</td>");
+                                                    out.println("<td>" + car.getAssembledate().toLocalDateTime().format(d) + "</td>");
+                                                    out.println("<td>" + car.getDayprice() + "</td>");
                                                     out.print("<tr>");
                                                 }
                                             } else {
@@ -124,23 +138,41 @@
             <table class="table table-striped table-sm">
                 <thead class="thead-dark">
                 <tr>
+                    <th>Дата</th>
                     <th>Арендодатель</th>
                     <th>Марка</th>
                     <th>Модель</th>
+                    <th>Цвет</th>
+                    <th>Двигатель</th>
+                    <th>Начало</th>
+                    <th>Окончание</th>
+                    <th>Сумма</th>
                 </tr>
                 </thead>
                 <tbody>
                 <%
-                    List<Order> listOrder = (List<Order>) request.getAttribute("customerOrders");
-                    if (listOrder != null) {
-                        for (Order order : listOrder) {
+                    List<Order> customerOrders = (List<Order>) request.getAttribute("customerOrders");
+                    if (customerOrders != null) {
+                        for (Order order : customerOrders) {
                             Car car = order.getCar();
-                            Person person = order.getCustomer();
-                            out.print("<tr>");
-                            out.print("<td>" + order.getOwner().getName() + "</td>");
-                            out.println("<td>" + car.getMark().getName() + "</td>");
-                            out.println("<td>" + car.getModel().getName() + "</td>");
-                            out.print("<tr>");
+                            if (car != null) {
+                                DateTimeFormatter dt = DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss");
+                                DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
+
+                                out.print("<tr>");
+                                out.println("<td>" + order.getDateOrder().toLocalDateTime().format(dt) + "</td>");
+                                out.println("<td>" + order.getOwner().getName() + "</td>");
+                                out.println("<td>" + car.getMark().getName() + "</td>");
+                                out.println("<td>" + car.getModel().getName() + "</td>");
+                                out.println("<td>" + car.getColor().getName() + "</td>");
+                                out.println("<td>" + car.getEngine().getName() + "</td>");
+                                out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
+                                out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
+                                out.println("<td>" + order.getPrice() + "</td>");
+                                out.print("<tr>");
+                            } else {
+                                out.print("<tr><td>Пустая машина</td></tr>");
+                            }
                         }
                     } else {
                         out.print("<tr><td>Ничего не найдено</td></tr>");
@@ -159,17 +191,44 @@
             <table class="table table-striped table-sm">
                 <thead class="thead-dark">
                 <tr>
-                    <th>Арендодатель</th>
-                    <th>Машина</th>
+                    <th>Дата</th>
+                    <th>Арендатор</th>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Цвет</th>
+                    <th>Двигатель</th>
+                    <th>Начало</th>
+                    <th>Окончание</th>
                     <th>Сумма</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <%
+                    List<Order> sellerOrders = (List<Order>) request.getAttribute("sellerOrders");
+                    if (sellerOrders != null) {
+                        for (Order order : sellerOrders) {
+                            Car car = order.getCar();
+                            if (car != null) {
+                                DateTimeFormatter dt = DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss");
+                                DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
+
+                                out.print("<tr>");
+                                out.println("<td>" + order.getDateOrder().toLocalDateTime().format(dt)  + "</td>");
+                                out.println("<td>" + order.getCustomer().getName() + "</td>");
+                                out.println("<td>" + car.getMark().getName() + "</td>");
+                                out.println("<td>" + car.getModel().getName() + "</td>");
+                                out.println("<td>" + car.getColor().getName() + "</td>");
+                                out.println("<td>" + car.getEngine().getName() + "</td>");
+                                out.println("<td>" + order.getBegindate().toLocalDateTime().format(d)  + "</td>");
+                                out.println("<td>" + order.getEnddate().toLocalDateTime().format(d)  + "</td>");
+                                out.println("<td>" + order.getPrice() + "</td>");
+                                out.print("<tr>");
+                            }
+                        }
+                    } else {
+                        out.print("<tr><td>Пустая машина</td></tr>");
+                    }
+                %>
                 </tbody>
             </table>
         </div>

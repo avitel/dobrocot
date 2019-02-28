@@ -27,6 +27,7 @@ public class HibernateSessionFactory {
                 configuration.addAnnotatedClass(Color.class);
                 configuration.addAnnotatedClass(Mark.class);
                 configuration.addAnnotatedClass(Engine.class);
+                configuration.addAnnotatedClass(Model.class);
 
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());

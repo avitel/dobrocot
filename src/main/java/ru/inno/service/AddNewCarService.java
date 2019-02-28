@@ -1,4 +1,4 @@
-package ru.inno.services;
+package ru.inno.service;
 
 import org.springframework.stereotype.Component;
 import ru.inno.ConnectionManager;
@@ -44,10 +44,12 @@ public class AddNewCarService {
         return allParams;
     }
 
-    public void addCar(int getId, String mark_id, String model_id,
-                               String assembledate, String engine_id, String numbeerofseats, String color) {
+    public void addCar(int getId, String mark_id, String model_id, String assembledate,
+                       String engine_id, String numbeerofseats, String color, String dayprice) {
         Connection c = ConnectionManager.getConnection();
         CarDAO carDAO = new CarImpl(c);
+
+        System.out.println(dayprice);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
         Date parsedDate = null;
@@ -56,9 +58,9 @@ public class AddNewCarService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+        Timestamp timestamp = new Timestamp(parsedDate.getTime());
         carDAO.addCar(getId, parseInt(mark_id), parseInt(model_id), timestamp,
-                parseInt(engine_id), parseInt(numbeerofseats), parseInt(color));
+                parseInt(engine_id), parseInt(numbeerofseats), parseInt(color), parseInt(dayprice));
 
         ConnectionManager.closeConnection(c);
     }

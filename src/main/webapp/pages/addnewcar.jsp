@@ -55,13 +55,12 @@
         <label>
             <select name="assembledate">
                 <option selected disabled>Год выпуска</option>
-              <%
-                  Calendar now = Calendar.getInstance();
-                  for (int i = 1990; i < now.get(Calendar.YEAR); i++) {
-                      out.println("<option value=" + i + ">" + i + "</option>");
-                      i++;
-                  }
-              %>
+                <%
+                    Calendar now = Calendar.getInstance();
+                    for (int i = now.get(Calendar.YEAR); i > 1990; i--) {
+                        out.println("<option value=" + i + ">" + i + "</option>");
+                    }
+                %>
             </select>
         </label>
 
@@ -104,6 +103,8 @@
                 %>
             </select>
         </label>
+
+        <input type="number" name="dayprice">Цена
 
         <input type="submit" value="Добавить"></p>
 

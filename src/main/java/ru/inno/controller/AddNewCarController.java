@@ -1,18 +1,14 @@
 package ru.inno.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.inno.ConnectionManager;
 import ru.inno.Security;
-import ru.inno.dao.PersonImpl;
-import ru.inno.services.AddNewCarService;
-import java.sql.Connection;
+import ru.inno.service.AddNewCarService;
 
 @Controller
 @RequestMapping("/addnewcar")
@@ -36,15 +32,16 @@ public class AddNewCarController {
     @RequestMapping(method = RequestMethod.POST)
     public RedirectView addNewCar(@RequestParam(name = "mark", required = false) String mark,
                                   @RequestParam(name = "model", required = false) String model,
-                                  @RequestParam(name = "assembleDate", required = false) String assembledate,
+                                  @RequestParam(name = "assembledate", required = false) String assembledate,
                                   @RequestParam(name = "engine", required = false) String engine,
-                                  @RequestParam(name = "numbeerofseats ", required = false) String numbeerofseats,
+                                  @RequestParam(name = "numbeerofseats", required = false) String numbeerofseats,
                                   @RequestParam(name = "color", required = false) String color,
+                                  @RequestParam(name = "dayprice", required = false) String dayprice,
                                   Model carModel) {
 
         int getId = security.getCurrentUser().getId();
 
-        addNewCarService.addCar(getId, mark, model, assembledate, engine, numbeerofseats, color);
+        addNewCarService.addCar(getId, mark, model, assembledate, engine, numbeerofseats, color, dayprice);
 
         return new RedirectView("/cabinet");
     }

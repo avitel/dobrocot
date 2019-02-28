@@ -1,4 +1,4 @@
-package ru.inno.services;
+package ru.inno.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

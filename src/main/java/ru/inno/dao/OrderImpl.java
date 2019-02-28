@@ -14,10 +14,10 @@ import java.util.List;
 
 public class OrderImpl implements OrderDAO {
 
-    private static final String INSERT_ORDER_SQL_TEMPLATE = "insert into \"order\" (car, seller, customer, date, begindate, enddate, price) values (?,?,?,?,?,?,?)";
-    private static final String GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE = "select * from \"order\" where customer = ?";
-    private static final String GET_ORDERS_BY_SELLER_SQL_TEMPLATE = "select * from \"order\" where seller = ?";
-    private static final String GET_ORDERS_BY_CAR_SQL_TEMPLATE = "select * from \"order\" where car = ?";
+    private static final String INSERT_ORDER_SQL_TEMPLATE = "insert into \"_order\" (car, seller, customer, date, begindate, enddate, price) values (?,?,?,?,?,?,?)";
+    private static final String GET_ORDERS_BY_CUSTOMER_SQL_TEMPLATE = "select * from \"_order\" where customer = ?";
+    private static final String GET_ORDERS_BY_SELLER_SQL_TEMPLATE = "select * from \"_order\" where seller = ?";
+    private static final String GET_ORDERS_BY_CAR_SQL_TEMPLATE = "select * from \"_order\" where car = ?";
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderImpl.class);
 
     private final Connection connection;

@@ -9,7 +9,7 @@
 
 <!DOCTYPE html>
 <html>
-<title>W3.CSS</title>
+<title>Personal cabinet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,9 +17,9 @@
 <body>
 
 <div class="w3-bar w3-black">
-    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Главная</a>
-    <a href="#" class="w3-bar-item w3-button">Кабинет</a>
-    <a href="#" class="w3-bar-item w3-button w3-right"><i class="fa fa-sign-out"></i> Выйти</a>
+    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Главная</a>
+    <a href="${pageContext.request.contextPath}/cabinet" class="w3-bar-item w3-button">Кабинет</a>
+    <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-right"><i class="fa fa-sign-out"></i> Выйти</a>
 </div>
 
 <p></p>
@@ -51,8 +51,6 @@
                     <div id="id01" class="w3-modal">
                         <div class="w3-modal-content">
                             <div class="w3-container">
-                                <!--                                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>-->
-
                                 <p>Список моих авто</p>
                                 <table class="w3-table-all w3-small">
                                     <thead class="thead-dark">
@@ -81,7 +79,7 @@
                                                 out.println("<td>" + car.getNumberofseats() + "</td>");
                                                 out.println("<td>" + car.getAssembledate().toLocalDateTime().format(d) + "</td>");
                                                 out.println("<td>" + car.getDayprice() + "</td>");
-                                                out.print("<tr>");
+                                                out.print("</tr>");
                                             }
                                         } else {
                                             out.print("<tr><td>Ничего не найдено</td></tr>");
@@ -90,10 +88,7 @@
                                     </tbody>
                                 </table>
                                 <p></p>
-                                <button class="w3-btn  w3-dark-grey"
-                                        onclick="document.getElementById('id01').style.display='none'"
-                                        class="w3-button w3-display-topright">Закрыть
-                                </button>
+                                <button class="w3-btn  w3-dark-grey" onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">Закрыть</button>
                                 <p></p>
                             </div>
                         </div>
@@ -155,7 +150,7 @@
                                         out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getPrice() + "</td>");
-                                        out.print("<tr>");
+                                        out.print("</tr>");
                                     }
                                 }
                             } else {
@@ -202,7 +197,7 @@
                                         out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getPrice() + "</td>");
-                                        out.print("<tr>");
+                                        out.print("</tr>");
                                     } else {
                                         out.print("<tr><td>Пустая машина</td></tr>");
                                     }
@@ -223,17 +218,6 @@
 </div>
 
 
-<!--
-<p></p>
-<div class="w3-container w3-orange">
-    <p> </p>
-</div>
-
-<div class="w3-container w3-black">
-    <h5>Footer</h5>
-</div>
--->
-
 <script>
     function openOrders(evt, tableName) {
         var i, x, tablinks;
@@ -248,7 +232,6 @@
         document.getElementById(tableName).style.display = "block";
         evt.currentTarget.className += " w3-dark-grey";
     }
-
 </script>
 
 

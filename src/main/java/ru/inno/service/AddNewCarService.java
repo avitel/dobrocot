@@ -1,17 +1,13 @@
-package ru.inno.services;
+package ru.inno.service;
 
 import org.springframework.stereotype.Service;
 import ru.inno.dao.*;
 import ru.inno.entity.*;
 
 import java.sql.Timestamp;
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 import static java.lang.Integer.parseInt;

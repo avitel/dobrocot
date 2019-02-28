@@ -48,7 +48,7 @@ public class OrderHiber implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOrdersByOwner(int person_id) {
+    public List<Order> getOrdersBySeller(int person_id) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Person owner = session.get(Person.class, person_id);
         Query query = session.createQuery("from Order where owner = :owner");

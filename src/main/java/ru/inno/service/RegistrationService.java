@@ -7,16 +7,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.inno.dao.*;
-import ru.inno.entity.Person;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 
 @Service
 public class RegistrationService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EngineImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
 
     private PersonDAO dao;
 

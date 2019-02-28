@@ -16,7 +16,6 @@ import java.util.List;
 @Service
 public class CabinetService {
 
-    private Person currentPerson;
     private Security security;
     private CarDAO carDAO;
     private OrderDAO orderDAO;
@@ -28,19 +27,19 @@ public class CabinetService {
         this.orderDAO = orderDAO;
     }
 
-    public Person getCurrentPerson(){
-        currentPerson = security.getCurrentUser();
-        return currentPerson;
+    public Person getCurrentPerson() {
+        return security.getCurrentUser();
     }
 
-    public List<Car> getCarList(Person person){
-        List<Car> carList = carDAO.getCarsByPerson(person.getId());
-        return carList;
+    public List<Car> getCarList(Person person) {
+        return carDAO.getCarsByPerson(person.getId());
     }
 
-    public List<Order> getCustomerOrders(Person person){
-        List<Order> list = orderDAO.getOrdersByCustomer(person.getId());
-        return list;
+    public List<Order> getCustomerOrders(Person person) {
+        return orderDAO.getOrdersByCustomer(person.getId());
     }
 
+    public List<Order> getSellerOrders(Person person) {
+        return orderDAO.getOrdersBySeller(person.getId());
+    }
 }

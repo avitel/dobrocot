@@ -30,21 +30,25 @@ public class AddNewCarController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public RedirectView addNewCar(@RequestParam(name = "mark", required = false) String mark,
-                                  @RequestParam(name = "model", required = false) String model,
-                                  @RequestParam(name = "assembledate", required = false) String assembledate,
-                                  @RequestParam(name = "engine", required = false) String engine,
-                                  @RequestParam(name = "numbeerofseats", required = false) String numbeerofseats,
-                                  @RequestParam(name = "color", required = false) String color,
-                                  @RequestParam(name = "dayprice", required = false) String dayprice,
-                                  Model carModel) {
-
+    public String addNewCar(@RequestParam(name = "mark", required = false) String mark,
+                            @RequestParam(name = "model", required = false) String model,
+                            @RequestParam(name = "assembledate", required = false) String assembledate,
+                            @RequestParam(name = "engine", required = false) String engine,
+                            @RequestParam(name = "numbeerofseats", required = false) String numbeerofseats,
+                            @RequestParam(name = "color", required = false) String color,
+                            @RequestParam(name = "dayprice", required = false) String dayprice,
+                            Model carModel) {
         int getId = security.getCurrentUser().getId();
+
+        if (mark == null || model == null || assembledate == null || engine == null ||
+                numbeerofseats == null || color == null || "".equals(dayprice)) {
+            carModel.addAttribute("ErrMessage", "Please fill in all fields.");
+            carModel.addAttribute("param", addNewCarService.getParam());
+            return "addnewcar";
+        }
 
         addNewCarService.addCar(getId, mark, model, assembledate, engine, numbeerofseats, color, dayprice);
 
-        return new RedirectView("/cabinet");
+        return "redirect:/cabinet";
     }
-
-
 }

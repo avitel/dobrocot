@@ -14,6 +14,8 @@
 <a href="/logout">Logout</a><br>
 <a href="/cabinet">Cabinet</a><br>
 <a href="/">Home</a><br>
+<h2 style="color : red">${errormessage}</h2>
+<h2 style="color : lightgreen">${successmessage}</h2>
 <h2>Выбранное авто</h2><br>
 <table border="1" width="100%" cellpadding="5">
     <tr>
@@ -54,25 +56,19 @@
     </tr>
 </table>
 <form action="/carreserve3" method="post">
-    <input type="date" name="date_begin"
-           value="<%=request.getAttribute("date_begin")%>"
-           data-date="" data-date-format="DD MMMM YYYY"/>
-    <input type="date" name="date_end"
-           value="<%=request.getAttribute("date_end")%>"
-           data-date="" data-date-format="DD MMMM YYYY"/>
-    <input type="hidden" name="car_id" value=${car_id} />
+        <input type="date" name="date_begin" value=${date_begin}/>
+        <input type="date" name="date_end" value=${date_end}/>
+    <input type="hidden" name="car_id" value=${car_id} </input>
 
     <button type="submit" name="submit" value="Добавить" >Посчитать</button>
 </form>
-<label></label>
+
 <form action="/carreserve2" method="post">
     <input type="hidden" name="date_begin"
-           value="<%=request.getAttribute("date_begin")%>"
-           data-date="" data-date-format="DD MMMM YYYY"/>
+           value="<%=request.getAttribute("date_begin")%>"/>
     <input type="hidden"  name="date_end"
-           value="<%=request.getAttribute("date_end")%>"
-           data-date="" data-date-format="DD MMMM YYYY"/>
-    <input type="hidden" name="car_id" value=${car_id} />
+           value="<%=request.getAttribute("date_end")%>"/>
+    <input type="hidden" name="car_id" value=${car_id} </input>
     <input type="hidden" name="id_owner" value=${id_owner} />
     <input type="hidden" name="price" value=${cost} />
     <button type="submit">Беру</button>

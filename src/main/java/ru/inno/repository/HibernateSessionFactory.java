@@ -18,7 +18,6 @@ public class HibernateSessionFactory {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                long begin = System.currentTimeMillis();
 
                 Configuration configuration = new Configuration();
 
@@ -30,10 +29,7 @@ public class HibernateSessionFactory {
                 configuration.addAnnotatedClass(Model.class);
                 configuration.addAnnotatedClass(Order.class);
 
-                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-                sessionFactory = configuration.buildSessionFactory(builder.build());
-
-                System.out.println("init time : "+(System.currentTimeMillis()-begin));
+                sessionFactory = configuration.buildSessionFactory();
 
             } catch (Exception e) {
                 LOGGER.error("hibernate factory error",e);

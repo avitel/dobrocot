@@ -14,7 +14,6 @@ public class ModelHiber implements ModelDAO {
 
     @Override
     public List<Model> getModels(Integer mark_id) {
-
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         List<Model> list;
         Query query;
@@ -26,15 +25,18 @@ public class ModelHiber implements ModelDAO {
         }else{
             query = session.createQuery("from Model");
         }
-
         list = query.list();
+        session.close();
         return list;
     }
 
 
     @Override
     public Model getModel(int id) {
-        return HibernateSessionFactory.getSessionFactory().openSession().get(Model.class, id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Model model = session.get(Model.class, id);
+        session.close();
+        return model;
     }
 
 

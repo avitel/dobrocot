@@ -16,14 +16,19 @@ public class MarkHiber implements MarkDAO {
 
     @Override
     public List<Mark> getMarks() {
-        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Mark");
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Query query = session.createQuery("from Mark");
         List<Mark> list = query.list();
+        session.close();
         return list;
     }
 
     @Override
     public Mark getMark(int id) {
-        return HibernateSessionFactory.getSessionFactory().openSession().get(Mark.class, id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Mark mark = session.get(Mark.class, id);
+        session.close();
+        return mark;
     }
 
     @Override

@@ -16,7 +16,10 @@ public class CarHiber implements CarDAO {
 
     @Override
     public Car getCar(int id) {
-        return HibernateSessionFactory.getSessionFactory().openSession().get(Car.class, id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Car car = session.get(Car.class, id);
+        session.close();
+        return car;
     }
 
     @Override
@@ -39,11 +42,10 @@ public class CarHiber implements CarDAO {
     @Override
     public List<Car> getFilteredCars(QueryBuilder filter) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        System.out.println("________________________________________"+filter.getHQLquery());
         Query query = session.createQuery(filter.getHQLquery());
         filter.setHQLParameters(query, session);
         List<Car> list = query.list();
-
+        session.close();
         return list;
     }
 

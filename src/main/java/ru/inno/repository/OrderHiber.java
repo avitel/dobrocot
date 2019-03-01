@@ -3,6 +3,7 @@ package ru.inno.repository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.mockito.internal.matchers.Or;
 import org.springframework.stereotype.Repository;
 import ru.inno.dao.OrderDAO;
 import ru.inno.entity.Car;
@@ -16,13 +17,18 @@ import java.util.List;
 public class OrderHiber implements OrderDAO {
     @Override
     public List<Order> getOrders() {
-        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Order");
-        return query.list();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        List<Order> list = session.createQuery("from Order").list();
+        session.close();
+        return list;
     }
 
     @Override
     public Order getOrder(int id) {
-       return HibernateSessionFactory.getSessionFactory().openSession().get(Order.class, id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Order order = session.get(Order.class, id);
+        session.close();
+       return order;
     }
 
     @Override
@@ -44,7 +50,9 @@ public class OrderHiber implements OrderDAO {
         Person customer = session.get(Person.class, person_id);
         Query query = session.createQuery("from Order where customer = :customer");
         query.setParameter("customer",customer);
-        return query.list();
+        List<Order> list = query.list();
+        session.close();
+        return list;
     }
 
     @Override
@@ -53,7 +61,9 @@ public class OrderHiber implements OrderDAO {
         Person owner = session.get(Person.class, person_id);
         Query query = session.createQuery("from Order where owner = :owner");
         query.setParameter("owner",owner);
-        return query.list();
+        List<Order> list = query.list();
+        session.close();
+        return list;
     }
 
     @Override
@@ -62,7 +72,9 @@ public class OrderHiber implements OrderDAO {
         Car car = session.get(Car.class, car_id);
         Query query = session.createQuery("from Order where car = :car");
         query.setParameter("car",car);
-        return query.list();
+        List<Order> list = query.list();
+        session.close();
+        return list;
     }
 
 

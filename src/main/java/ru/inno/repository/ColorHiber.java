@@ -6,7 +6,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.inno.dao.ColorDAO;
 import ru.inno.entity.Color;
-import ru.inno.entity.Person;
 
 import java.util.List;
 
@@ -15,15 +14,20 @@ public class ColorHiber implements ColorDAO {
 
     @Override
     public List<Color> getColors() {
-        Query query = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Color");
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Query query = session.createQuery("from Color");
         List<Color> list = query.list();
+        session.close();
         return list;
     }
 
 
     @Override
     public Color getColor(int id) {
-        return HibernateSessionFactory.getSessionFactory().openSession().get(Color.class, id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Color color = session.get(Color.class, id);
+        session.close();
+        return color;
     }
 
 

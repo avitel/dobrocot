@@ -16,28 +16,39 @@ public class RegistrationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
 
     private PersonDAO dao;
+    private PasswordEncoder encoder;
+
+    public RegistrationService() {}
+
+    @Autowired
+    public void setEncoder(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
 
     @Autowired
     public void setDao(PersonDAO dao) {
         this.dao = dao;
     }
 
+    public PasswordEncoder getEncoder() {
+        return encoder;
+    }
+
+    public PersonDAO getDao() {
+        return dao;
+    }
+
     public boolean addUser(String name, String login, String password){
 
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordHash = encoder.encode(password);
         boolean result = false;
-        try {
-            if (dao.getPerson(login) == null){
-                int id = dao.addPerson(name, login, passwordHash, "ROLE_USER");
-                if (id != 0){
-                    result = true;
-                }
+        if (dao.getPerson(login) == null){
+            int id = dao.addPerson(name, login, passwordHash, "ROLE_USER");
+            if (id != 0){
+                result = true;
             }
-
-        } catch (SQLException e) {
-            LOGGER.error("add user sql error",e);
         }
+
         return result;
     }
 }

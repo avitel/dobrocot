@@ -11,7 +11,8 @@ import ru.inno.dao.ColorImpl;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
 import ru.inno.entity.Person;
-import ru.inno.services.CabinetService;
+import ru.inno.service.CabinetService;
+
 
 import java.util.Arrays;
 import java.util.List;

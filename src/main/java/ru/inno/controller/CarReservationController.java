@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.inno.service.ReservableService;
 
-import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,25 +33,17 @@ public class CarReservationController {
         HashMap<String, String> mapDates = (HashMap<String, String>) reservableService.getReservedDates(car_id);
         model.addAttribute("dateReserved", mapDates);
         return "carreserve";
-
     }
 
     @RequestMapping(value = "/carreserve3", method = RequestMethod.POST)
     public String doReserve2(Model model, @RequestParam(name = "date_begin") String date_begin,
                              @RequestParam(name = "date_end") String date_end,
                              @RequestParam(name = "car_id") String car_id) {
-//        model.addAttribute("successmessage", "");
-//        model.addAttribute("errormessage", "");
         int days = 0;
         try {
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        model.addAttribute("date_begin", formatter.parse(date_begin));
-//        model.addAttribute("date_end", formatter.parse(date_end));
-        model.addAttribute("date_begin", date_begin);
-        model.addAttribute("date_end", date_end);
-
-
-
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            model.addAttribute("date_begin", date_begin);
+            model.addAttribute("date_end", date_end);
             days = reservableService.getDays(formatter.parse(date_begin), formatter.parse(date_end));
         } catch (Exception e) {
             model.addAttribute("errormessage", "Какая то ошибка1!");
@@ -66,7 +55,6 @@ public class CarReservationController {
         model.addAttribute("cost", Integer.parseInt(carParams.get("dayprice")) * days);
         model.addAttribute("car_id", car_id);
         return doReserve(model, car_id);
-
     }
 
     @RequestMapping(value = "/carreserve2", method = RequestMethod.POST)
@@ -76,8 +64,6 @@ public class CarReservationController {
                              @RequestParam(name = "car_id") String car_id,
                              @RequestParam(name = "id_owner") String id_owner,
                              @RequestParam(name = "price") String price) {
-//        model.addAttribute("successmessage", "");
-//        model.addAttribute("errormessage", "");
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             if (!reservableService.checkAvailableDate(formatter.parse(date_begin), formatter.parse(date_end), car_id)) {
@@ -92,8 +78,5 @@ public class CarReservationController {
             e.printStackTrace();
         }
         return doReserve(model, car_id);
-
-        //return "carreserved";
-
     }
 }

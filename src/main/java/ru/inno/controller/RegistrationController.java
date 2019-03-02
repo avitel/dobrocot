@@ -23,7 +23,7 @@ public class RegistrationController {
     @RequestMapping(method = RequestMethod.GET)
     public String getForm(){
 
-        return "registration";
+        return "registration_";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -35,10 +35,9 @@ public class RegistrationController {
         if (service.addUser(name, login, pass) == false){
             model.addAttribute("WarningMessage", "user already exist");
 
-            return "registration";
+            return "registration_";
         } else {
             return "redirect:/";
         }
-
     }
 }

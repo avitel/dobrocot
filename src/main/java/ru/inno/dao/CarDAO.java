@@ -15,5 +15,5 @@ public interface CarDAO {
 
     List<Car> getCarsByPerson(int person_id);
 
-    
+    boolean deleteCar(int id);
 }

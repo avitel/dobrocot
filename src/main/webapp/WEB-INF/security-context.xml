@@ -9,7 +9,6 @@
        http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="ru.inno"/>
 
    <http auto-config="true" use-expressions="true">
        <csrf disabled="true"/>
@@ -39,9 +38,9 @@
 
     <b:bean id = "dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <b:property name="driverClassName" value="org.postgresql.Driver"/>
-        <b:property name="url" value="${db.url}"/>
-        <b:property name="username" value="${db.login}"/>
-        <b:property name="password" value="${db.pass}"/>
+        <b:property name="url" value="${hibernate.connection.url}"/>
+        <b:property name="username" value="${hibernate.connection.username}"/>
+        <b:property name="password" value="${hibernate.connection.password}"/>
     </b:bean>
 
 
@@ -49,6 +48,6 @@
         <b:constructor-arg name="dataSource" ref="dataSource"/>
     </b:bean>
 
-    <context:property-placeholder location="classpath:config.properties"/>
+    <context:property-placeholder location="classpath:hibernate.properties"/>
 
 </b:beans>

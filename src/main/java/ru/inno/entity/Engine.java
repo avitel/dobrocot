@@ -1,8 +1,17 @@
 package ru.inno.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class Engine {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String name;
+
+
 
     public int getId() {
         return id;
@@ -21,6 +30,10 @@ public class Engine {
     }
 
     public Engine() {
+    }
+
+    public Engine(String name) {
+        this.name = name;
     }
 
     public Engine(int id, String name) {

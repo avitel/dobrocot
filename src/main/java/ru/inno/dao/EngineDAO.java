@@ -12,6 +12,6 @@ public interface EngineDAO {
      * Добавляем двигатель в базу
      * @param name
      */
-    void addEngine(String name);
+    int addEngine(String name);
 //    void deleteEngine(Engine engine);
 }

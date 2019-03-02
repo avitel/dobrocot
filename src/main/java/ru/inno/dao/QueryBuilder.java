@@ -1,5 +1,11 @@
 package ru.inno.dao;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import ru.inno.entity.*;
+
+import java.security.acl.Owner;
+
 public class QueryBuilder {
     
     private Integer color;
@@ -31,6 +37,10 @@ public class QueryBuilder {
                     "left join model on car.model_id = model.id \n" +
                     "left join engine on car.engine_id = engine.id \n" +
                     "left join color on car.color_id = color.id";
+
+
+    public static final String GET_FILTERED_CARS_HQL_TEMPLATE =
+            "from Car";
 
 
     public QueryBuilder(Integer color, Integer engine, Integer mark, Integer model, Integer owner) {
@@ -124,4 +134,76 @@ public class QueryBuilder {
 
         return sb.toString();
     }
+
+
+    public String getHQLquery(){
+
+
+        StringBuilder sb = new StringBuilder(GET_FILTERED_CARS_HQL_TEMPLATE);
+
+        sb.append("\nwhere ");
+
+        boolean conditionExists=false;
+
+        if (color != null) {
+            sb.append("\ncolor = :param_color and");
+            conditionExists = true;
+        }
+
+        if (engine != null) {
+            sb.append("\nengine = :param_engine and");
+            conditionExists = true;
+        }
+
+        if (mark != null) {
+            sb.append("\nmark = :param_mark and");
+            conditionExists = true;
+        }
+
+        if (model != null) {
+            sb.append("\nmodel = :param_model and");
+            conditionExists = true;
+        }
+
+        if (owner != null) {
+            sb.append("\nowner = :param_owner and");
+            conditionExists = true;
+        }
+
+        if (conditionExists) {
+            sb.delete(sb.length()-3, sb.length());
+        }else {
+            sb.delete(sb.length()-7, sb.length());
+        }
+
+        return sb.toString();
+    }
+
+
+
+    public void setHQLParameters(Query query, Session session){
+
+        if (color != null) {
+            query.setParameter("param_color", session.get(Color.class, color));
+        }
+
+        if (engine != null) {
+            query.setParameter("param_engine", session.get(Engine.class, engine));
+        }
+
+        if (mark != null) {
+            query.setParameter("param_mark", session.get(Mark.class, mark));
+        }
+
+        if (model != null) {
+            query.setParameter("param_model", session.get(Model.class, model));
+        }
+
+        if (owner != null) {
+            query.setParameter("param_owner", session.get(Person.class, owner));
+        }
+
+
+    }
+
 }

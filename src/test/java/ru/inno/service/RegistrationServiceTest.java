@@ -39,13 +39,38 @@ class RegistrationServiceTest {
     void addUser() {
         PersonDAO mockDao = Mockito.mock(PersonHiber.class);
         Mockito.when(mockDao.getPerson("login1")).thenReturn(null);
-        Mockito.when(mockDao.getPerson("login2")).thenReturn(new Person());
         Mockito.when(mockDao.addPerson(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(1);
 
         registrationService.setDao(mockDao);
         registrationService.setEncoder(new BCryptPasswordEncoder());
 
         assertEquals(true, registrationService.addUser("mock","login1","mock"));
+    }
+
+
+    @Test
+    void addUserCaseAlreadyExist() {
+        PersonDAO mockDao = Mockito.mock(PersonHiber.class);
+        Mockito.when(mockDao.getPerson("login2")).thenReturn(new Person());
+        Mockito.when(mockDao.addPerson(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(1);
+
+        registrationService.setDao(mockDao);
+        registrationService.setEncoder(new BCryptPasswordEncoder());
+
         assertEquals(false, registrationService.addUser("mock","login2","mock"));
     }
+
+
+    @Test
+    void addUserNegative() {
+        PersonDAO mockDao = Mockito.mock(PersonHiber.class);
+        Mockito.when(mockDao.getPerson("login1")).thenReturn(null);
+        Mockito.when(mockDao.addPerson(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(1);
+
+        registrationService.setDao(mockDao);
+        registrationService.setEncoder(new BCryptPasswordEncoder());
+
+        assertThrows(NullPointerException.class, () -> registrationService.addUser(null,null,null));
+    }
 }
+

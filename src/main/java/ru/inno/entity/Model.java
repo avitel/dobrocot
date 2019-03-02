@@ -1,8 +1,19 @@
 package ru.inno.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "model")
 public class Model {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_mark")
     private Mark mark;
+
+    @Column
     private String name;
 
     public int getId() {
@@ -35,6 +46,20 @@ public class Model {
         this.name = name;
     }
 
+    public Model(Mark mark, String name) {
+        this.mark = mark;
+        this.name = name;
+    }
+
     public Model() {
+    }
+
+    @Override
+    public String toString() {
+        return "Model{" +
+                "id=" + id +
+                ", mark=" + mark +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

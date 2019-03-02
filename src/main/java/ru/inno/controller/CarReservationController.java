@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.inno.service.ReservableService;
-import java.sql.Date;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,19 +33,20 @@ public class CarReservationController {
         HashMap<String, String> mapDates = (HashMap<String, String>) reservableService.getReservedDates(car_id);
         model.addAttribute("dateReserved", mapDates);
         return "carreserve";
-
     }
 
     @RequestMapping(value = "/carreserve3", method = RequestMethod.POST)
-    public String doReserve2(Model model, @RequestParam(name = "date_begin") Date date_begin,
-                             @RequestParam(name = "date_end") Date date_end,
+    public String doReserve2(Model model, @RequestParam(name = "date_begin") String date_begin,
+                             @RequestParam(name = "date_end") String date_end,
                              @RequestParam(name = "car_id") String car_id) {
-        model.addAttribute("date_begin", date_begin);
-        model.addAttribute("date_end", date_end);
         int days = 0;
         try {
-            days = reservableService.getDays(date_begin, date_end);
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            model.addAttribute("date_begin", date_begin);
+            model.addAttribute("date_end", date_end);
+            days = reservableService.getDays(formatter.parse(date_begin), formatter.parse(date_end));
         } catch (Exception e) {
+            model.addAttribute("errormessage", "Какая то ошибка1!");
             model.addAttribute("error", "Error in date of reserve!");
             return "error";
         }
@@ -51,22 +55,28 @@ public class CarReservationController {
         model.addAttribute("cost", Integer.parseInt(carParams.get("dayprice")) * days);
         model.addAttribute("car_id", car_id);
         return doReserve(model, car_id);
-
     }
 
     @RequestMapping(value = "/carreserve2", method = RequestMethod.POST)
     public String doReserve3(Model model,
-                             @RequestParam(name = "date_begin") Date date_begin,
-                             @RequestParam(name = "date_end") Date date_end,
+                             @RequestParam(name = "date_begin") String date_begin,
+                             @RequestParam(name = "date_end") String date_end,
                              @RequestParam(name = "car_id") String car_id,
                              @RequestParam(name = "id_owner") String id_owner,
                              @RequestParam(name = "price") String price) {
-        if (!reservableService.checkAvailableDate(date_begin, date_end, car_id)) {
-            model.addAttribute("error", "Error in date of reserve!");
-            return "error";
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            if (!reservableService.checkAvailableDate(formatter.parse(date_begin), formatter.parse(date_end), car_id)) {
+                model.addAttribute("error", "Error in date of reserve!");
+                model.addAttribute("errormessage", "Нельзя взять машину на эту дату!");
+                return doReserve(model, car_id);
+            }
+            reservableService.addReservationOrder(Integer.parseInt(car_id), Integer.parseInt(id_owner), formatter.parse(date_begin), formatter.parse(date_end), Integer.parseInt(price));
+            model.addAttribute("successmessage", "Машина зарезервирована!");
+        } catch (ParseException e) {
+            model.addAttribute("errormessage", "Какая то ошибка2!" + e);
+            e.printStackTrace();
         }
-        reservableService.addReservationOrder(Integer.parseInt(car_id), Integer.parseInt(id_owner), /*Integer.parseInt(id_customer),*/ date_begin, date_end, Integer.parseInt(price));
-        return "carreserved";
-
+        return doReserve(model, car_id);
     }
 }

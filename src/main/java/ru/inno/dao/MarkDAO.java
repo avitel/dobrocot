@@ -6,15 +6,9 @@ import java.util.List;
 
 public interface MarkDAO {
 
-
-
     List<Mark> getMarks();
+
     Mark getMark(int id);
-    /**
-     *
-     * Добавляем марку в базу
-     * @param name
-     */
-    void addMark(String name);
-//    void deleteMark(Mark mark);
+
+    int addMark(String name);
 }

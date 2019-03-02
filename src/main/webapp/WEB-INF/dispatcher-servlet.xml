@@ -6,23 +6,17 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Dispatcher Servlet - определяет инфраструктуру обработки запросов сервлетом -->
 
-    <!-- Включает поддержку @Controller и др. в Spring MVC -->
-    <mvc:annotation-driven/>
-
-    <!-- Определяет какое представление рендерить на основании вычеслений в @Controller
-    (return ModelAndView) -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
+
     <mvc:resources mapping = "/static/**" location = "/static/" />
 
-    <!-- Сканирует пакет для поиска бинов -->
     <context:component-scan base-package="ru.inno"/>
-    <!--  Включает Spring аннотации вроде @Autowired -->
+
     <context:annotation-config/>
 
 </beans>

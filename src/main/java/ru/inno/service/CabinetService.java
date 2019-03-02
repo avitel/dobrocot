@@ -1,16 +1,13 @@
 package ru.inno.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.inno.ConnectionManager;
 import ru.inno.Security;
 import ru.inno.dao.*;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
 import ru.inno.entity.Person;
 
-import java.sql.Connection;
 import java.util.List;
 
 @Service

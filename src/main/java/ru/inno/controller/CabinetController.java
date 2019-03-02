@@ -5,23 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.inno.dao.ColorImpl;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
 import ru.inno.entity.Person;
 import ru.inno.service.CabinetService;
 
-
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @RequestMapping("/cabinet")
 public class CabinetController {
 
-    private static final Logger log = LoggerFactory.getLogger(ColorImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(CabinetController.class);
 
     private CabinetService cabinetService;
 

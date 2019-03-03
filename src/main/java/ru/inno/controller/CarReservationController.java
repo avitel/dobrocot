@@ -46,7 +46,6 @@ public class CarReservationController {
             model.addAttribute("date_end", date_end);
             days = reservableService.getDays(formatter.parse(date_begin), formatter.parse(date_end));
         } catch (Exception e) {
-            model.addAttribute("errormessage", "Какая то ошибка1!");
             model.addAttribute("error", "Error in date of reserve!");
             return "error";
         }
@@ -71,10 +70,13 @@ public class CarReservationController {
                 model.addAttribute("errormessage", "Нельзя взять машину на эту дату!");
                 return doReserve(model, car_id);
             }
+            if (!reservableService.checkAvailableCustomer(Integer.parseInt(id_owner))) {
+                model.addAttribute("errormessage", "Невозможно арендовать свою же машину!");
+                return doReserve(model, car_id);
+            }
             reservableService.addReservationOrder(Integer.parseInt(car_id), Integer.parseInt(id_owner), formatter.parse(date_begin), formatter.parse(date_end), Integer.parseInt(price));
             model.addAttribute("successmessage", "Машина зарезервирована!");
         } catch (ParseException e) {
-            model.addAttribute("errormessage", "Какая то ошибка2!" + e);
             e.printStackTrace();
         }
         return doReserve(model, car_id);

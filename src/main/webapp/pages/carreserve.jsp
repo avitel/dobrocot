@@ -55,15 +55,15 @@
         <th><h3>${cost}</h3></th>
     </tr>
 </table>
+Дата аренды с ${date_begin} по ${date_end} <br>
 <form action="/carreserve3" method="post">
         <input type="date" name="date_begin" value=${date_begin}/>
         <input type="date" name="date_end" value=${date_end}/>
     <input type="hidden" name="car_id" value=${car_id} </input>
-
     <button type="submit" name="submit" value="Добавить" >Посчитать</button>
 </form>
 
-<form action="/carreserve2" method="post">
+<form id="get_car" action="/carreserve2" method="post">
     <input type="hidden" name="date_begin"
            value="<%=request.getAttribute("date_begin")%>"/>
     <input type="hidden"  name="date_end"

@@ -1,5 +1,6 @@
 package ru.inno.repository;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -15,28 +16,38 @@ public class EngineHiber implements EngineDAO {
 
     @Override
     public List<Engine> getEngines() {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Query query = session.createQuery("from Engine");
-        List<Engine> list = query.list();
-        session.close();
+        List<Engine> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Query query = session.createQuery("from Engine");
+            list = query.list();
+        }
         return list;
     }
 
+
     @Override
     public Engine getEngine(int id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Engine engine = session.get(Engine.class, id);
-        session.close();
+        Engine engine;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            engine = session.get(Engine.class, id);
+        }
         return engine;
     }
 
+
     @Override
     public int addEngine(String name) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        int id = (int) session.save(new Engine(name));
-        tx.commit();
-        session.close();
+        int id=0;
+        Transaction tx = null;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            id = (int) session.save(new Engine(name));
+            tx.commit();
+        }catch (HibernateException e){
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
         return id;
     }
 }

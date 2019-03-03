@@ -1,5 +1,6 @@
 package ru.inno.repository;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -15,67 +16,81 @@ import java.util.List;
 
 @Repository
 public class OrderHiber implements OrderDAO {
+
     @Override
     public List<Order> getOrders() {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        List<Order> list = session.createQuery("from Order").list();
-        session.close();
+        List<Order> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+        list = session.createQuery("from Order").list();
+        };
         return list;
     }
+
 
     @Override
     public Order getOrder(int id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Order order = session.get(Order.class, id);
-        session.close();
+        Order order;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+        order = session.get(Order.class, id);
+        };
        return order;
     }
 
+
     @Override
     public int addOrder(int id_car, int id_owner, int id_customer, Timestamp dateOrder, Timestamp date_begin, Timestamp date_end, int price) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        Car car = session.get(Car.class,id_car);
-        Person owner = session.get(Person.class, id_owner);
-        Person customer = session.get(Person.class, id_customer);
-        int id = (int)session.save(new Order(car, owner,customer,dateOrder,date_begin,date_end,price));
-        tx.commit();
-        session.close();
+        int id=0;
+        Transaction tx = null;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            Car car = session.get(Car.class,id_car);
+            Person owner = session.get(Person.class, id_owner);
+            Person customer = session.get(Person.class, id_customer);
+            id = (int)session.save(new Order(car, owner,customer,dateOrder,date_begin,date_end,price));
+            tx.commit();
+        }catch (HibernateException e){
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
         return id;
     }
 
+
     @Override
     public List<Order> getOrdersByCustomer(int person_id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Person customer = session.get(Person.class, person_id);
-        Query query = session.createQuery("from Order where customer = :customer");
-        query.setParameter("customer",customer);
-        List<Order> list = query.list();
-        session.close();
+        List<Order> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Person customer = session.get(Person.class, person_id);
+            Query query = session.createQuery("from Order where customer = :customer");
+            query.setParameter("customer",customer);
+            list = query.list();
+        };
         return list;
     }
 
+
     @Override
     public List<Order> getOrdersBySeller(int person_id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        List<Order> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
         Person owner = session.get(Person.class, person_id);
         Query query = session.createQuery("from Order where owner = :owner");
         query.setParameter("owner",owner);
-        List<Order> list = query.list();
-        session.close();
+        list = query.list();
+        };
         return list;
     }
 
     @Override
     public List<Order> getOrdersByCar(int car_id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Car car = session.get(Car.class, car_id);
-        Query query = session.createQuery("from Order where car = :car");
-        query.setParameter("car",car);
-        List<Order> list = query.list();
-        session.close();
+        List<Order> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Car car = session.get(Car.class, car_id);
+            Query query = session.createQuery("from Order where car = :car");
+            query.setParameter("car",car);
+            list = query.list();
+        };
         return list;
     }
-
-
 }

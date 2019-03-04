@@ -66,7 +66,6 @@ public class CarReservationController {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             if (!reservableService.checkAvailableDate(formatter.parse(date_begin), formatter.parse(date_end), car_id)) {
-                model.addAttribute("error", "Error in date of reserve!");
                 model.addAttribute("errormessage", "Нельзя взять машину на эту дату!");
                 return doReserve(model, car_id);
             }

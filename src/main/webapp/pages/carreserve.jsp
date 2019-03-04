@@ -70,157 +70,179 @@
 <body class="w3-theme-l4">
 
 <div class="w3-bar w3-black">
-    <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Главная</a>
-    <a href="/cabinet" class="w3-bar-item w3-button">Кабинет</a>
-    <a href="/logout" class="w3-bar-item w3-button w3-right"><i class="fa fa-sign-out"></i> Выйти</a>
+    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Главная</a>
+    <a href="${pageContext.request.contextPath}/cabinet" class="w3-bar-item w3-button">Кабинет</a>
+    <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-right"><i
+            class="fa fa-sign-out"></i> Выйти</a>
 </div>
 
 <br>
 
-<div class="w3-container w3-content">
-    <div class="w3-card w3-border">
-        <div class="w3-bar w3-border-bottom w3-light-grey intronav">
-            <header class="w3-container">
-                <h4>Выбранная машина</h4>
-            </header>
-        </div>
+<div class="w3-row">
 
-
-        <div class="w3-container  w3-responsive">
-            <br>
-            <table class="w3-table-all  w3-hoverable w3-small">
-                <tbody>
-                <tr>
-                    <td><b>Владелец</b></td>
-                    <td>${owner}</td>
-                    <td><b>Двигатель</b></td>
-                    <td>${engine}</td>
-                </tr>
-                <tr>
-                    <td><b>Марка</b></td>
-                    <td>${mark}</td>
-                    <td><b>Число мест</b></td>
-                    <td>${numberofseats}</td>
-                </tr>
-                <tr>
-                    <td><b>Модель</b></td>
-                    <td>${model}</td>
-                    <td><b>Дата выпуска</b></td>
-                    <td>${assembledate}</td>
-                </tr>
-                <tr>
-                    <td><b>Цена за день</b></td>
-                    <td>${dayprice}</td>
-                    <td><b>Цвет</b></td>
-                    <td>${color}</td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-        <br>
-
-        <footer class="w3-container w3-responsive">
-            <h5>Авто недоступно к бронированию в следующие даты:</h5>
-            <table class="w3-table-all  w3-hoverable w3-small">
-                <tbody>
-                <thead>
-                <tr class="w3-light-grey">
-                    <th>C</th>
-                    <th>По</th>
-                </tr>
-                </thead>
-                <%
-                    HashMap<String, String> mapDates = (HashMap<String, String>) request.getAttribute("dateReserved");
-                    for (String begin : mapDates.keySet()) {
-                %>
-                <tr>
-                    <td><%=begin%>
-                    </td>
-                    <td><%=mapDates.get(begin)%>
-                    </td>
-                </tr>
-                <%}%>
-                </tbody>
-            </table>
-            <br>
-        </footer>
-
-    </div>
-</div>
-
-
-<br>
-
-<div class="w3-container w3-content">
-    <div class="w3-card w3-border">
-        <div class="w3-bar w3-border-bottom w3-light-grey intronav">
-            <header class="w3-container">
-                <h4>Выбери необходимые даты</h4>
-            </header>
-        </div>
-
-        <div class="w3-row-padding">
-            <div class="w3-half  w3-responsive">
-                <h4>Начало аренды:
-                    <label id="startLabel">${date_begin}</label>
-                    <!--                    <input type="text" value="" class="startDate" disabled>-->
-                </h4>
-                <div id="dp1" class=" datepicker-here"></div>
+    <div class="w3-half w3-container w3-content" style="min-width: 600px">
+        <div class="w3-card w3-border">
+            <div class="w3-bar w3-border-bottom w3-light-grey intronav">
+                <header class="w3-container">
+                    <h4>Выбери необходимые даты</h4>
+                </header>
             </div>
-            <div class="w3-half  w3-responsive">
-                <h4>Окончание аренды:
-                    <label id="endLabel">${date_end}</label>
-                </h4>
-                <div id="dp2" class=" datepicker-here"></div>
-            </div>
-        </div>
 
-        <div class="w3-container">
-            <h4>Аренда на ${days} дней. Сумма: ${cost} р.</h4>
-        </div>
+            <br>
 
-        <div class="w3-container">
-            <form action="/carreserve3" method="post">
-                <input type="hidden" name="date_begin"  class="startDate" disabled>
-                <input type="hidden" name="date_end"  class="endDate" disabled>
-                <input type="hidden" name="car_id" value=${car_id}>
-                <br>
-                <button id="idCalc" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Посчитать</button>
-                <br>
-            </form>
+            <div class="w3-row-padding">
+                <div class="w3-half  w3-responsive">
+                    <div id="dp1" class=" datepicker-here"></div>
+                    <h4>Начало аренды:
+                        <label id="startLabel">${date_begin}</label>
+                        <!--                    <input type="text" value="" class="startDate" disabled>-->
+                    </h4>
+                </div>
 
-            <form action="/carreserve2" method="post">
-                <input type="hidden" name="date_begin" value="" class="startDate">
-                <input type="hidden" name="date_end" value="" class="endDate">
-                <input type="hidden" name="car_id" value=${car_id}>
-                <input type="hidden" name="id_owner" value=${id_owner}>
-                <input type="hidden" name="price" value=${cost}>
-                <button id="idSubmit" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Арендовать</button>
-            </form>
-
-
-        </div>
-
-
-        <!-- The Modal -->
-        <div id="id01" class="w3-modal" style="display: ${modalStyle}">
-            <div class="w3-modal-content">
-                <div class="w3-container">
-                    <span onclick="document.getElementById('id01').style.display='none'"
-                          class="w3-button w3-display-topright">&times;</span>
-                    <h2 style="color : red">${errormessage}</h2>
-                    <h2 style="color : lightgreen">${successmessage}</h2>
+                <div class="w3-half  w3-responsive">
+                    <div id="dp2" class=" datepicker-here"></div>
+                    <h4>Окончание аренды:
+                        <label id="endLabel">${date_end}</label>
+                    </h4>
                 </div>
             </div>
+
+            <div class="w3-container">
+                <h4>Аренда на ${days} дней. Сумма: ${cost} &#x20bd;</h4>
+            </div>
+
+            <div class="w3-container">
+                <form action="/carreserve3" method="post">
+                    <input type="hidden" name="date_begin" class="startDate" value="">
+                    <input type="hidden" name="date_end" class="endDate" value="">
+                    <input type="hidden" name="car_id" value=${car_id}>
+                    <br>
+                    <button id="idCalc" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Посчитать
+                    </button>
+                    <br>
+                </form>
+
+                <form action="/carreserve2" method="post">
+                    <input type="hidden" name="date_begin" value="${date_begin}" class="startDate">
+                    <input type="hidden" name="date_end" value="${date_end}" class="endDate">
+                    <input type="hidden" name="car_id" value=${car_id}>
+                    <input type="hidden" name="id_owner" value=${id_owner}>
+                    <input type="hidden" name="price" value=${cost}>
+                    <button id="idSubmit" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Арендовать
+                    </button>
+                </form>
+
+
+            </div>
+
+
+            <!-- The Modal -->
+            <div id="idModal" class="w3-modal" style="${modalStyle}">
+                <div class="w3-modal-content">
+                    <header class="w3-container w3-light-grey">
+                        <h4>Результат обработки запроса</h4>
+                    </header>
+                    <div class="w3-container">
+
+                        <div class="w3-panel w3-leftbar ${msgStyle}">
+                            <p>${submitMessage}</p>
+                        </div>
+
+                        <button class="w3-btn w3-dark-grey"
+                                onclick="document.getElementById('idModal').style.display='none'"
+                                class="w3-button w3-display-topright">Закрыть
+                        </button>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
         </div>
+        <br>
+    </div>
 
 
-        <br><br>
+    <div class="w3-half w3-container w3-content" style="min-width: 600px">
+        <div class="w3-card w3-border">
+            <div class="w3-bar w3-border-bottom w3-light-grey intronav">
+                <header class="w3-container">
+                    <h4>Выбранная машина</h4>
+                </header>
+            </div>
+
+
+            <div class="w3-container  w3-responsive">
+                <br>
+                <table class="w3-table-all  w3-hoverable w3-small">
+                    <tbody>
+                    <tr>
+                        <td><b>Владелец</b></td>
+                        <td>${owner}</td>
+                        <td><b>Двигатель</b></td>
+                        <td>${engine}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Марка</b></td>
+                        <td>${mark}</td>
+                        <td><b>Число мест</b></td>
+                        <td>${numberofseats}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Модель</b></td>
+                        <td>${model}</td>
+                        <td><b>Дата выпуска</b></td>
+                        <td>${assembledate}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Цена за день</b></td>
+                        <td>${dayprice}</td>
+                        <td><b>Цвет</b></td>
+                        <td>${color}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <br>
+
+            <footer class="w3-container w3-responsive">
+                <h5>Авто недоступно к бронированию в следующие даты:</h5>
+
+                <button onclick="accordionAction('Demo1')" class="w3-btn w3-block w3-dark-grey w3-left-align">Показать
+                    список
+                    <i class="fa fa-caret-down"></i></button>
+                <div id="Demo1" class="w3-container w3-hide">
+                    <table class="w3-table-all  w3-hoverable w3-small">
+                        <tbody>
+                        <thead>
+                        <tr class="w3-light-grey">
+                            <th>C</th>
+                            <th>По</th>
+                        </tr>
+                        </thead>
+                        <%
+                            HashMap<String, String> mapDates = (HashMap<String, String>) request.getAttribute("dateReserved");
+                            for (String begin : mapDates.keySet()) {
+                        %>
+                        <tr>
+                            <td><%=begin%>
+                            </td>
+                            <td><%=mapDates.get(begin)%>
+                            </td>
+                        </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+            </footer>
+
+        </div>
     </div>
 
 </div>
-
 
 <br><br>
 
@@ -233,6 +255,18 @@
 
 
 <script type="text/javascript">
+
+    ${jsScript}
+
+    function accordionAction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
     $('#dp1').datepicker({
         minDate: new Date(),
         onSelect: function (fd) {
@@ -247,11 +281,11 @@
             setDate(fd, "endDate")
             document.getElementById("endLabel").innerHTML = fd;
             enableBtn("idCalc");
-            enableBtn("idSubmit");
+            // enableBtn("idSubmit");
         }
     })
 
-    function enableBtn(btnId){
+    function enableBtn(btnId) {
         var e = document.getElementById(btnId);
         e.removeAttribute("disabled");
     }

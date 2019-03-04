@@ -64,6 +64,7 @@ public class CarReservationController {
                              @RequestParam(name = "id_owner") String id_owner,
                              @RequestParam(name = "price") String price) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        model.addAttribute("modalStyle","block");
         try {
             if (!reservableService.checkAvailableDate(formatter.parse(date_begin), formatter.parse(date_end), car_id)) {
                 model.addAttribute("error", "Error in date of reserve!");
@@ -76,6 +77,7 @@ public class CarReservationController {
             }
             reservableService.addReservationOrder(Integer.parseInt(car_id), Integer.parseInt(id_owner), formatter.parse(date_begin), formatter.parse(date_end), Integer.parseInt(price));
             model.addAttribute("successmessage", "Машина зарезервирована!");
+
         } catch (ParseException e) {
             e.printStackTrace();
         }

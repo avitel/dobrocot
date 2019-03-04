@@ -17,5 +17,7 @@ public interface OrderDAO {
 
     List<Order> getOrdersByCar(int car_id);
 
+    List<Order> getOrdersByCarPresent(int car_id);
+
     List<Order> getOrdersBySeller(int person_id);
 }

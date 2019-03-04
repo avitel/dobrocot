@@ -71,7 +71,6 @@ public class CarReservationController {
         try {
             model.addAttribute("msgStyle", "w3-red");
             if (!reservableService.checkAvailableDate(formatter.parse(date_begin), formatter.parse(date_end), car_id)) {
-
                 model.addAttribute("submitMessage", "Нельзя взять машину на эту дату!");
                 return doReserve(model, car_id);
             }

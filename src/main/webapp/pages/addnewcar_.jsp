@@ -109,7 +109,7 @@
             </select>
         </label>
 
-        <input type="number" name="dayprice">Цена
+        <input type="text" name="dayprice" required pattern="^[1-9][0-9]+$">Цена
 
         <input type="submit" value="Добавить"></p>
 

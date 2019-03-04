@@ -77,5 +77,17 @@ public class OrderHiber implements OrderDAO {
         return list;
     }
 
+    @Override
+    public List<Order> getOrdersByCarPresent(int car_id) {
+        List<Order> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Car car = session.get(Car.class, car_id);
+            Query query = session.createQuery("from Order where car = :car and date_trunc('day',localtimestamp) <= enddate");
+            query.setParameter("car",car);
+            list = query.list();
+        };
+        return list;
+    }
+
 
 }

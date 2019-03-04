@@ -50,7 +50,8 @@ public class CarReservationService implements ReservableService {
     public Map getReservedDates(String car_id) {
         int id = Integer.parseInt(car_id);
         Map<String, String> map = new HashMap<>();
-        List<Order> list = order.getOrdersByCar(id);
+        //List<Order> list = order.getOrdersByCar(id);
+        List<Order> list = order.getOrdersByCarPresent(id);
         for (Order ord : list) {
             map.put(ord.getBegindate().toLocalDateTime().format(DateTimeFormatter.ISO_DATE),
                     ord.getEnddate().toLocalDateTime().format(DateTimeFormatter.ISO_DATE));
@@ -70,18 +71,22 @@ public class CarReservationService implements ReservableService {
     @Override
     public boolean checkAvailableDate(Date d1, Date d2, String car_id) {
         int id = Integer.parseInt(car_id);
-        List<Order> list = order.getOrdersByCar(id);
+        //List<Order> list = order.getOrdersByCar(id);
+        List<Order> list = order.getOrdersByCarPresent(id);
+        Timestamp ts1 = new Timestamp(d1.getTime());
+        Timestamp ts2 = new Timestamp(d2.getTime());
         for (Order ord : list) {
-            Timestamp ts1 = new Timestamp(d1.getTime());
-            Timestamp ts2 = new Timestamp(d2.getTime());
             if (!(
                     (ts2.before(ord.getBegindate()) & ts1.before(ord.getBegindate())
                             | ts1.after(ord.getEnddate()) & ts2.after(ord.getEnddate()))
                             & ts2.after(ts1)
-                            & ts1.after(new Timestamp(System.currentTimeMillis()))
+                            & ts1.after(new Timestamp(System.currentTimeMillis()-86400000))
             )) {
                 return false;
             }
+        }
+        if(!(ts2.after(ts1) & ts1.after(new Timestamp(System.currentTimeMillis()-86400000)))){
+            return false;
         }
         return true;
     }

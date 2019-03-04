@@ -18,19 +18,20 @@
 <br/>
 <br/>
 
-Please fill the form<br/>
+Please fill the form (use only latin letters)<br/>
+<br/>
 
 <form method="post" action="${pageContext.request.contextPath}/registration">
 
     <table>
         <tr>
-            <td> name:</td> <td> <input type="text" name="name" required autofocus> </td>
+            <td> name:</td> <td> <input type="text" name="name" required pattern="^[a-zA-Z]+$" autofocus> </td>
         </tr>
         <tr>
-            <td> login:</td> <td> <input type="text" name="login" required > </td>
+            <td> login:</td> <td> <input type="text" name="login" required pattern="^[a-zA-Z]+$" > </td>
         </tr>
         <tr>
-            <td> password:</td> <td> <input type="password" name="pass" required > </td>
+            <td> password:</td> <td> <input type="password" name="pass" required pattern="^[a-zA-Z0-9]+$"> </td>
         </tr>
         <tr>
             <td>        </td> <td> <input type="submit" value="Submit"/> </td>

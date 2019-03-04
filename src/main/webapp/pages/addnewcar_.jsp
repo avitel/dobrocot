@@ -21,6 +21,11 @@
 <br/>
 <br/>
 
+<font color="red">
+    <%
+        if (null != request.getAttribute("ErrMessage"))
+            out.print(request.getAttribute("ErrMessage"));
+    %></font>
 <br/>
 
 <form method="post" action="${pageContext.request.contextPath}/addnewcar">

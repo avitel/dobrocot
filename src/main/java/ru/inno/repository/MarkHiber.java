@@ -1,5 +1,6 @@
 package ru.inno.repository;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -16,28 +17,38 @@ public class MarkHiber implements MarkDAO {
 
     @Override
     public List<Mark> getMarks() {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Query query = session.createQuery("from Mark");
-        List<Mark> list = query.list();
-        session.close();
+        List<Mark> list;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Query query = session.createQuery("from Mark");
+            list = query.list();
+        }
         return list;
     }
 
+
     @Override
     public Mark getMark(int id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Mark mark = session.get(Mark.class, id);
-        session.close();
+        Mark mark;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            mark = session.get(Mark.class, id);
+        }
         return mark;
     }
 
+
     @Override
     public int addMark(String name) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        int id = (int)session.save(new Mark(name));
-        tx.commit();
-        session.close();
+        int id=0;
+        Transaction tx = null;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            id = (int)session.save(new Mark(name));
+            tx.commit();
+        }catch (HibernateException e){
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
         return id;
     }
 }

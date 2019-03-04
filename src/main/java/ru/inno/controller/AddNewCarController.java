@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 import ru.inno.Security;
 import ru.inno.service.AddNewCarService;
 
@@ -26,7 +25,7 @@ public class AddNewCarController {
     @RequestMapping(method = RequestMethod.GET)
     public String getPage(Model model) {
         model.addAttribute("param", addNewCarService.getParam());
-        return "addnewcar";
+        return "addnewcar_";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -44,7 +43,7 @@ public class AddNewCarController {
                 numbeerofseats == null || color == null || "".equals(dayprice)) {
             carModel.addAttribute("ErrMessage", "Please fill in all fields.");
             carModel.addAttribute("param", addNewCarService.getParam());
-            return "addnewcar";
+            return "addnewcar_";
         }
 
         addNewCarService.addCar(getId, mark, model, assembledate, engine, numbeerofseats, color, dayprice);

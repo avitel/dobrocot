@@ -87,6 +87,12 @@ public class CarReservationService implements ReservableService {
     }
 
     @Override
+    public boolean checkAvailableCustomer(int id_seller) {
+        int id_customer = security.getCurrentUser().getId();
+        return id_seller!=id_customer;
+    }
+
+    @Override
     public void addReservationOrder(int id_car, int id_owner, Date date_begin, Date date_end, int price) {
         int id_customer = security.getCurrentUser().getId();
         order.addOrder(id_car, id_owner, id_customer, new Timestamp(System.currentTimeMillis()),

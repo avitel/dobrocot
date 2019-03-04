@@ -14,6 +14,8 @@
 
     <mvc:resources mapping = "/static/**" location = "/static/" />
 
+    <mvc:annotation-driven/>
+
     <context:component-scan base-package="ru.inno"/>
 
     <context:annotation-config/>

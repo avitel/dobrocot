@@ -165,7 +165,8 @@
                         </select>
                         <br>
 
-                        <input type="number" class="w3-input w3-border w3-round w3-text-dark-grey" name="dayprice" placeholder="Цена за день"  required pattern="^[1-9][0-9]+$">
+                        <input type="text" class="w3-input w3-border w3-round w3-text-dark-grey"
+                               name="dayprice" placeholder="Цена за день" required pattern="^[1-9][0-9]+$">
                         <br>
 
                         <button class="w3-block w3-button w3-dark-grey" type="submit">Добавить</button>

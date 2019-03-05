@@ -8,9 +8,9 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/datepicker.js"></script>
-<link rel="stylesheet" href="/static/css/datepicker.css"/>
+<script type="text/javascript" src="./static/js/jquery.min.js"></script>
+<script type="text/javascript" src="./static/js/datepicker.js"></script>
+<link rel="stylesheet" href="./static/css/datepicker.css"/>
 
 <style>
     table {
@@ -112,7 +112,7 @@
             </div>
 
             <div class="w3-container">
-                <form action="/carreserve3" method="post">
+                <form action="${pageContext.request.contextPath}/carreserve3" method="post">
                     <input type="hidden" name="date_begin" class="startDate" value="">
                     <input type="hidden" name="date_end" class="endDate" value="">
                     <input type="hidden" name="car_id" value=${car_id}>
@@ -122,7 +122,7 @@
                     <br>
                 </form>
 
-                <form action="/carreserve2" method="post">
+                <form action="${pageContext.request.contextPath}/carreserve2" method="post">
                     <input type="hidden" name="date_begin" value="${date_begin}" class="startDate">
                     <input type="hidden" name="date_end" value="${date_end}" class="endDate">
                     <input type="hidden" name="car_id" value=${car_id}>

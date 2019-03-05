@@ -45,13 +45,13 @@
                     <a href="#" class="w3-block  w3-button  w3-dark-grey"
                        onclick="document.getElementById('id01').style.display='block'">Мои авто</a>
                     <p></p>
-                    <a href="/addnewcar" class="w3-block  w3-button  w3-dark-grey">Добавить авто</a>
+                    <a href="${pageContext.request.contextPath}/addnewcar" class="w3-block  w3-button  w3-dark-grey">Добавить авто</a>
 
                     <div id="id01" class="w3-modal">
                         <div class="w3-modal-content">
                             <div class="w3-container">
                                 <p>Список моих авто</p>
-                                <table class="w3-table-all w3-small">
+                                <table class="w3-table-all w3-small w3-responsive">
                                     <thead class="thead-dark">
                                     <tr class="w3-dark-grey w3-text-white">
                                         <th>Марка</th>

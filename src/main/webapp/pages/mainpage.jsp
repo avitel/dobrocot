@@ -76,7 +76,6 @@
     String userName = (String) request.getAttribute(MainController.USER_ATTRIBUTE);
     String contextPath = request.getContextPath();
     String hello = "Привет, " + userName;
-    String helloLink = "#";
     String regCab = "Личный кабинет";
     String regCabLink = "/cabinet";
     String logInOut = "Выйти";
@@ -85,7 +84,6 @@
 
     if (null == userName) {
         hello = "Привет, Гость!";
-        helloLink = "#";
         regCab = "Регистрация";
         regCabLink = "/registration";
         logInOut = "Войти";
@@ -95,9 +93,9 @@
 %>
 
 <div class="w3-bar w3-black">
-    <a href=" <% out.println(helloLink); %> " class="w3-bar-item w3-button">
+    <span class="w3-bar-item">
         <% out.println(hello); %>
-    </a>
+    </span>
     <a href="<% out.println(contextPath + regCabLink); %> " class="w3-bar-item w3-button">
         <% out.println(regCab); %>
     </a>

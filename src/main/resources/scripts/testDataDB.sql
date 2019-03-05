@@ -80,9 +80,9 @@ VALUES ('Valuev'),
        ('Lapshin');
 
 
-delete from "order" where true;
+delete from _order where true;
 alter sequence order_id_seq restart ;
-INSERT INTO public."order" (date, seller, customer, car, begindate, enddate)
+INSERT INTO public._order (date, seller, customer, car, begindate, enddate)
 VALUES
 ('1999-01-09',2,4,1,'1999-01-09','2999-01-09'),
 ('1998-04-12',3,2,2,'1998-04-12','2998-04-12'),

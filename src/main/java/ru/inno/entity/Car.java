@@ -40,6 +40,9 @@ public class Car {
     @Column
     private int dayprice;
 
+    @Column
+    private boolean isdeleted;
+
     public Car() {}
 
     public Car(int id, Person owner, Mark mark, Model model, Timestamp assembledate, Engine engine, int numberofseats, Color color
@@ -67,6 +70,9 @@ public class Car {
         this.dayprice = dayprice;
     }
 
+    public void setIsdeleted(boolean isdeleted) {
+        this.isdeleted = isdeleted;
+    }
 
     public int getId() {
         return id;

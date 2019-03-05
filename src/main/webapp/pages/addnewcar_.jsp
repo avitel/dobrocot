@@ -40,9 +40,9 @@
 <body>
 
 <div class="w3-bar w3-black">
-    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Главная</a>
-    <a href="${pageContext.request.contextPath}/cabinet" class="w3-bar-item w3-button">Кабинет</a>
-    <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-right"><i
+    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button  w3-mobile"><i class="fa fa-home"></i> Главная</a>
+    <a href="${pageContext.request.contextPath}/cabinet" class="w3-bar-item w3-button  w3-mobile">Кабинет</a>
+    <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-right w3-mobile"><i
             class="fa fa-sign-out"></i> Выйти</a>
 </div>
 

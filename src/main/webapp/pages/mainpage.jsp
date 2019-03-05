@@ -93,28 +93,30 @@
 %>
 
 <div class="w3-bar w3-black">
-    <span class="w3-bar-item">
+    <span class="w3-bar-item w3-mobile">
         <% out.println(hello); %>
     </span>
-    <a href="<% out.println(contextPath + regCabLink); %> " class="w3-bar-item w3-button">
+    <a href="<% out.println(contextPath + regCabLink); %> " class="w3-bar-item w3-button w3-mobile">
         <% out.println(regCab); %>
     </a>
-    <a href="<% out.println(contextPath + logInOutLink); %>" class="w3-bar-item w3-button w3-right"><i class="fa fa-sign-<%out.println(logInOutSign);%>"></i>
+    <a href="<% out.println(contextPath + logInOutLink); %>" class="w3-bar-item w3-button w3-right w3-mobile"><i class="fa fa-sign-<%out.println(logInOutSign);%>"></i>
         <% out.println(logInOut); %>
     </a>
 </div>
 
 
 <div class="w3-content w3-display-container" style="max-width:100%; ">
-    <img class="mySlides" src="./static/car_1.jpg" style="width:100%">
-    <img class="mySlides" src="./static/car_2.jpg" style="width:100%">
-    <img class="mySlides" src="./static/car_3.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_1.jpg" style="width:100%; display: block;">
+    <img class="mySlides w3-animate-fading" src="./static/car_2.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_3.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_4.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_5.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_6.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_7.jpg" style="width:100%">
+    <img class="mySlides w3-animate-fading" src="./static/car_8.jpg" style="width:100%">
     <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
         <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
         <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
-        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
-        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
-        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
     </div>
 </div>
 
@@ -298,7 +300,7 @@
 
     function carousel() {
         var i;
-        var x = document.getElementsByClassName("mySlides_");
+        var x = document.getElementsByClassName("mySlides");
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
@@ -307,13 +309,9 @@
             myIndex = 1
         }
         x[myIndex - 1].style.display = "block";
-        setTimeout(carousel, 2000); // Change image every 2 seconds
+        setTimeout(carousel, 5000);
     }
 
-</script>
-
-
-<script>
     var slideIndex = 1;
     showDivs(slideIndex);
 

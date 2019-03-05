@@ -17,8 +17,10 @@
 <body>
 
 <div class="w3-bar w3-black">
-    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-home"></i> Главная</a>
-    <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-right w3-mobile"><i class="fa fa-sign-out"></i> Выйти</a>
+    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-home"></i>
+        Главная</a>
+    <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-right w3-mobile"><i
+            class="fa fa-sign-out"></i> Выйти</a>
 </div>
 
 <p></p>
@@ -48,7 +50,7 @@
                     <a href="${pageContext.request.contextPath}/addnewcar" class="w3-block  w3-button  w3-dark-grey">Добавить авто</a>
 
                     <div id="id01" class="w3-modal">
-                        <div class="w3-modal-content" style="max-width:600px">
+                        <div class="w3-modal-content" style="max-width:700px">
                             <div class="w3-container">
                                 <p>Список моих авто</p>
                                 <table class="w3-table-all w3-small w3-responsive">
@@ -61,6 +63,7 @@
                                         <th>Число мест</th>
                                         <th>Дата выпуска</th>
                                         <th>Цена за день</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -71,13 +74,16 @@
                                                 DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
 
                                                 out.print("<tr>");
+                                                out.println("<form action=\"" + request.getContextPath() + "/cabinet\" method=\"post\">");
                                                 out.println("<td>" + car.getMark().getName() + "</td>");
                                                 out.println("<td>" + car.getModel().getName() + "</td>");
                                                 out.println("<td>" + car.getColor().getName() + "</td>");
                                                 out.println("<td>" + car.getEngine().getName() + "</td>");
                                                 out.println("<td>" + car.getNumberofseats() + "</td>");
                                                 out.println("<td>" + car.getAssembledate().toLocalDateTime().format(d) + "</td>");
-                                                out.println("<td>" + car.getDayprice() + "</td>");
+                                                out.println("<td>" + car.getDayprice() + " &#x20bd;</td>");
+                                                out.println("<td>" + "<button class=\"w3-block w3-button w3-dark-grey\" name=\"car_id\" " +
+                                                        "type=\"submit\" value=" + car.getId() + ">Удалить</button> </td> </form>");
                                                 out.print("</tr>");
                                             }
                                         } else {
@@ -87,7 +93,10 @@
                                     </tbody>
                                 </table>
                                 <p></p>
-                                <button class="w3-btn  w3-dark-grey" onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">Закрыть</button>
+                                <button class="w3-btn  w3-dark-grey"
+                                        onclick="document.getElementById('id01').style.display='none'"
+                                        class="w3-button w3-display-topright">Закрыть
+                                </button>
                                 <p></p>
                             </div>
                         </div>
@@ -107,13 +116,15 @@
             <div class="w3-card w3-border">
 
                 <div class="w3-bar w3-border-bottom w3-light-grey intronav">
-                    <a class="w3-bar-item w3-button tablink w3-dark-grey" onclick="openOrders(event, 'Customer')" id="myLink">Взято в аренду</a>
+                    <a class="w3-bar-item w3-button tablink w3-dark-grey" onclick="openOrders(event, 'Customer')"
+                       id="myLink">Взято в аренду</a>
                     <a class="w3-bar-item w3-button tablink" onclick="openOrders(event, 'Seller')">Предоставлено в
                         аренду</a>
                 </div>
 
 
-                <div id="Seller" class="w3-container w3-responsive city w3-animate-opacity orders" style="display: none;">
+                <div id="Seller" class="w3-container w3-responsive city w3-animate-opacity orders"
+                     style="display: none;">
                     <p></p>
                     <table class="w3-table-all w3-small">
                         <thead class="thead-dark">
@@ -148,7 +159,7 @@
                                         out.println("<td>" + car.getEngine().getName() + "</td>");
                                         out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
-                                        out.println("<td>" + order.getPrice() + "</td>");
+                                        out.println("<td>" + order.getPrice() + "  &#x20bd;</td>");
                                         out.print("</tr>");
                                     }
                                 }
@@ -160,7 +171,8 @@
                     </table>
                 </div>
 
-                <div id="Customer" class="w3-container w3-responsive city w3-animate-opacity orders" style="display: block;">
+                <div id="Customer" class="w3-container w3-responsive city w3-animate-opacity orders"
+                     style="display: block;">
                     <p></p>
                     <table class="w3-table-all w3-small">
                         <thead class="thead-dark">
@@ -177,34 +189,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <%
-                            List<Order> customerOrders = (List<Order>) request.getAttribute("customerOrders");
-                            if (customerOrders != null) {
-                                for (Order order : customerOrders) {
-                                    Car car = order.getCar();
-                                    if (car != null) {
-                                        DateTimeFormatter dt = DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss");
-                                        DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
+                            <%
+                                List<Order> customerOrders = (List<Order>) request.getAttribute("customerOrders");
+                                if (customerOrders != null) {
+                                    for (Order order : customerOrders) {
+                                        Car car = order.getCar();
+                                        if (car != null) {
+                                            DateTimeFormatter dt = DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss");
+                                            DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
 
-                                        out.print("<tr>");
-                                        out.println("<td>" + order.getDateOrder().toLocalDateTime().format(dt) + "</td>");
-                                        out.println("<td>" + order.getOwner().getName() + "</td>");
-                                        out.println("<td>" + car.getMark().getName() + "</td>");
-                                        out.println("<td>" + car.getModel().getName() + "</td>");
-                                        out.println("<td>" + car.getColor().getName() + "</td>");
-                                        out.println("<td>" + car.getEngine().getName() + "</td>");
-                                        out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
-                                        out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
-                                        out.println("<td>" + order.getPrice() + "</td>");
-                                        out.print("</tr>");
-                                    } else {
-                                        out.print("<tr><td>Пустая машина</td></tr>");
+                                            out.println("<tr><td>" + order.getDateOrder().toLocalDateTime().format(dt) + "</td>");
+                                            out.println("<td>" + order.getOwner().getName() + "</td>");
+                                            out.println("<td>" + car.getMark().getName() + "</td>");
+                                            out.println("<td>" + car.getModel().getName() + "</td>");
+                                            out.println("<td>" + car.getColor().getName() + "</td>");
+                                            out.println("<td>" + car.getEngine().getName() + "</td>");
+                                            out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
+                                            out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
+                                            out.println("<td>" + order.getPrice() + " &#x20bd;</td></tr>");
+                                        } else {
+                                            out.print("<tr><td>Пустая машина</td></tr>");
+                                        }
                                     }
+                                } else {
+                                    out.print("<tr><td>Ничего не найдено</td></tr>");
                                 }
-                            } else {
-                                out.print("<tr><td>Ничего не найдено</td></tr>");
-                            }
-                        %>
+                            %>
                         </tbody>
                     </table>
                 </div>

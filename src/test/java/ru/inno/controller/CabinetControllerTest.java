@@ -65,7 +65,13 @@ class CabinetControllerTest {
 
     @Test
     void cabinetPOST() throws Exception {
-        mockMvc.perform(post("/cabinet/"))
+        when(cabinetService.getCurrentPerson()).thenReturn(person);
+        when(cabinetService.getCarList(any(Person.class))).thenReturn(cars);
+        when(cabinetService.getSellerOrders(any(Person.class))).thenReturn(orders);
+        when(cabinetService.getCustomerOrders(any(Person.class))).thenReturn(orders);
+        when(cabinetService.deleteCar(2)).thenReturn(true);
+
+        mockMvc.perform(post("/cabinet/").param("car_id","2"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors());

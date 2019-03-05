@@ -3,8 +3,10 @@ package ru.inno.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
@@ -12,7 +14,9 @@ import ru.inno.entity.Person;
 import ru.inno.service.CabinetService;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cabinet")
@@ -45,8 +49,11 @@ public class CabinetController {
         return modelAndView;
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView cabinetPOST(ModelAndView modelAndView) {
-        return modelAndView;
+    public ModelAndView deleteCar(@RequestParam(name = "car_id") String car_id, ModelAndView modelAndView) {
+        int carId = Integer.parseInt(car_id);
+        log.info("Car id - {}, deleted - {}",carId,cabinetService.deleteCar(carId));
+        return cabinetGET(modelAndView);
     }
 }

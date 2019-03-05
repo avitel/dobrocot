@@ -24,28 +24,28 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-plus"></i></div>
             <div class="w3-rest">
-                <input id="userName" class="w3-input w3-border w3-round" name="name" type="text" placeholder="Имя" autofocus required pattern="[A-Za-z0-9]{3,}" onkeyup='check();'>
+                <input id="userName" class="w3-input w3-border w3-round" name="name" type="text" placeholder="Имя" required pattern="[A-Za-z0-9]{3,20}" autofocus onkeyup='check();'>
             </div>
         </div>
 
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-circle-o"></i></div>
             <div class="w3-rest">
-                <input id="userLogin" class="w3-input w3-border w3-round" name="login" type="text" placeholder="Логин"  required pattern="[A-Za-z0-9]{3,}" onkeyup='check();'>
+                <input id="userLogin" class="w3-input w3-border w3-round" name="login" type="text" placeholder="Логин"  required pattern="[A-Za-z0-9]{3,20}" onkeyup='check();'>
             </div>
         </div>
 
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
             <div class="w3-rest">
-                <input id="password" class="w3-input w3-border w3-round" name="passOrig" placeholder="Пароль" type="password"  required pattern="^[a-zA-Z0-9]+$" onkeyup='check();'>
+                <input id="password" class="w3-input w3-border w3-round" name="passOrig" placeholder="Пароль" type="password"  required pattern="^[a-zA-Z0-9]{3,20}$" onkeyup='check();'>
             </div>
         </div>
 
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-repeat "></i></div>
             <div class="w3-rest">
-                <input id="confirm_password" class="w3-input w3-border w3-round" type="password" name="pass" equired pattern="^[a-zA-Z0-9]+$" onkeyup='check();' placeholder="Подтверждение пароля">
+                <input id="confirm_password" class="w3-input w3-border w3-round" type="password" name="pass" required pattern="^[a-zA-Z0-9]{3,20}$" onkeyup='check();' placeholder="Подтверждение пароля">
                 <span id='message'></span>
             </div>
         </div>

@@ -37,10 +37,10 @@ class CarReservationServiceTest {
     void getReservedDatesPositive() {
         List<Order> list = new ArrayList<>();
         Order ord = new Order();
-        ord.setBegindate(new Timestamp(System.currentTimeMillis()));
-        ord.setEnddate(new Timestamp(System.currentTimeMillis()));
+        ord.setBegindate(new Timestamp(System.currentTimeMillis()+10_000_000));
+        ord.setEnddate(new Timestamp(System.currentTimeMillis()+20_000_000));
         list.add(ord);
-        Mockito.when(orderDAO.getOrdersByCar(Mockito.anyInt())).thenReturn(list);
+        Mockito.when(orderDAO.getOrdersByCarPresent(Mockito.anyInt())).thenReturn(list);
         Map map = reservationService.getReservedDates("1");
         Assertions.assertEquals(map.size(), 1);
     }

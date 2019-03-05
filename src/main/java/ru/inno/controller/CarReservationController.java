@@ -40,15 +40,20 @@ public class CarReservationController {
                              @RequestParam(name = "date_end") String date_end,
                              @RequestParam(name = "car_id") String car_id) {
         int days = 0;
+
         try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             model.addAttribute("date_begin", date_begin);
             model.addAttribute("date_end", date_end);
             days = reservableService.getDays(formatter.parse(date_begin), formatter.parse(date_end));
         } catch (Exception e) {
-            model.addAttribute("error", "Error in date of reserve!");
-            return "error";
+            model.addAttribute("msgStyle", "w3-red");
+            model.addAttribute("modalStyle", "display: block");
+            model.addAttribute("submitMessage", "Неверно указаны даты");
+            return doReserve(model, car_id);
         }
+
+        model.addAttribute("jsScript","enableBtn(\"idSubmit\");");
         model.addAttribute("days", days);
         Map<String, String> carParams = reservableService.getValues(car_id);
         model.addAttribute("cost", Integer.parseInt(carParams.get("dayprice")) * days);
@@ -63,18 +68,22 @@ public class CarReservationController {
                              @RequestParam(name = "car_id") String car_id,
                              @RequestParam(name = "id_owner") String id_owner,
                              @RequestParam(name = "price") String price) {
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        model.addAttribute("modalStyle","display: block");
         try {
+            model.addAttribute("msgStyle", "w3-red");
             if (!reservableService.checkAvailableDate(formatter.parse(date_begin), formatter.parse(date_end), car_id)) {
-                model.addAttribute("errormessage", "Нельзя взять машину на эту дату!");
+                model.addAttribute("submitMessage", "Нельзя взять машину на эту дату!");
                 return doReserve(model, car_id);
             }
             if (!reservableService.checkAvailableCustomer(Integer.parseInt(id_owner))) {
-                model.addAttribute("errormessage", "Невозможно арендовать свою же машину!");
+                model.addAttribute("submitMessage", "Невозможно арендовать свою же машину!");
                 return doReserve(model, car_id);
             }
             reservableService.addReservationOrder(Integer.parseInt(car_id), Integer.parseInt(id_owner), formatter.parse(date_begin), formatter.parse(date_end), Integer.parseInt(price));
-            model.addAttribute("successmessage", "Машина зарезервирована!");
+            model.addAttribute("submitMessage", "Машина зарезервирована!");
+            model.addAttribute("msgStyle", "w3-green");
+
         } catch (ParseException e) {
             e.printStackTrace();
         }

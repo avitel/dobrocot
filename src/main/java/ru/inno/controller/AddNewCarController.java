@@ -41,7 +41,8 @@ public class AddNewCarController {
 
         if (mark == null || model == null || assembledate == null || engine == null ||
                 numbeerofseats == null || color == null || "".equals(dayprice)) {
-            carModel.addAttribute("ErrMessage", "Please fill in all fields.");
+            carModel.addAttribute("ErrMessage", "Пожалуйста заполните все поля.");
+            carModel.addAttribute("modalStyle", "display: block");
             carModel.addAttribute("param", addNewCarService.getParam());
             return "addnewcar_";
         }

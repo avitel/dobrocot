@@ -76,7 +76,6 @@
     String userName = (String) request.getAttribute(MainController.USER_ATTRIBUTE);
     String contextPath = request.getContextPath();
     String hello = "Привет, " + userName;
-    String helloLink = "#";
     String regCab = "Личный кабинет";
     String regCabLink = "/cabinet";
     String logInOut = "Выйти";
@@ -85,7 +84,6 @@
 
     if (null == userName) {
         hello = "Привет, Гость!";
-        helloLink = "#";
         regCab = "Регистрация";
         regCabLink = "/registration";
         logInOut = "Войти";
@@ -95,9 +93,9 @@
 %>
 
 <div class="w3-bar w3-black">
-    <a href=" <% out.println(helloLink); %> " class="w3-bar-item w3-button">
+    <span class="w3-bar-item">
         <% out.println(hello); %>
-    </a>
+    </span>
     <a href="<% out.println(contextPath + regCabLink); %> " class="w3-bar-item w3-button">
         <% out.println(regCab); %>
     </a>
@@ -108,9 +106,9 @@
 
 
 <div class="w3-content w3-display-container" style="max-width:100%; ">
-    <img class="mySlides" src="/static/car_1.jpg" style="width:100%">
-    <img class="mySlides" src="/static/car_2.jpg" style="width:100%">
-    <img class="mySlides" src="/static/car_3.jpg" style="width:100%">
+    <img class="mySlides" src="./static/car_1.jpg" style="width:100%">
+    <img class="mySlides" src="./static/car_2.jpg" style="width:100%">
+    <img class="mySlides" src="./static/car_3.jpg" style="width:100%">
     <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
         <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
         <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
@@ -232,7 +230,7 @@
     <div class="w3-container">
         <div class="w3-card w3-border">
             <header class="w3-container w3-light-grey w3-border-bottom">
-                <p>Надено:</p>
+                <p>Найдено:</p>
             </header>
 
             <div class="w3-container w3-responsive city w3-animate-opacity orders">

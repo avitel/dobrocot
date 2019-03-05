@@ -61,6 +61,7 @@
                                         <th>Число мест</th>
                                         <th>Дата выпуска</th>
                                         <th>Цена за день</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -77,7 +78,7 @@
                                                 out.println("<td>" + car.getEngine().getName() + "</td>");
                                                 out.println("<td>" + car.getNumberofseats() + "</td>");
                                                 out.println("<td>" + car.getAssembledate().toLocalDateTime().format(d) + "</td>");
-                                                out.println("<td>" + car.getDayprice() + "</td>");
+                                                out.println("<td>" + car.getDayprice() + " &#x20bd;</td>");
                                                 out.print("</tr>");
                                             }
                                         } else {
@@ -108,8 +109,7 @@
 
                 <div class="w3-bar w3-border-bottom w3-light-grey intronav">
                     <a class="w3-bar-item w3-button tablink w3-dark-grey" onclick="openOrders(event, 'Customer')" id="myLink">Взято в аренду</a>
-                    <a class="w3-bar-item w3-button tablink" onclick="openOrders(event, 'Seller')">Предоставлено в
-                        аренду</a>
+                    <a class="w3-bar-item w3-button tablink" onclick="openOrders(event, 'Seller')">Предоставлено в аренду</a>
                 </div>
 
 
@@ -148,7 +148,7 @@
                                         out.println("<td>" + car.getEngine().getName() + "</td>");
                                         out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
-                                        out.println("<td>" + order.getPrice() + "</td>");
+                                        out.println("<td>" + order.getPrice() + "  &#x20bd;</td>");
                                         out.print("</tr>");
                                     }
                                 }
@@ -177,6 +177,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
                         <%
                             List<Order> customerOrders = (List<Order>) request.getAttribute("customerOrders");
                             if (customerOrders != null) {
@@ -186,7 +187,7 @@
                                         DateTimeFormatter dt = DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss");
                                         DateTimeFormatter d = DateTimeFormatter.ofPattern("d-MMM-uuuu");
 
-                                        out.print("<tr>");
+                                        out.println("form action=\"" + request.getContextPath() + "/cabinet\" method=\"post\">");
                                         out.println("<td>" + order.getDateOrder().toLocalDateTime().format(dt) + "</td>");
                                         out.println("<td>" + order.getOwner().getName() + "</td>");
                                         out.println("<td>" + car.getMark().getName() + "</td>");
@@ -195,16 +196,19 @@
                                         out.println("<td>" + car.getEngine().getName() + "</td>");
                                         out.println("<td>" + order.getBegindate().toLocalDateTime().format(d) + "</td>");
                                         out.println("<td>" + order.getEnddate().toLocalDateTime().format(d) + "</td>");
-                                        out.println("<td>" + order.getPrice() + "</td>");
-                                        out.print("</tr>");
+                                        out.println("<td>" + order.getPrice() + " &#x20bd;</td>");
+                                        out.println("<td>" + "<button class=\"w3-block w3-button w3-dark-grey\" name=\"car_id\" " +
+                                                "type=\"submit\" value=" + car.getId() + ">Удалить</button> </td> </form>");
+
                                     } else {
-                                        out.print("<tr><td>Пустая машина</td></tr>");
+                                        out.print("<td>Пустая машина</td>");
                                     }
                                 }
                             } else {
-                                out.print("<tr><td>Ничего не найдено</td></tr>");
+                                out.print("<td>Ничего не найдено</td>");
                             }
                         %>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

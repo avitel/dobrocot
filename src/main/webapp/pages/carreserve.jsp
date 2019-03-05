@@ -113,7 +113,7 @@
                     </tr>
                     <tr>
                         <td><b>Цена за день</b></td>
-                        <td>${dayprice}</td>
+                        <td>${dayprice}  &#x20bd;</td>
                         <td><b>Цвет</b></td>
                         <td>${color}</td>
                     </tr>
@@ -163,7 +163,7 @@
         <div class="w3-card w3-border">
             <div class="w3-bar w3-border-bottom w3-light-grey intronav">
                 <header class="w3-container">
-                    <h4>Выбери необходимые даты</h4>
+                    <h4>Выберите необходимые даты</h4>
                 </header>
             </div>
 

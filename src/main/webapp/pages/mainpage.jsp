@@ -99,7 +99,8 @@
     <a href="<% out.println(contextPath + regCabLink); %> " class="w3-bar-item w3-button w3-mobile">
         <% out.println(regCab); %>
     </a>
-    <a href="<% out.println(contextPath + logInOutLink); %>" class="w3-bar-item w3-button w3-right w3-mobile"><i class="fa fa-sign-<%out.println(logInOutSign);%>"></i>
+    <a href="<% out.println(contextPath + logInOutLink); %>" class="w3-bar-item w3-button w3-right w3-mobile"><i
+            class="fa fa-sign-<%out.println(logInOutSign);%>"></i>
         <% out.println(logInOut); %>
     </a>
 </div>
@@ -119,6 +120,13 @@
         <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
     </div>
 </div>
+<br>
+
+<div class="w3-container w3-center w3-black w3-text-white">
+    <h5>Гораздо лучше, чем прокатный автомобиль</h5>
+    <h4>Предоставить или взять в аренду авто - легко!</h4>
+</div>
+
 
 <br>
 
@@ -134,9 +142,9 @@
 
                 <form action="<%=contextPath%>/" method="post">
                     <%
-                        Map<String,Object> filterOption = (Map<String, Object>) request.getAttribute(MainController.FILTER_OPTION_ATTRIBUTE);
-                        if (null==filterOption) {
-                            response.sendRedirect(contextPath+"/error");
+                        Map<String, Object> filterOption = (Map<String, Object>) request.getAttribute(MainController.FILTER_OPTION_ATTRIBUTE);
+                        if (null == filterOption) {
+                            response.sendRedirect(contextPath + "/error");
                         }
                     %>
                     <div class="w3-row-padding">
@@ -265,7 +273,7 @@
                                             "<td>" + car.getNumberofseats() + "</td>" +
                                             "<td>" + car.getColor().getName() + "</td>" +
                                             "<td>" + car.getEngine().getName() + "</td>" +
-                                            "<td>" + car.getDayprice() + "</td>" +
+                                            "<td>" + car.getDayprice() + " &#x20bd;</td>" +
                                             "<td>" + "<button class=\"w3-block w3-button w3-dark-grey\" name=\"car_id\" " +
                                             "type=\"submit\" value=" + car.getId() + ">Выбрать</button> </td> </form>"
                                             + "</tr>"
@@ -309,7 +317,7 @@
             myIndex = 1
         }
         x[myIndex - 1].style.display = "block";
-        setTimeout(carousel, 5000);
+        setTimeout(carousel, 7000);
     }
 
     var slideIndex = 1;

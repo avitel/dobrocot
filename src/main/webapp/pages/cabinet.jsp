@@ -48,7 +48,7 @@
                     <a href="${pageContext.request.contextPath}/addnewcar" class="w3-block  w3-button  w3-dark-grey">Добавить авто</a>
 
                     <div id="id01" class="w3-modal">
-                        <div class="w3-modal-content">
+                        <div class="w3-modal-content" style="max-width:600px">
                             <div class="w3-container">
                                 <p>Список моих авто</p>
                                 <table class="w3-table-all w3-small w3-responsive">

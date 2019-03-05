@@ -80,91 +80,7 @@
 
 <div class="w3-row">
 
-    <div class="w3-half w3-container w3-content" style="min-width: 600px">
-        <div class="w3-card w3-border">
-            <div class="w3-bar w3-border-bottom w3-light-grey intronav">
-                <header class="w3-container">
-                    <h4>Выбери необходимые даты</h4>
-                </header>
-            </div>
-
-            <br>
-
-            <div class="w3-row-padding">
-                <div class="w3-half  w3-responsive">
-                    <div id="dp1" class=" datepicker-here"></div>
-                    <h4>Начало аренды:
-                        <label id="startLabel">${date_begin}</label>
-                        <!--                    <input type="text" value="" class="startDate" disabled>-->
-                    </h4>
-                </div>
-
-                <div class="w3-half  w3-responsive">
-                    <div id="dp2" class=" datepicker-here"></div>
-                    <h4>Окончание аренды:
-                        <label id="endLabel">${date_end}</label>
-                    </h4>
-                </div>
-            </div>
-
-            <div class="w3-container">
-                <h4>Аренда на ${days} дней. Сумма: ${cost} &#x20bd;</h4>
-            </div>
-
-            <div class="w3-container">
-                <form action="${pageContext.request.contextPath}/carreserve3" method="post">
-                    <input type="hidden" name="date_begin" class="startDate" value="">
-                    <input type="hidden" name="date_end" class="endDate" value="">
-                    <input type="hidden" name="car_id" value=${car_id}>
-                    <br>
-                    <button id="idCalc" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Посчитать
-                    </button>
-                    <br>
-                </form>
-
-                <form action="${pageContext.request.contextPath}/carreserve2" method="post">
-                    <input type="hidden" name="date_begin" value="${date_begin}" class="startDate">
-                    <input type="hidden" name="date_end" value="${date_end}" class="endDate">
-                    <input type="hidden" name="car_id" value=${car_id}>
-                    <input type="hidden" name="id_owner" value=${id_owner}>
-                    <input type="hidden" name="price" value=${cost}>
-                    <button id="idSubmit" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Арендовать
-                    </button>
-                </form>
-
-
-            </div>
-
-
-            <!-- The Modal -->
-            <div id="idModal" class="w3-modal" style="${modalStyle}">
-                <div class="w3-modal-content">
-                    <header class="w3-container w3-light-grey">
-                        <h4>Результат обработки запроса</h4>
-                    </header>
-                    <div class="w3-container">
-
-                        <div class="w3-panel w3-leftbar ${msgStyle}">
-                            <p>${submitMessage}</p>
-                        </div>
-
-                        <button class="w3-btn w3-dark-grey"
-                                onclick="document.getElementById('idModal').style.display='none'"
-                                class="w3-button w3-display-topright">Закрыть
-                        </button>
-                        <br><br>
-                    </div>
-                </div>
-            </div>
-
-
-            <br>
-        </div>
-        <br>
-    </div>
-
-
-    <div class="w3-half w3-container w3-content" style="min-width: 600px">
+    <div class="w3-col l6 m12  w3-container w3-content" style="min-width: 280px">
         <div class="w3-card w3-border">
             <div class="w3-bar w3-border-bottom w3-light-grey intronav">
                 <header class="w3-container">
@@ -173,9 +89,9 @@
             </div>
 
 
-            <div class="w3-container  w3-responsive">
+            <div class="w3-container w3-responsive">
                 <br>
-                <table class="w3-table-all  w3-hoverable w3-small">
+                <table class="w3-table-all w3-hoverable w3-small">
                     <tbody>
                     <tr>
                         <td><b>Владелец</b></td>
@@ -240,6 +156,90 @@
             </footer>
 
         </div>
+        <br>
+    </div>
+
+    <div class="w3-col l6 m12 w3-container w3-content" style="min-width: 280px">
+        <div class="w3-card w3-border">
+            <div class="w3-bar w3-border-bottom w3-light-grey intronav">
+                <header class="w3-container">
+                    <h4>Выбери необходимые даты</h4>
+                </header>
+            </div>
+
+            <br>
+
+            <div class="w3-row-padding">
+                <div class="w3-half" style="min-width: 280px">
+                    <div id="dp1" class=" datepicker-here"></div>
+                    <h4>Начало аренды:
+                        <label id="startLabel">${date_begin}</label>
+                        <!--                    <input type="text" value="" class="startDate" disabled>-->
+                    </h4>
+                </div>
+
+                <div class="w3-half" style="min-width: 280px">
+                    <div id="dp2" class=" datepicker-here"></div>
+                    <h4>Окончание аренды:
+                        <label id="endLabel">${date_end}</label>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="w3-container">
+                <h4>Аренда на ${days} дней. Сумма: ${cost} &#x20bd;</h4>
+            </div>
+
+            <div class="w3-container">
+                <form action="${pageContext.request.contextPath}/carreserve3" method="post">
+                    <input type="hidden" name="date_begin" class="startDate" value="">
+                    <input type="hidden" name="date_end" class="endDate" value="">
+                    <input type="hidden" name="car_id" value=${car_id}>
+                    <br>
+                    <button id="idCalc" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Посчитать
+                    </button>
+                    <br>
+                </form>
+
+                <form action="${pageContext.request.contextPath}/carreserve2" method="post">
+                    <input type="hidden" name="date_begin" value="${date_begin}" class="startDate">
+                    <input type="hidden" name="date_end" value="${date_end}" class="endDate">
+                    <input type="hidden" name="car_id" value=${car_id}>
+                    <input type="hidden" name="id_owner" value=${id_owner}>
+                    <input type="hidden" name="price" value=${cost}>
+                    <button id="idSubmit" class="w3-block w3-button w3-dark-grey" type="submit" disabled>Арендовать
+                    </button>
+                </form>
+
+
+            </div>
+
+
+            <!-- The Modal -->
+            <div id="idModal" class="w3-modal" style="${modalStyle}">
+                <div class="w3-modal-content">
+                    <header class="w3-container w3-light-grey">
+                        <h4>Результат обработки запроса</h4>
+                    </header>
+                    <div class="w3-container">
+
+                        <div class="w3-panel w3-leftbar ${msgStyle}">
+                            <p>${submitMessage}</p>
+                        </div>
+
+                        <button class="w3-btn w3-dark-grey"
+                                onclick="document.getElementById('idModal').style.display='none'"
+                                class="w3-button w3-display-topright">Закрыть
+                        </button>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+        </div>
+        <br>
     </div>
 
 </div>

@@ -1,20 +1,14 @@
 package ru.inno.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.inno.Security;
 import ru.inno.dao.*;
 import ru.inno.entity.Car;
 import ru.inno.entity.Order;
 
-import java.sql.Connection;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CarReservationService implements ReservableService {
@@ -80,12 +74,12 @@ public class CarReservationService implements ReservableService {
                     (ts2.before(ord.getBegindate()) & ts1.before(ord.getBegindate())
                             | ts1.after(ord.getEnddate()) & ts2.after(ord.getEnddate()))
                             & ts2.after(ts1)
-                            & ts1.after(new Timestamp(System.currentTimeMillis()-86400000))
+                            & ts1.after(new Timestamp(new GregorianCalendar().getTimeInMillis()-86400000))
             )) {
                 return false;
             }
         }
-        if(!(ts2.after(ts1) & ts1.after(new Timestamp(System.currentTimeMillis()-86400000)))){
+        if(!(ts2.after(ts1) & ts1.after(new Timestamp(new GregorianCalendar().getTimeInMillis()-86400000)))){
             return false;
         }
         return true;
@@ -100,7 +94,7 @@ public class CarReservationService implements ReservableService {
     @Override
     public void addReservationOrder(int id_car, int id_owner, Date date_begin, Date date_end, int price) {
         int id_customer = security.getCurrentUser().getId();
-        order.addOrder(id_car, id_owner, id_customer, new Timestamp(System.currentTimeMillis()),
+        order.addOrder(id_car, id_owner, id_customer, new Timestamp(new GregorianCalendar().getTimeInMillis()),
                 new Timestamp(date_begin.getTime()),
                 new Timestamp(date_end.getTime()),
                 price);

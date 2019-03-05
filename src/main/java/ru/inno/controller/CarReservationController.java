@@ -47,8 +47,10 @@ public class CarReservationController {
             model.addAttribute("date_end", date_end);
             days = reservableService.getDays(formatter.parse(date_begin), formatter.parse(date_end));
         } catch (Exception e) {
-            model.addAttribute("error", "Error in date of reserve!");
-            return "error";
+            model.addAttribute("msgStyle", "w3-red");
+            model.addAttribute("modalStyle", "display: block");
+            model.addAttribute("submitMessage", "Неверно указаны даты");
+            return doReserve(model, car_id);
         }
 
         model.addAttribute("jsScript","enableBtn(\"idSubmit\");");

@@ -53,7 +53,7 @@ public class CabinetController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView deleteCar(@RequestParam(name = "car_id") String car_id, ModelAndView modelAndView) {
         int carId = Integer.parseInt(car_id);
-        log.info("Car id {} {}",carId,cabinetService.deleteCar(carId));
+        log.info("Car id - {}, deleted - {}",carId,cabinetService.deleteCar(carId));
         return cabinetGET(modelAndView);
     }
 }

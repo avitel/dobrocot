@@ -39,4 +39,8 @@ public class CabinetService {
     public List<Order> getSellerOrders(Person person) {
         return orderDAO.getOrdersBySeller(person.getId());
     }
+
+    public boolean deleteCar(int id){
+        return carDAO.deleteCar(id);
+    }
 }

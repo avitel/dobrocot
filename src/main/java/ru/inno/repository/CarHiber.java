@@ -74,7 +74,8 @@ public class CarHiber implements CarDAO {
 
             tx = session.beginTransaction();
             Car car = session.get(Car.class, id);
-            session.delete(car);
+            car.setIsdeleted(true);
+            session.update(car);
             tx.commit();
         }catch (HibernateException e){
             if (tx != null) {

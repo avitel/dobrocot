@@ -18,7 +18,9 @@
        <intercept-url pattern="/carreserved" access="hasAnyRole('ROLE_USER')"/>
        <intercept-url pattern="/addnewcar" access="hasAnyRole('ROLE_USER')"/>
        <intercept-url pattern="/cabinet" access="hasAnyRole('ROLE_USER')"/>
-       <form-login/>
+       <form-login  login-page="/login" username-parameter="username"
+                    password-parameter="password" authentication-failure-url="/Access_Denied" />
+
        <logout logout-success-url="/"></logout>
 
    </http>

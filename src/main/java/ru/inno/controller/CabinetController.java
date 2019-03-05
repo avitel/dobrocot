@@ -49,16 +49,11 @@ public class CabinetController {
         return modelAndView;
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView cabinetPOST(ModelAndView modelAndView) {
-
-        return modelAndView;
-    }
-
-
-    @RequestMapping(value = "/cabinet", method = RequestMethod.POST)
-    public ModelAndView deleteCar(ModelAndView modelAndView, @RequestParam(name = "car_id") String car_id) {
-
+    public ModelAndView deleteCar(@RequestParam(name = "car_id") String car_id, ModelAndView modelAndView) {
+        int carId = Integer.parseInt(car_id);
+        log.info("Car id {} {}",carId,cabinetService.deleteCar(carId));
         return cabinetGET(modelAndView);
     }
 }

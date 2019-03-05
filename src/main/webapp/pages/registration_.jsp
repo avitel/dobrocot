@@ -24,7 +24,7 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-plus"></i></div>
             <div class="w3-rest">
-                <input id="userName" class="w3-input w3-border w3-round" name="name" type="text" placeholder="Имя" required pattern="[A-Za-z0-9]{3,20}" onkeyup='check();'>
+                <input id="userName" class="w3-input w3-border w3-round" name="name" type="text" placeholder="Имя" required pattern="[A-Za-z0-9]{3,20}" autofocus onkeyup='check();'>
             </div>
         </div>
 
@@ -45,7 +45,7 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-repeat "></i></div>
             <div class="w3-rest">
-                <input id="confirm_password" class="w3-input w3-border w3-round" type="password" name="pass" equired pattern="^[a-zA-Z0-9]{3,20}$" onkeyup='check();' placeholder="Подтверждение пароля">
+                <input id="confirm_password" class="w3-input w3-border w3-round" type="password" name="pass" required pattern="^[a-zA-Z0-9]{3,20}$" onkeyup='check();' placeholder="Подтверждение пароля">
                 <span id='message'></span>
             </div>
         </div>

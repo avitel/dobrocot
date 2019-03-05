@@ -106,7 +106,7 @@
 </div>
 
 
-<div class="w3-content w3-display-container" style="max-width:100%; ">
+<div class="w3-content w3-display-container w3-hide-small" style="max-width:100%; ">
     <img class="mySlides w3-animate-fading" src="./static/car_1.jpg" style="width:100%; display: block;">
     <img class="mySlides w3-animate-fading" src="./static/car_2.jpg" style="width:100%">
     <img class="mySlides w3-animate-fading" src="./static/car_3.jpg" style="width:100%">
@@ -120,11 +120,11 @@
         <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
     </div>
 </div>
-<br>
 
-<div class="w3-container w3-center w3-black w3-text-white">
-    <h5>Гораздо лучше, чем прокатный автомобиль</h5>
-    <h4>Предоставить или взять в аренду авто - легко!</h4>
+
+<div class="w3-container w3-center w3-text-dark-grey">
+    <i><h5>Гораздо лучше, чем прокатный автомобиль</h5>
+    <h3>Предоставить или взять в аренду авто - легко!</h3></i>
 </div>
 
 

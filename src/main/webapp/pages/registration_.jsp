@@ -8,11 +8,11 @@
 <body>
 
 <div class="w3-bar w3-black">
-    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Главная</a>
-    <a href="${pageContext.request.contextPath}/login" class="w3-bar-item w3-button w3-right"><i class="fa fa-sign-in"></i> Войти</a>
+    <a href="${pageContext.request.contextPath}/" class="w3-bar-item w3-button w3-mobile"><i class="fa fa-home"></i> Главная</a>
+    <a href="${pageContext.request.contextPath}/login" class="w3-bar-item w3-button w3-right w3-mobile"><i class="fa fa-sign-in"></i> Войти</a>
 </div>
 
-<br><br><br><br><br><br>
+<br><br>
 
 
 
@@ -24,7 +24,7 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-plus"></i></div>
             <div class="w3-rest">
-                <input id="userName" class="w3-input w3-border w3-round" name="name" type="text" placeholder="Имя" onkeyup='check();'>
+                <input id="userName" class="w3-input w3-border w3-round" name="name" type="text" placeholder="Имя" required pattern="[A-Za-z0-9]{3,}" onkeyup='check();'>
             </div>
         </div>
 
@@ -55,12 +55,7 @@
     </form>
 </div>
 
-<br><br><br><br><br><br>
-<footer>
-    <div class="w3-container w3-light-grey ">
-        <p> @Copyright Dobrocot 2019</p>
-    </div>
-</footer>
+
 
 <script>
     function enableBtn(btnId){
@@ -99,7 +94,7 @@
         if (document.getElementById('userName').value.length < 3 ||
             document.getElementById('userLogin').value.length < 3 ||
             document.getElementById('password').value.length < 3 ){
-            document.getElementById('message').innerHTML = 'имя, логин и пароль не менее 3х символов';
+            document.getElementById('message').innerHTML = 'латиница и цифры, не менее 3х символов';
         }
     }
 

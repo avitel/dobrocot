@@ -1,9 +1,10 @@
 jdk:
   - oraclejdk8
 
-script:
-  - curl -v -u dobrocot:$TOMCAT_SECURE -T $TRAVIS_BUILD_DIR/standalone/dobrocot.war "http://itcraft.su/manager/text/deploy?path=/&update=true"
-
 deploy:
   provider: script
+  skip_cleanup: true
   script: mvn package
+
+script:
+  - curl -v -u dobrocot:$TOMCAT_SECURE -T $TRAVIS_BUILD_DIR/standalone/dobrocot.war "http://itcraft.su/manager/text/deploy?path=/&update=true"

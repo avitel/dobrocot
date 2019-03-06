@@ -14,7 +14,9 @@
 
 <br><br>
 
-
+<div class="w3-content w3-panel ${messageStyle}">
+    <h3>${WarningMessage}</h3>
+</div>
 
 <div class="w3-content" style="max-width:600px">
     <form method="post" action="${pageContext.request.contextPath}/registration" class="w3-container w3-text-dark-grey w3-card-4 w3-light-grey w3-margin  w3-border">

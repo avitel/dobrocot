@@ -33,7 +33,8 @@ public class RegistrationController {
                                 ,@RequestParam String pass){
 
         if (service.addUser(name, login, pass) == false){
-            model.addAttribute("WarningMessage", "user already exist");
+            model.addAttribute("WarningMessage", "Такой пользователь уже существует");
+            model.addAttribute("messageStyle", " w3-red");
 
             return "registration_";
         } else {

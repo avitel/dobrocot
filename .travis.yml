@@ -9,4 +9,5 @@ deploy:
   script: mvn package
 
 script:
-  - curl -v -u dobrocot:$TOMCAT_SECURE -T $TRAVIS_BUILD_DIR/standalone/dobrocot.war "http://itcraft.su/manager/text/deploy?path=/&update=true"
+  - curl -v -u dobrocot:$TOMCAT_SECURE -T $TRAVIS_BUILD_DIR/standalone/dobrocot.war "http://itcraft.su/manager/text/deploy?path=/dobrocot&update=true"
+

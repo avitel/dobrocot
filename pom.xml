@@ -127,7 +127,21 @@
     </dependencies>
 
     <build>
+        <!--<finalName>dobrocot</finalName>-->
+
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <!--<webappDirectory>./targetout</webappDirectory>-->
+                    <outputDirectory>./standalone</outputDirectory>
+                    <warName>dobrocot</warName>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
